@@ -61,7 +61,7 @@ A selector ([specification](https://github.com/eclipse-zenoh/roadmap/blob/main/r
 
 Here's what a selector concretely looks like:
 ```
-path/**/something?arg1=val1&arg2=value%202
+path/**/something?arg1=val1;arg2=value%202
 ^               ^ ^                      ^
 |Key Expression-| |----- parameters -----|
 ```
@@ -78,7 +78,7 @@ The selector's `parameters` section functions just like query parameters:
 * It's separated from the path (Key Expr) by a `?`.
 * It's a `?` list of key-value pairs.
 * The first `=` in a key-value pair separates the key from the value.
-* If no `=` is found, the value is an empty string: `hello=there&kenobi` is interpreted as `{"hello": "there", "kenobi": ""}`.
+* If no `=` is found, the value is an empty string: `hello=there;kenobi` is interpreted as `{"hello": "there", "kenobi": ""}`.
 * The selector is assumed to be url-encoded: any character can be escaped using `%<charCode>`.
 
 There are however some additional conventions:
@@ -86,8 +86,6 @@ There are however some additional conventions:
 * The Zenoh Team considers any key that does not start with an ASCII alphabetic character reserved, intending to standardize some parameters to facilitate working with diverse queryables.
 * Since Zenoh operations may be distributed over diverse networks, we encourage queryable developers to use some prefix in their custom keys to avoid collisions.
 * When interpreting a key-value pair as a boolean, the absence of the key-value pair, or the value being `"false"` are the only "falsey" values: in the previous examples, the both `hello` and `kenobi` would be considered truthy if interpreted as boolean.
-
-Queryables are free to interpret the parameters however they see fit, but Zenoh-provided [queryables](#queryable), such as the [admin-space](#admin-space).
 
 The list of standardized parameters, as well as their usage, is documented in the [selector specification](https://github.com/eclipse-zenoh/roadmap/blob/main/rfcs/ALL/Selectors/README.md).
 
