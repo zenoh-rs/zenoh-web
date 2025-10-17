@@ -1,6 +1,6 @@
 ---
 title: "Zenoh 1.6.1: Imoogi"
-date: 2025-10-02
+date: 2025-10-20
 menu: "blog"
 weight: 20251020
 description: "20th October, 2025 -- Paris."
