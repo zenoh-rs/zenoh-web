@@ -1,5 +1,5 @@
 ---
-title: "Zenoh 1.6.1: Imoogi"
+title: "Zenoh 1.6.x: Imoogi"
 date: 2025-10-20
 menu: "blog"
 weight: 20251020
@@ -7,7 +7,7 @@ description: "20th October, 2025 -- Paris."
 draft: false
 ---
 
-We are thrilled to announce the release of Zenoh 1.6.1 – **Imoogi**!
+We are thrilled to announce the release of Zenoh 1.6.x – **Imoogi**!
 
 Named after the Korean dragon that ascends to greatness, this release elevates the Zenoh ecosystem with powerful refinements and critical improvements. Imoogi focuses on stabilizing and extending the groundbreaking features introduced in version 1.5.0, bringing enhanced shared memory capabilities, improved configuration management, better scalability, and expanded language binding support.
 
@@ -161,14 +161,14 @@ Note: to enable statistics, Zenoh has to be built with the [`stats` feature](htt
 
 ## Configuration changes
 
-In version 1.6.1, we introduced minor modifications to the Zenoh configuration to improve its overall consistency:
+In version 1.6.x, we introduced minor modifications to the Zenoh configuration to improve its overall consistency:
 
 * The unstable `congestion_control` value "blockfirst" was renamed to "block_first".
 * The "downsampling/messages" value "push" has been deprecated and may no longer be supported in future versions. It has been replaced with "put" and "delete" values (similar to other interceptors), which allow separate control of the publishing frequency for PUT and DELETE messages.
 
 ## Scalability improvements
 
-In version 1.6.1, we fixed a bug that was causing an infinite loop of messages across multiple processes in a peer-to-peer topology [(PR)](https://github.com/eclipse-zenoh/zenoh/pull/214). We also applied various optimizations that reduce CPU consumption for discovery message processing [(PR)](https://github.com/eclipse-zenoh/zenoh/pull/2174).
+In version 1.6.x, we fixed a bug that was causing an infinite loop of messages across multiple processes in a peer-to-peer topology [(PR)](https://github.com/eclipse-zenoh/zenoh/pull/214). We also applied various optimizations that reduce CPU consumption for discovery message processing [(PR)](https://github.com/eclipse-zenoh/zenoh/pull/2174).
 
 Overall, these changes drastically reduced CPU consumption and significantly improved Zenoh scalability, especially in peer-to-peer scenarios and the rmw_zenoh use case.
 
@@ -386,7 +386,7 @@ z_shm_provider_alloc_layout_aligned(&precomputed_layout, z_loan(*provider), buf_
 
 ## Introduce Matching API
 
-We added the last missing part of core Zenoh functionality - matching listener and matching status for Publisher and Querier in Zenoh-TS 1.6.1. Similarly to other languages, the new API can be used as follows:
+We added the last missing part of core Zenoh functionality - matching listener and matching status for Publisher and Querier in Zenoh-TS 1.6.x. Similarly to other languages, the new API can be used as follows:
 
 ```typescript
 const publisher: Publisher = await session.declarePublisher(keyExpr);
@@ -407,7 +407,7 @@ let matchingStatus = publisher.matchingStatus().await;
 
 # Plugin API Update
 
-Prior to 1.6.1, due to the absence of a stable ABI in Rust, it was necessary to ensure that plugins and zenohd were built with the same version of Rust, the same Zenoh version and features, and additionally that all common dependency crates of plugins and Zenoh (such as ***serde*** or ***tokio***) had the same version and contained exactly the same features. The last requirement was especially difficult to satisfy.
+Prior to 1.6.x, due to the absence of a stable ABI in Rust, it was necessary to ensure that plugins and zenohd were built with the same version of Rust, the same Zenoh version and features, and additionally that all common dependency crates of plugins and Zenoh (such as ***serde*** or ***tokio***) had the same version and contained exactly the same features. The last requirement was especially difficult to satisfy.
 
 In the new version, we reworked the plugin interface, and it should no longer be necessary to satisfy the last constraint.
 
@@ -427,7 +427,7 @@ NuZe currently lives in [https://github.com/ZettaScaleLabs/nu-zenoh](https://git
 
 # Changelogs
 
-The effort behind Zenoh 1.6.1 **Imoogi** has resulted in numerous bug fixes and improvements across the ecosystem. The full changelog for every Zenoh repository is available at the following links:
+The effort behind Zenoh 1.6.x **Imoogi** has resulted in numerous bug fixes and improvements across the ecosystem. The full changelog for every Zenoh repository is available at the following links:
 
 [Rust](https://github.com/eclipse-zenoh/zenoh/releases) | [C](https://github.com/eclipse-zenoh/zenoh-c/releases) | [C++](https://github.com/eclipse-zenoh/zenoh-cpp/releases) | [Python](https://github.com/eclipse-zenoh/zenoh-python/releases) | [Java](https://github.com/eclipse-zenoh/zenoh-java/releases) | [Kotlin](https://github.com/eclipse-zenoh/zenoh-kotlin/releases) | [TypeScript](https://github.com/eclipse-zenoh/zenoh-ts/releases) | [Pico](https://github.com/eclipse-zenoh/zenoh-pico/releases) | [DDS plugin](https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases) | [ROS2 plugin](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/releases) | [MQTT plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases) | [WebServer plugin](https://github.com/eclipse-zenoh/zenoh-plugin-webserver/releases) | [Filesystem backend](https://github.com/eclipse-zenoh/zenoh-backend-filesystem/releases) | [RocksDB backend](https://github.com/eclipse-zenoh/zenoh-backend-rocksdb/releases) | [S3 backend](https://github.com/eclipse-zenoh/zenoh-backend-s3/releases) | [InfluxDB backend](https://github.com/eclipse-zenoh/zenoh-backend-influxdb/releases)
 
