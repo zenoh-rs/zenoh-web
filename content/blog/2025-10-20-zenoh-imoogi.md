@@ -94,27 +94,7 @@ publisher.put(large_data).await.unwrap();
 // Zenoh will use SHM under the hood for this large message.
 ```
 
-This implicit SHM transport applies in all modes (even when using a router), vastly improving throughput for local messages. In benchmark tests, the combined SHM changes provided approximately **10–100% throughput boost** (depending on message size).
-
-Latency improvement:
-
-![Implicit SHM Latency Improvement](../../img/20251020-zenoh-imoogi/shm_latency_imp.png)
-
-Throughput improvement:
-
-![Implicit SHM Throughput Improvement](../../img/20251020-zenoh-imoogi/shm_throughput_imp.png)
-
-### SHM Performance
-
-Latency:
-
-![SHM Latency Performance](../../img/20251020-zenoh-imoogi/shm_latency_perf.png)
-
-Throughput:
-
-![SHM Throughput Performance](../../img/20251020-zenoh-imoogi/shm_throughput_perf.png)
-
-Note: throughput decreases for payloads larger than 2 MB due to insufficient memory arena capacity.
+This implicit SHM transport applies in all modes (even when using a router), vastly improving throughput for local messages.
 
 ### SHM monitoring
 
