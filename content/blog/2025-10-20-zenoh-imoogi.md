@@ -7,18 +7,18 @@ description: "20th October, 2025 -- Paris."
 draft: false
 ---
 
-We are excited to announce the release of Zenoh 1.6.1 – **Imoogi**!
+We are thrilled to announce the release of Zenoh 1.6.1 – **Imoogi**!
 
 Named after the Korean dragon that ascends to greatness, this release elevates the Zenoh ecosystem with powerful refinements and critical improvements. Imoogi focuses on stabilizing and extending the groundbreaking features introduced in version 1.5.0, bringing enhanced shared memory capabilities, improved configuration management, better scalability, and expanded language binding support.
 
 Key highlights of this release include:
 
 * **Shared Memory Evolution**: Comprehensive SHM API improvements with typed buffers, better allocator performance, flexible allocation builders, buffer resize capabilities, and implicit SHM optimization for large payloads — delivering 10-100% throughput improvements.
-* **Configuration Consistency**: Refined configuration parameters for improved usability, including renamed `congestion_control` values and enhanced downsampling controls.
+* **Configuration Consistency**: Refined configuration parameters for improved usability, including renamed `congestion_control` value "blockfirst" to "block_first" and enhanced downsampling controls.
 * **Extended Language Support**: Full shared memory API introduced in Zenoh-Python, comprehensive SHM updates in Zenoh-C, matching API in Zenoh-TS, and streamlined plugin interfaces.
 * **Zenoh-Pico Enhancements:** Advanced Pub/Sub support with TLS security, bringing enterprise-grade security and reliability features to constrained devices.
 * **Scalability Enhancements**: Fixed critical peer-to-peer topology issues and optimized discovery message processing, drastically reducing CPU consumption especially for ROS 2 use cases.
-* **Nu Integration:** Nuze combines Nushell's powerful structured data scripting with Zenoh commands, providing a convenient tool for testing, debugging, and building interactive Zenoh applications.
+* **Nu Integration:** NuZe combines Nushell's powerful structured data scripting with Zenoh commands, providing a convenient tool for testing, debugging, and building interactive Zenoh applications.
 * **Documentation & Tooling**: Significantly expanded Rust documentation with usage examples and cross-references, improved README structure, Rust 1.75 compatibility enhancements, and better plugin diagnostics.
 
 Let's explore what Imoogi brings to the Zenoh ecosystem!
@@ -86,7 +86,7 @@ We also expose alignment defaults and constants (`ALIGN_N_BYTE(S)`) and have tig
 
 ### Implicit SHM Optimization
 
-Perhaps the most exciting change is that Zenoh now **automatically uses shared memory for large data**. In practice, this means you don't have to do anything special: if you publish a large payload, Zenoh will "implicitly pack" it into SHM and transmit just a reference locally. For example:
+Perhaps the most thrilling change is that Zenoh now **automatically uses shared memory for large data**. In practice, this means you don't have to do anything special: if you publish a large payload, Zenoh will "implicitly pack" it into SHM and transmit just a reference locally. For example:
 
 ```rust
 let large_data = vec![0u8; 1_000_000];   // 1 MB payload
@@ -177,7 +177,7 @@ tx_n_msgs{media="net"} 20
 tx_n_msgs{media="shm"} 45
 ```
 
-Note: to enable statistics, Zenoh has to be built with the `stats` feature.
+Note: to enable statistics, Zenoh has to be built with the [`stats` feature](https://docs.rs/crate/zenoh/1.6.2/features).
 
 ## Configuration changes
 
@@ -194,7 +194,9 @@ Overall, these changes drastically reduced CPU consumption and significantly imp
 
 ## Rust 1.75 compatibility improvement
 
-The **zenoh** crate is declared to be compatible with Rust 1.75. Unfortunately, the Rust version compatibility checker ignores the fact that dependent crates evolve, and a crate that worked with Rust 1.75 at one point may later fail to compile because some of its dependencies have bumped their minimum supported versions.
+The **zenoh** crate is declared to be compatible with Rust 1.75. This compatibility is maintained to support ROS2 Humble users on Ubuntu 22.04 LTS, which ships with Rust 1.75 as the official package version—essential for building rmw_zenoh on that platform.
+
+Unfortunately, the Rust version compatibility checker ignores the fact that dependent crates evolve, and a crate that worked with Rust 1.75 at one point may later fail to compile because some of its dependencies have bumped their minimum supported versions.
 
 One possible solution would be to use pinned dependencies (e.g., `"=0.1.2"`) in zenoh itself, but this approach can cause compatibility issues.
 
@@ -211,6 +213,8 @@ The project's [README](https://github.com/eclipse-zenoh/zenoh/blob/main/README.m
 ## Advanced Pub/Sub
 
 Zenoh-Pico now includes support for the Advanced Publisher and Subscriber, bringing it in line with core Zenoh, where this functionality was first introduced in version [1.1.0](https://zenoh.io/blog/2024-12-12-zenoh-firesong-1.1.0/).
+
+These features enable reliable communication even when using best-effort links such as UDP/IP.
 
 This version introduces:
 
@@ -429,17 +433,17 @@ In the new version, we reworked the plugin interface, and it should no longer be
 
 The requirement for the same version of Rust and the same Zenoh version and features still remains, but the diagnostics for such mismatches have also been improved.
 
-# Nuze: Nu meets Zenoh
+# NuZe: Nu meets Zenoh
 
 Nu is the powerful scripting language underlying [Nushell](https://www.nushell.sh/). In Nu, everything is *structured* data in the form of [tables](https://www.nushell.sh/lang-guide/chapters/types/basic_types/table.html). This allows commands to pipeline in a natural, robust, and consistent way. Tables are a particularly great fit for Zenoh data: sample streams are tables where each column represents a sample property (e.g., key-expression, timestamp, encoding, etc.).
 
-Nuze (/nuz/) embeds the upstream Nu engine and extends it with Zenoh commands through the Rust bindings. The result is a single standalone executable that combines Nushell functionality with an extensive collection of custom Zenoh commands. The Asciinema recording below illustrates the use of Nuze to declare a queryable and send a query to it:
+NuZe (/nuz/) embeds the upstream Nu engine and extends it with Zenoh commands through the Rust bindings. The result is a single standalone executable that combines Nushell functionality with an extensive collection of custom Zenoh commands. The Asciinema recording below illustrates the use of NuZe to declare a queryable and send a query to it:
 
 [![asciicast](https://asciinema.org/a/Uy6yvpT86vWzYW5DmWBfLcc8V.svg)](https://asciinema.org/a/Uy6yvpT86vWzYW5DmWBfLcc8V)
 
-Nuze was conceived to facilitate testing and debugging of Zenoh applications: it is a convenient tool to write end-to-end tests and quickly poke into a Zenoh network. It also (unsurprisingly) serves as a powerful building block for interactive Zenoh applications in a given domain.
+NuZe was conceived to facilitate testing and debugging of Zenoh applications: it is a convenient tool to write end-to-end tests and quickly poke into a Zenoh network. It also (unsurprisingly) serves as a powerful building block for interactive Zenoh applications in a given domain.
 
-Nuze currently lives in [https://github.com/ZettaScaleLabs/nu-zenoh](https://github.com/ZettaScaleLabs/nu-zenoh) and is based on [Nushell 0.106.1](https://www.nushell.sh/blog/2025-07-30-nushell_0_106_1.html) as of commit `578316b`; see the repository [README](https://github.com/ZettaScaleLabs/nu-zenoh?tab=readme-ov-file#nuze-zenoh-nu-shell) for installation and usage instructions.
+NuZe currently lives in [https://github.com/ZettaScaleLabs/nu-zenoh](https://github.com/ZettaScaleLabs/nu-zenoh) and is based on [Nushell 0.106.1](https://www.nushell.sh/blog/2025-07-30-nushell_0_106_1.html) as of commit `578316b`; see the repository [README](https://github.com/ZettaScaleLabs/nu-zenoh?tab=readme-ov-file#nuze-zenoh-nu-shell) for installation and usage instructions.
 
 # Changelogs
 
@@ -447,7 +451,7 @@ The effort behind Zenoh 1.6.1 **Imoogi** has resulted in numerous bug fixes and 
 
 [Rust](https://github.com/eclipse-zenoh/zenoh/releases) | [C](https://github.com/eclipse-zenoh/zenoh-c/releases) | [C++](https://github.com/eclipse-zenoh/zenoh-cpp/releases) | [Python](https://github.com/eclipse-zenoh/zenoh-python/releases) | [Java](https://github.com/eclipse-zenoh/zenoh-java/releases) | [Kotlin](https://github.com/eclipse-zenoh/zenoh-kotlin/releases) | [TypeScript](https://github.com/eclipse-zenoh/zenoh-ts/releases) | [Pico](https://github.com/eclipse-zenoh/zenoh-pico/releases) | [DDS plugin](https://github.com/eclipse-zenoh/zenoh-plugin-dds/releases) | [ROS2 plugin](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/releases) | [MQTT plugin](https://github.com/eclipse-zenoh/zenoh-plugin-mqtt/releases) | [WebServer plugin](https://github.com/eclipse-zenoh/zenoh-plugin-webserver/releases) | [Filesystem backend](https://github.com/eclipse-zenoh/zenoh-backend-filesystem/releases) | [RocksDB backend](https://github.com/eclipse-zenoh/zenoh-backend-rocksdb/releases) | [S3 backend](https://github.com/eclipse-zenoh/zenoh-backend-s3/releases) | [InfluxDB backend](https://github.com/eclipse-zenoh/zenoh-backend-influxdb/releases)
 
-We're excited to see what you'll build with these enhancements. As always, your feedback, contributions, and success stories help shape the future of Zenoh. Join the conversation, share your experiences, and help us continue making Zenoh better for everyone.
+We're thrilled to see what you'll build with these enhancements. As always, your feedback, contributions, and success stories help shape the future of Zenoh. Join the conversation, share your experiences, and help us continue making Zenoh better for everyone.
 
 You can reach us on [Zenoh's Discord server](https://discord.com/invite/vSDSpqnbkm)!
 
