@@ -13,7 +13,7 @@ Named after the Korean dragon that ascends to greatness, this release elevates t
 
 Key highlights of this release include:
 
-* **Shared Memory Evolution**: Comprehensive SHM API improvements with typed buffers, better allocator performance, flexible allocation builders, buffer resize capabilities, and implicit SHM optimization for large payloads — delivering 10-100% throughput improvements.
+* **Shared Memory Evolution**: Comprehensive SHM API improvements with typed buffers, better allocator performance, flexible allocation builders, buffer resize capabilities, implicit SHM optimization for large payloads, and precommit SHM pages — delivering major throughput improvements.
 * **Configuration Consistency**: Refined configuration parameters for improved usability, including renamed `congestion_control` value "blockfirst" to "block_first" and enhanced downsampling controls.
 * **Extended Language Support**: Full shared memory API introduced in Zenoh-Python, comprehensive SHM updates in Zenoh-C, matching API in Zenoh-TS, and streamlined plugin interfaces.
 * **Zenoh-Pico Enhancements:** Advanced Pub/Sub support with TLS security, bringing enterprise-grade security and reliability features to constrained devices.
@@ -95,6 +95,21 @@ publisher.put(large_data).await.unwrap();
 ```
 
 This implicit SHM transport applies in all modes (even when using a router), vastly improving throughput for local messages.
+
+### Precommit SHM pages
+
+**What changed:** the SHM provider now pre-commits newly-created shared-memory buffers and locks their pages into physical RAM before handing them to consumers. Concretely, pages that previously could be allocated lazily (and thus incur a page fault on first touch) are committed and locked so the memory backing the SHM buffer is resident and won't trigger major page faults later [(PR)](https://github.com/eclipse-zenoh/zenoh/pull/2175).
+
+**Observable runtime effect:** previously a large zero-copy handoff could incur an unpredictable latency spike when the OS needed to fault in pages; after this change those first-access page fault penalties are removed (at the cost of doing the work up front). That makes SHM handoffs much more deterministic and stable for real-time/edge use cases where a router or local consumer must forward large buffers with tight latency requirements.
+
+**Performance & resource tradeoffs:** precommitting shifts the cost from the consumer's first access to SHM segment creation time — it takes slightly longer and the process' resident memory increases immediately. It also prevents lazy swapping for those pages, so overall resident memory can be higher. These are intentional tradeoffs: you trade a small, predictable allocation cost and higher resident footprint for removing rare but large, unpredictable page fault latency spikes.
+
+**Failure modes & safeguards:** the PR adds more careful logging around the SHM provider (e.g., logging errors in `LazyShmProvider`) and CI/test adjustments to cope with platform limits. Integrators should expect to see error logs if the OS refuses to lock pages and should verify system limits (e.g., `RLIMIT_MEMLOCK` on Linux).
+
+**Actionable implications:**
+* If you need strict, deterministic forwarding latency (routers, real-time edge processes), this change reduces the risk of rare but large latency spikes due to page faults.
+* If you run on constrained or multi-tenant systems, audit your memory-locking limits (or configure Zenoh hosts where locking is required to have appropriate privileges/limits) and account for the increased resident memory.
+* Watch the SHM provider logs for locking errors during startup; the PR makes those errors visible.
 
 ### SHM monitoring
 
