@@ -19,7 +19,7 @@ By default Zenoh applications are configured to communicate peer to peer (`peer`
 **Configuration**
 ```
 {
-  mode: peer,
+  mode: "peer",
 }
 ```
 
@@ -34,7 +34,7 @@ Zenoh applications in `peer` mode join multicast group `224.0.0.224` on UDP port
 **Configuration**
 ```
 {
-  mode: peer,
+  mode: "peer",
   scouting: {
     multicast: {
       enabled: true,
@@ -54,7 +54,7 @@ Zenoh applications in `peer` mode forward all local applications and routers tha
 **Configuration**
 ```
 {
-  mode: peer,
+  mode: "peer",
   connect: {
     endpoints: ["tcp/192.168.1.1:7447", "tcp/192.168.1.2:7447"],
   },
@@ -77,7 +77,7 @@ Communicating peer to peer implies establishing multiple sessions with multiple 
 **Configuration**
 ```
 {
-  mode: client,
+  mode: "client",
 }
 ```
 
@@ -88,7 +88,7 @@ Zenoh applications in `client` mode run `multicast` scouting to discover Zenoh r
 **Configuration**
 ```
 {
-  mode: client,
+  mode: "client",
   connect: {
     endpoints: ["tcp/192.168.1.1:7447", "tcp/192.168.1.2:7447"],
   },
@@ -104,7 +104,7 @@ In a mesh network, applications cannot directly connect to each other. Peer to p
 **Configuration**
 ```
 {
-  mode: peer,
+  mode: "peer",
   routing: {
     peer: {
       mode: "linkstate",
