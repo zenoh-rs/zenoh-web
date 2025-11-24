@@ -17,7 +17,7 @@ Settings::: Resolution: Extra Large, Frame Rate 30 fps, Export with transparent 
 ## Pub/Sub in Zenoh
 ![Zenoh pub/sub in action](/img/zenoh-pub-sub.gif "Zenoh pub/sub in action")
 
-This animation shows a basic pub/sub in action. The subscribers connected to the system receives the values send by the publishers routed efficicently through the Zenoh network.
+This animation shows a basic pub/sub in action. The subscribers connected to the system receive the values sent by the publishers routed efficicently through the Zenoh network.
 You can also observe the presence of a sleeping subscriber connected to the network. Once the subscriber awakes, the nearest Zenoh node will send the pending publications.
 
 ## Queries in Zenoh
