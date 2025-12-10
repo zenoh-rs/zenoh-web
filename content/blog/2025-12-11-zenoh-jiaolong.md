@@ -29,9 +29,9 @@ Let's break down the enhancements in Jiāolóng!
 
 ## Query cancellation
 
-We introduced cancellation tokens that allow interrupting ongoing get queries. 
+We introduced cancellation tokens that allow interrupting ongoing get queries.
 
-Cancelling a token unregisters associated get query callback, and if the latter is being currently executed, the cancel operation blocks until execution terminates. Thus, after cancel returns, it is guaranteed that callback will no longer be called. 
+Cancelling a token unregisters the associated get query callback, and if the callback is currently being executed, the cancel operation blocks until execution terminates. Thus, after cancel returns, it is guaranteed that the callback will no longer be called. 
 
 Here's a simple example that cancels a query after a 5-second delay:
 
@@ -69,7 +69,7 @@ z_get(z_session_loan(&session), z_loan(&key_expression), "", z_closure_reply_mov
 z_owned_reply_t reply;
 z_result_t res = z_recv(z_loan(&reply_handler), &reply);
 
-/// in another thread ...
+// in another thread ...
 z_sleep_s(5);
 z_cancellation_token_cancel(z_loan_mut(ct));
 ```
@@ -85,7 +85,7 @@ auto replies = session.get(key_expression, "", channels::FifoChannel(16), std::m
 std::thread t([ct]() {
     std::this_thread::sleep_for(5s);
     ct.cancel();
-};
+});
 auto reply = replies.recv();
 ```
 
@@ -129,9 +129,9 @@ We slightly altered the `SourceInfo` API. Now both source id and sequence number
 let publisher = session1.declare_publisher("key/expression").await.unwrap();
 let subscriber = session2.declare_subscriber("key/expression").await.unwrap();
 
-publisher.put("data").source_info(SourceInfo::new(id, sn))).unwrap();
+publisher.put("data").source_info(SourceInfo::new(id, sn)).unwrap();
 
-/// ...
+// ...
 
 let sample = subscriber.recv_async().await.unwrap();
 if let Some(source_info) = sample.source_info() {
@@ -152,16 +152,16 @@ opts.source_info = &source_info;
 
 z_session_put(z_loan(key_expression), z_move(payload), &opts);
 
-/// Upon sample reception ...
+// Upon sample reception ...
 z_source_info_t* sample_source_info = z_sample_source_info(z_loan(sample));
 if (sample_source_info != NULL) {
     z_entity_global_id_t source_id = z_source_info_id(sample_source_info);
-    uint32_t source_sn = z_source_info_sn(sample_source_info); 
+    uint32_t source_sn = z_source_info_sn(sample_source_info);
     z_id_t zid = z_entity_global_id_zid(&source_id);
     uint32_t eid = z_entity_global_id_eid(&source_id);
     z_owned_string_t id_string;
-    z_id_to_string(&id, &id_string);
-    printf("Received sample %lu from %.*s : %lu\n", source_sn, (int)z_string_len(z_loan(id_string)), z_string_data(z_loan(id_string), eid);
+    z_id_to_string(&zid, &id_string);
+    printf("Received sample %lu from %.*s : %lu\n", source_sn, (int)z_string_len(z_loan(id_string)), z_string_data(z_loan(id_string)), eid);
     z_drop(z_move(id_string));
 }
 ```
@@ -170,7 +170,7 @@ if (sample_source_info != NULL) {
 
 **Making SHM Easier: Transport Provider Now Public**
 
-We're excited to announce that Zenoh's internal Shared Memory (SHM) Provider, used within the transport layer, is now available via public API (PR [#2221](https://github.com/eclipse-zenoh/zenoh/pull/2221)).
+We're excited to announce that Zenoh's internal Shared Memory (SHM) Provider, used within the transport layer, is now available via public API ([PR](https://github.com/eclipse-zenoh/zenoh/pull/2221)).
 
 **What does this mean for you?**
 
@@ -214,10 +214,10 @@ let session = zenoh::open(zenoh::Config::default()).await.unwrap();
 let shm_provider = session.get_shm_provider();
 assert!(shm_provider.into_option().is_none());
 
-// Wait for a few time
+// Wait a moment
 std::thread::sleep(std::time::Duration::from_millis(100));
 
-// Provider gets available
+// Provider becomes available
 let shm_provider = session.get_shm_provider();
 assert!(shm_provider.into_option().is_some());
 ```
@@ -228,7 +228,7 @@ You no longer need to manage this lifecycle yourself. Instead of instantiating y
 
 ### C Bindings for the Transport SHM Provider
 
-Following the introduction of the public Transport SHM Provider API in Rust (PR [#2221](https://github.com/eclipse-zenoh/zenoh/pull/2221)), we've extended this functionality to the C ecosystem through PR [#1132](https://github.com/eclipse-zenoh/zenoh-c/pull/1132).
+Following the introduction of the public Transport SHM Provider API in Rust ([PR](https://github.com/eclipse-zenoh/zenoh/pull/2221)), we've extended this functionality to the C ecosystem ([PR](https://github.com/eclipse-zenoh/zenoh-c/pull/1132)).
 
 #### Key Features of the C Bindings
 
@@ -313,23 +313,23 @@ if (std::holds_alternative<ShmProviderNotReadyState>(provider_state)) {
 
 ## Zenoh-Pico
 
-### Local messages optimisation
+### Local messages optimization
 
-This release features the  co-localised optimisation. PUT/DELETE, query, reply and reply-final messages whose key expressions are declared in the same session are delivered directly without going through the transport layer. This removes serialization, syscalls and network I/O for local flows which helps reduce latency, and CPU usage for in-process or single-device use cases.
+This release features a co-located optimization. PUT/DELETE, query, reply and reply-final messages whose key expressions are declared in the same session are delivered directly without going through the transport layer. This removes serialization, syscalls and network I/O for local flows which helps reduce latency and CPU usage for in-process or single-device use cases.
 
-Additionally, Zenoh-Pico now exposes a locality selector z_locality_t, to control the locality of  publications, subscriptions, etc.,  where the possible values are:
+Additionally, Zenoh-Pico now exposes a locality selector z_locality_t, to control the locality of publications, subscriptions, etc., where the possible values are:
 
 * `Z_LOCALITY_ANY` (default) — allow both session-local and remote traffic,
 * `Z_LOCALITY_SESSION_LOCAL` — stay inside the session (no network activity),
 * `Z_LOCALITY_REMOTE` — remote-only traffic (disable same-session delivery).
 
-You can configure locality via `allowed_origin` /` allowed_destination` fields in options such as `z_subscriber_options_t`, `z_publisher_options_t`, `z_put_options_t`, `z_queryable_options_t`, and querier/get options.
+You can configure locality via `allowed_origin` / `allowed_destination` fields in options such as `z_subscriber_options_t`, `z_publisher_options_t`, `z_put_options_t`, `z_queryable_options_t`, and querier/get options.
 
-**Behaviour change note:** queries can now be handled locally. In previous releases, query/reply flows relied on the transport path and there was no same-session delivery mechanism for queries, so a querier and a queryable declared in the same session would not communicate in a purely local setup. In 1.7.x, the new loopback path allows local queryables to answer local queries without any network activity.
+**Behavior change note:** queries can now be handled locally. In previous releases, query/reply flows relied on the transport path and there was no same-session delivery mechanism for queries, so a querier and a queryable declared in the same session would not communicate in a purely local setup. In 1.7.x, the new loopback path allows local queryables to answer local queries without any network activity.
 
 This feature is enabled by `Z_FEATURE_LOCAL_SUBSCRIBER` and `Z_FEATURE_LOCAL_QUERYABLE` build options.
 
-**Benchmark note:** the chart shows query throughput (msgs/s) per payload size. "Remote" is the following setup: two client sessions talking through a router (even running on the same host, AMD Ryzen 7 7840U, 64GB DDR5, Linux). "1.7.x (local)" is the new 1.7.x path: querier and queryable in the same `z_session_t` in the same process, communicating via in-process loopback. This local query scenario was not possible in previous releases, so the improvement reflects a new local path. Importantly the remote curves for 1.6.2 vs 1.7.x show no regressions in the existing remote workflow.
+**Benchmark note:** The chart shows query throughput (msgs/s) per payload size. "Remote" is the following setup: two client sessions talking through a router (even running on the same host, AMD Ryzen 7 7840U, 64GB DDR5, Linux). "1.7.x (local)" is the new 1.7.x path: querier and queryable in the same `z_session_t` in the same process, communicating via in-process loopback. This local query scenario was not possible in previous releases, so the improvement reflects a new local path. Importantly, the remote curves for 1.6.2 vs 1.7.x show no regressions in the existing remote workflow.
 
 ![Query throughput](../../img/20251211-zenoh-jiaolong/pico_local_thr.png)
 
@@ -341,7 +341,7 @@ And the following chart shows latency for the same scenarios:
 
 In multi-thread builds, Zenoh-Pico can now manage its background tasks automatically. `z_open()` can autostart the read and lease tasks (enabled by default), so most applications no longer need to call `zp_start_read_task()` / `zp_start_lease_task()` manually. This also works nicely with restarting tasks on reconnect: tasks are restarted only if they were configured to run.
 
-This behaviour is controlled via `z_open_options_t`. Users can initialise it with `z_open_options_default()` and pass it to `z_open()`. The defaults keep autostart enabled for read and lease tasks. If your application needs stricter control, you can disable autostart and continue starting/stopping tasks explicitly. There is also a separate switch to autostart the periodic scheduler task (only when periodic tasks are compiled in), so you can keep periodic work fully manual or let Zenoh-Pico manage it.
+This behavior is controlled via `z_open_options_t`. Users can initialize it with `z_open_options_default()` and pass it to `z_open()`. The defaults keep autostart enabled for read and lease tasks. If your application needs stricter control, you can disable autostart and continue starting/stopping tasks explicitly. There is also a separate switch to autostart the periodic scheduler task (only when periodic tasks are compiled in), so you can keep periodic work fully manual or let Zenoh-Pico manage it.
 
 Example:
 
