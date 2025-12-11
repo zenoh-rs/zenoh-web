@@ -13,9 +13,9 @@ This release also includes major updates to language bindings: Zenoh-TS now feat
 
 Let's dive into the highlights of this release.
 
-# Zenoh
+## Zenoh
 
-## Throughput
+### Throughput
 
 This release of Zenoh has further improved its performance by breaking the 10M msg/sec barrier, as measured on our MacBook laptops. We have almost doubled the throughput for small messages (8 bytes) since the release of 1.0.0.
 
@@ -34,7 +34,7 @@ $ cargo run --release --example z_pub_thr -- --no-multicast-scouting -e tcp/127.
 10758472.296933835 msg/s
 ```
 
-## SHM: Performance, Safety and Simplicity
+### SHM: Performance, Safety and Simplicity
 
 In this release, Zenoh's shared memory has become more performant, safer, and easier to use—both for newcomers and power users alike. Here are the important changes:
 
@@ -93,9 +93,9 @@ Following the Zenoh SHM API changes, full support for the API and example update
 * For [Zenoh-C](https://github.com/eclipse-zenoh/zenoh-c/pull/1033)
 * For [Zenoh-Cpp](https://github.com/eclipse-zenoh/zenoh-cpp/pull/537)
 
-## Configuration improvements
+### Configuration improvements
 
-### Improved configuration validation
+#### Improved configuration validation
 The following parts of the configuration are now properly validated at load time:
 
 - `access_control`
@@ -103,7 +103,7 @@ The following parts of the configuration are now properly validated at load time
 - `low_pass_filter`
 - `qos/network`
 
-### Providing a full configuration through --cfg command line argument
+#### Providing a full configuration through --cfg command line argument
 
 It is now possible to provide a full configuration through the command line with the `--cfg` argument.
 Example:
@@ -111,7 +111,7 @@ Example:
 zenohd --cfg=':{id:"aa",listen:{timeout_ms:10}}'
 ```
 
-### Optional ID in the configuration
+#### Optional ID in the configuration
 The `id` field of the configuration was a non-optional field that was automatically set up at configuration creation or at configuration load if not explicitly provided. Because of this, it was impossible to clone and reuse a configuration as-is because this would result in two configurations with the same `id`.
 This field has been made optional and the `id` is automatically generated at configuration application (not at configuration creation/load) if not explicitly provided.
 
@@ -129,12 +129,12 @@ session2 = zenoh.open(conf)
 session2.put("key/expression", "value")
 ```
 
-### DSCP link configuration support
+#### DSCP link configuration support
 Endpoints now support DSCP configuration, which can be specified in the endpoint string as follows: `"tcp/192.168.0.1:7447#dscp=0x08"`
 
 This means you can now control the type of service that your routers and switches will apply to Zenoh traffic, making it possible for them to differentiate real-time traffic.
 
-### Link weight support
+#### Link weight support
 We have added support for weighted routing graphs. In other words, you can now assign weights to any of the links in the communication graph to express routing cost. At any given point in time, the routing algorithm will choose the path with minimal cost to route data from A to B.
 
 Example:
@@ -142,7 +142,7 @@ Example:
 zenohd --cfg='routing:router:linkstate:transport_weights:[{"dst_zid": "zid1", "weight": 10}, {"dst_zid": "zid2", "weight": 42}]'
 ```
 
-## Breaking change: Reply::replier_id
+### Breaking change: Reply::replier_id
 
 The unstable `replier_id` API, which used to return a `ZenohId`, is now aligned with other `SourceInfo` implementations, returning an `EntityGlobalId` which allows it to globally identify the queryable that generated the reply in question. This is a breaking change that has been propagated to all affected APIs: Rust, C, C++, Python, Kotlin, and Java. The `replier_id` API remains marked as unstable for now.
 
@@ -154,7 +154,7 @@ if let Some(replier_id) = reply.replier_id() {
 }
 ```
 
-## QUIC Datagram support
+### QUIC Datagram support
 
 As of Zenoh 1.5.0, it is now possible to use unreliable datagrams in QUIC by setting `rel=0` in QUIC endpoints/locators. Both the initial MTU value and the MTU discovery interval are configurable via endpoint configuration:
 
@@ -166,14 +166,14 @@ Note that QUIC streamed and datagram modes are not currently compatible in Zenoh
 
 See [RFC 9221](https://datatracker.ietf.org/doc/rfc9221/) for more information on the QUIC protocol.
 
-# Advanced Pub/Sub
+## Advanced Pub/Sub
 
 You've been asking for it and we did it 🙂 The Advanced Pub/Sub API is now available in both Python and Kotlin! You can check out the implementations and examples at the following links:
 
 * Zenoh-Python: [Advanced Pub/Sub](https://github.com/eclipse-zenoh/zenoh-python/pull/537)
 * Zenoh-Kotlin: [Advanced Pub/Sub](https://github.com/eclipse-zenoh/zenoh-kotlin/pull/455)
 
-# Zenoh-TS
+## Zenoh-TS
 
 The Zenoh TypeScript API has witnessed several major improvements:
 
@@ -192,7 +192,7 @@ Feel free to use this example to interactively explore basic Zenoh functionality
 
 ![Nuxt example](../../img/20250414-zenoh-gozuryu/zenoh_ts_nuxt.png)
 
-# Zenoh-Pico
+## Zenoh-Pico
 
 ### STM32 ThreadX Support
 
@@ -218,7 +218,7 @@ With this release, we changed how logging is handled at compile time. The previo
   More details can be found [here](https://github.com/eclipse-zenoh/zenoh-pico/pull/934).
 
 
-# Installation Process Changes
+## Installation Process Changes
 
 The Debian repository is now [signed](https://github.com/eclipse-zenoh/ci/issues/316), which requires changes to the sources.list of already installed systems and downloading the public key. The [instructions](https://zenoh.io/docs/getting-started/installation/#ubuntu-or-any-debian) to install on a new system are now:
 

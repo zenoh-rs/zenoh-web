@@ -268,7 +268,7 @@ const z_loaned_shm_provider_t* provider =
 	z_shared_shm_provider_loan_as(z_loan(shared_provider));
 ```
 
-### **Transport SHM Provider in C++**
+### Transport SHM Provider in C++
 
 To reflect C API additions, similar changes were made in C++ bindings, including provider state machine and SharedShmProvider.
 

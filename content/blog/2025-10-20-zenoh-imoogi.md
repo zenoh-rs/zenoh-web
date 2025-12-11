@@ -23,11 +23,11 @@ Key highlights of this release include:
 
 Let's explore what Imoogi brings to the Zenoh ecosystem!
 
-# Zenoh
+## Zenoh
 
-## SHM Improvements
+### SHM Improvements
 
-### Typed SHM Buffers
+#### Typed SHM Buffers
 
 Zenoh 1.5 introduced a fully **generic, typed** shared-memory API. All SHM buffer traits are now generic over the data type, and a new `Typed<T, …>` wrapper provides a high-level, type-safe view over the raw SHM buffer [(PR)](https://github.com/eclipse-zenoh/zenoh/pull/2034). In other words, you can treat a shared buffer almost like a Rust struct. For example, if you have a C-compatible struct:
 
@@ -50,11 +50,11 @@ typed_buf.as_mut().x = 42;    // safe, typed access
 
 Under the hood, this enforces the correct alignment and size for `MyData`, avoiding manual casting.
 
-### Improved Allocator
+#### Improved Allocator
 
 The SHM allocator is now based on the [talc](https://crates.io/crates/talc) allocator and performs much more efficiently in real-world workload scenarios, addressing performance and fragmentation issues.
 
-### Improved Allocation Builder Ergonomics
+#### Improved Allocation Builder Ergonomics
 
 Allocation builders are now much simpler and more robust. The provider's `alloc` method is generic and accepts different layout descriptions such as `usize`, `(usize, AllocAlignment)`, and `MemoryLayout`.
 
@@ -72,7 +72,7 @@ let _shm_buf = layout.alloc().wait()?;
 
 
 
-### Buffer Layout, Resize and Safety
+#### Buffer Layout, Resize and Safety
 
 The SHM API rework also clarified *owned vs. borrowed* buffers and added dynamic operations. Notably, you can now **resize a shared buffer in place**, which wasn't previously possible. For example, after allocating a buffer you can:
 
@@ -84,7 +84,7 @@ to grow or shrink it (within its segment's limits).
 
 We also expose alignment defaults and constants (`ALIGN_N_BYTE(S)`) and have tightened lifetime management: SHM buffers now own their segment handle to ensure proper cleanup. New unchecked mutability methods (`as_mut_unchecked()`) were added for cases where you *know* a mutable borrow is safe. Overall, these API changes make working with SHM buffers more predictable and idiomatic to Rust.
 
-### Implicit SHM Optimization
+#### Implicit SHM Optimization
 
 Perhaps the most thrilling change is that Zenoh now **automatically uses shared memory for large data**. In practice, this means you don't have to do anything special: if you publish a large payload, Zenoh will "implicitly pack" it into SHM and transmit just a reference locally. For example:
 
@@ -96,7 +96,7 @@ publisher.put(large_data).await.unwrap();
 
 This implicit SHM transport applies in all modes (even when using a router), vastly improving throughput for local messages.
 
-### Precommit SHM pages
+#### Precommit SHM pages
 
 **What changed:** the SHM provider now pre-commits newly-created shared-memory buffers and locks their pages into physical RAM before handing them to consumers. Concretely, pages that previously could be allocated lazily (and thus incur a page fault on first touch) are committed and locked so the memory backing the SHM buffer is resident and won't trigger major page faults later [(PR)](https://github.com/eclipse-zenoh/zenoh/pull/2175).
 
@@ -111,9 +111,9 @@ This implicit SHM transport applies in all modes (even when using a router), vas
 * If you run on constrained or multi-tenant systems, audit your memory-locking limits (or configure Zenoh hosts where locking is required to have appropriate privileges/limits) and account for the increased resident memory.
 * Watch the SHM provider logs for locking errors during startup; the PR makes those errors visible.
 
-### SHM monitoring
+#### SHM monitoring
 
-#### TransportSession SHM indicator
+##### TransportSession SHM indicator
 
 A boolean field has been added to the `session` object of the AdminSpace report indicating whether SHM is enabled for the relevant TransportSession.
 
@@ -137,7 +137,7 @@ A boolean field has been added to the `session` object of the AdminSpace report 
 ]
 ```
 
-#### SHM related statistics
+##### SHM related statistics
 
 The statistics reports have been updated to distinguish between network messages sent and received through SHM and those sent and received through the network.
 
@@ -174,20 +174,20 @@ tx_n_msgs{media="shm"} 45
 
 Note: to enable statistics, Zenoh has to be built with the [`stats` feature](https://docs.rs/crate/zenoh/1.6.2/features).
 
-## Configuration changes
+### Configuration changes
 
 In version 1.6.x, we introduced minor modifications to the Zenoh configuration to improve its overall consistency:
 
 * The unstable `congestion_control` value "blockfirst" was renamed to "block_first".
 * The "downsampling/messages" value "push" has been deprecated and may no longer be supported in future versions. It has been replaced with "put" and "delete" values (similar to other interceptors), which allow separate control of the publishing frequency for PUT and DELETE messages.
 
-## Scalability improvements
+### Scalability improvements
 
 In version 1.6.x, we fixed a bug that was causing an infinite loop of messages across multiple processes in a peer-to-peer topology [(PR)](https://github.com/eclipse-zenoh/zenoh/pull/214). We also applied various optimizations that reduce CPU consumption for discovery message processing [(PR)](https://github.com/eclipse-zenoh/zenoh/pull/2174).
 
 Overall, these changes drastically reduced CPU consumption and significantly improved Zenoh scalability, especially in peer-to-peer scenarios and the rmw_zenoh use case.
 
-## Rust 1.75 compatibility improvement
+### Rust 1.75 compatibility improvement
 
 The **zenoh** crate is declared to be compatible with Rust 1.75. This compatibility is maintained to support ROS2 Humble users on Ubuntu 22.04 LTS, which ships with Rust 1.75 as the official package version—essential for building rmw_zenoh on that platform.
 
@@ -197,15 +197,15 @@ One possible solution would be to use pinned dependencies (e.g., `"=0.1.2"`) in 
 
 The solution is to include an additional crate, [zenoh-pinned-deps-1-75](https://crates.io/crates/zenoh-pinned-deps-1-75), which pins all failing dependencies (as of the time of release 😭) to versions compatible with Rust 1.75.
 
-## Documentation improvements
+### Documentation improvements
 
 The [Rust documentation](https://docs.rs/zenoh/latest/zenoh/) has been significantly extended. Introductory paragraphs with usage examples were added to the main page and each module. Features were documented, and functions and types were cross-linked to ensure that users would not get lost when encountering a type without knowing its purpose or how to use it.
 
 The project's [README](https://github.com/eclipse-zenoh/zenoh/blob/main/README.md) was also improved and systematized. Each component now has its own README, with the root README linking to all of them.
 
-# Zenoh-Pico
+## Zenoh-Pico
 
-## Advanced Pub/Sub
+### Advanced Pub/Sub
 
 Zenoh-Pico now includes support for the Advanced Publisher and Subscriber, bringing it in line with core Zenoh, where this functionality was first introduced in version [1.1.0](https://zenoh.io/blog/2024-12-12-zenoh-firesong-1.1.0/).
 
@@ -232,7 +232,7 @@ z_result_t res = zp_start_periodic_scheduler_task(z_loan_mut(s), NULL);
 
 Complete examples can be found at [z_advanced_pub.c](https://github.com/eclipse-zenoh/zenoh-pico/blob/main/examples/unix/c11/z_advanced_pub.c) and [z_advanced_sub.c](https://github.com/eclipse-zenoh/zenoh-pico/blob/main/examples/unix/c11/z_advanced_sub.c).
 
-## Mbed TLS Support
+### Mbed TLS Support
 
 Secure communication is essential for IoT deployments, especially when connecting devices to cloud platforms or transmitting sensitive data. With this release, Zenoh-Pico brings enterprise-grade security to constrained devices through TLS and mutual TLS (mTLS) support via Mbed TLS.
 
@@ -240,7 +240,7 @@ TLS provides encryption and server authentication, ensuring that your devices co
 
 Zenoh-Pico now supports TLS via Mbed TLS in both client and peer modes. Enable it at build time with `Z_FEATURE_LINK_TLS=1` and use `tls/<host>:<port>` locators. This feature is currently available for Unix platforms.
 
-### Certificate Validation and Security
+#### Certificate Validation and Security
 
 The TLS implementation includes robust security features:
 
@@ -248,7 +248,7 @@ The TLS implementation includes robust security features:
 * **Hostname verification**: Automatically validates the server certificate's Common Name (CN) and Subject Alternative Name (SAN) against the hostname. This can be disabled if needed via `Z_CONFIG_TLS_VERIFY_NAME_ON_CONNECT_KEY`.
 * **Mutual TLS (mTLS)**: Full support for client certificate authentication, enabled with `Z_CONFIG_TLS_ENABLE_MTLS_KEY=true`.
 
-### Configuration Options
+#### Configuration Options
 
 **For peer mode (listening)**:
 
@@ -260,7 +260,7 @@ Configure your client certificate and private key with `Z_CONFIG_TLS_CONNECT_CER
 
 All configuration options are fully documented in `docs/config.rst`.
 
-### Example Configuration
+#### Example Configuration
 
 Here's a complete example showing client-side mTLS with inline base64-encoded certificates:
 
@@ -282,11 +282,11 @@ zp_config_insert(z_loan_mut(cfg), Z_CONFIG_TLS_VERIFY_NAME_ON_CONNECT_KEY, "fals
 
 Complete working examples for publishing and subscribing over TLS can be found in `examples/unix/c11/z_pub_tls.c` and `examples/unix/c11/z_sub_tls.c`.
 
-## zp_read Optimization
+### zp_read Optimization
 
 The `zp_read` function has undergone significant optimization in this release, addressing critical performance and reliability issues that affected applications processing high message throughput. These improvements come from two complementary enhancements that transform how Zenoh-Pico handles network data.
 
-### Batch Processing for Improved Throughput
+#### Batch Processing for Improved Throughput
 
 The original `zp_read` implementation processed only a single message per call, creating a significant performance bottleneck. Applications had to repeatedly call `zp_read` to drain the network buffer, and when messages arrived faster than they could be processed one-by-one, TCP buffers would overflow, causing data corruption.
 
@@ -312,7 +312,7 @@ The implementation now efficiently processes all messages in both unicast and mu
 
 More details can be found in this [PR](https://github.com/eclipse-zenoh/zenoh-pico/pull/1004).
 
-### No-Data Notification
+#### No-Data Notification
 
 After changing `zp_read` to batch processing, applications needed a way to distinguish between successful operations that processed data and calls where no data was available. Previously, both scenarios returned `Z_OK`, making it impossible to implement efficient polling strategies or detect when the network buffer was empty.
 
@@ -341,7 +341,7 @@ if (result == Z_NO_DATA_PROCESSED) {
 
 More details can be found in this [PR](https://github.com/eclipse-zenoh/zenoh-pico/pull/1022).
 
-### Impact
+#### Impact
 
 Together, these optimizations provide:
 
@@ -357,9 +357,9 @@ These changes are particularly impactful for:
 * Event-driven applications that need efficient idle behavior.
 * Applications running on congested or unreliable networks.
 
-# Zenoh-Python
+## Zenoh-Python
 
-## Introduce SHM API
+### Introduce SHM API
 
 A shared memory API has been added to zenoh-python, allowing you to allocate and write to shared-memory segments before sending them through Zenoh.
 
@@ -381,7 +381,7 @@ sbuf[:] = payload
 session.put(sbuf)
 ```
 
-# Zenoh-C
+## Zenoh-C
 
 The SHM API has been updated to align with recent changes in the Rust API, specifically the renaming of `alloc_layout` to `precomputed_layout`. While the renamed items are deprecated, they remain accessible to facilitate a smoother migration process for developers.
 
@@ -397,9 +397,9 @@ z_owned_precomputed_layout_t precomputed_layout;
 z_shm_provider_alloc_layout_aligned(&precomputed_layout, z_loan(*provider), buf_ok_size, alignment));
 ```
 
-# Zenoh-TS
+## Zenoh-TS
 
-## Introduce Matching API
+### Introduce Matching API
 
 We added the last missing part of core Zenoh functionality - matching listener and matching status for Publisher and Querier in Zenoh-TS 1.6.x. Similarly to other languages, the new API can be used as follows:
 
@@ -420,7 +420,7 @@ let matchingListener = await publisher.matchingListener({handler: listenerCallba
 let matchingStatus = publisher.matchingStatus().await;
 ```
 
-# Plugin API Update
+## Plugin API Update
 
 Prior to 1.6.x, due to the absence of a stable ABI in Rust, it was necessary to ensure that plugins and zenohd were built with the same version of Rust, the same Zenoh version and features, and additionally that all common dependency crates of plugins and Zenoh (such as ***serde*** or ***tokio***) had the same version and contained exactly the same features. The last requirement was especially difficult to satisfy.
 
@@ -428,7 +428,7 @@ In the new version, we reworked the plugin interface, and it should no longer be
 
 The requirement for the same version of Rust and the same Zenoh version and features still remains, but the diagnostics for such mismatches have also been improved.
 
-# NuZe: Nu meets Zenoh
+## NuZe: Nu meets Zenoh
 
 Nu is the powerful scripting language underlying [Nushell](https://www.nushell.sh/). In Nu, everything is *structured* data in the form of [tables](https://www.nushell.sh/lang-guide/chapters/types/basic_types/table.html). This allows commands to pipeline in a natural, robust, and consistent way. Tables are a particularly great fit for Zenoh data: sample streams are tables where each column represents a sample property (e.g., key-expression, timestamp, encoding, etc.).
 
@@ -440,7 +440,7 @@ NuZe was conceived to facilitate testing and debugging of Zenoh applications: it
 
 NuZe currently lives in [https://github.com/ZettaScaleLabs/nu-zenoh](https://github.com/ZettaScaleLabs/nu-zenoh) and is based on [Nushell 0.106.1](https://www.nushell.sh/blog/2025-07-30-nushell_0_106_1.html) as of commit `578316b`; see the repository [README](https://github.com/ZettaScaleLabs/nu-zenoh?tab=readme-ov-file#nuze-zenoh-nu-shell) for installation and usage instructions.
 
-# Changelogs
+## Changelogs
 
 The effort behind Zenoh 1.6.x **Imoogi** has resulted in numerous bug fixes and improvements across the ecosystem. The full changelog for every Zenoh repository is available at the following links:
 
