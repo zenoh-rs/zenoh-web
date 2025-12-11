@@ -30,9 +30,9 @@ Let’s dive into the highlights of this release.
 
 These are just the highlights — Zenoh 1.3.3 comes packed with enhancements across the entire ecosystem, from core protocol upgrades to binding-specific improvements in C, C++, TypeScript, Java/Kotlin, and Zenoh-Pico. In the sections below, we’ll take a closer look at what’s new, what’s faster, and what’s now possible with **Gozuryū**.
 
-# Zenoh
+## Zenoh
 
-## Namespace prefix support
+### Namespace prefix support
 
 In the latest release we introduced the concept of session namespaces. A namespace can be viewed as a prefix that is automatically prepended to key expressions of all messages that are sent outside of the session. This includes publications, queries, replies, \ subscriber, queryable and liveliness token declarations.
 
@@ -98,7 +98,7 @@ Namespaces can be useful when one needs to avoid name collisions when running th
 
 Any string satisfying key expression constraints and not including wildcard chunks (i.e. `"*"`, `"**"`, or `"$*"`) can be used as a namespace.
 
-## Multicast TTL Configuration
+### Multicast TTL Configuration
 
 Multicast communication now supports a configurable TTL (Time-To-Live) parameter. Previously, multicast packets were restricted to a TTL of 1, preventing them from traversing routers. With this update, users can specify a TTL value when establishing a multicast connection, ensuring that traffic can reach beyond a local network. For example:
 
@@ -106,25 +106,25 @@ Multicast communication now supports a configurable TTL (Time-To-Live) parameter
 ./z_pub -m peer -l 'udp/239.1.3.37:9001#iface=myinterface;ttl=32' -k 'testkey' -p 'Hello beyond the router'
 ```
 
-## Configurable Interests Timeout
+### Configurable Interests Timeout
 
 The interests protocol timeout, previously hardcoded to 10 seconds, is now configurable via `routing.interests.timeout`. This allows users to fine-tune interest tracking behavior based on network conditions and application requirements. The default remains 10 seconds, but adjusting this parameter can help optimize message delivery in dynamic environments.
 
-## Improved Link Establishment Timeout
+### Improved Link Establishment Timeout
 
 A default timeout for new link establishment has been introduced. While link acceptance already had a 10-second timeout, establishing a new link lacked a similar safeguard. This update ensures that connections do not fail prematurely due to incorrect timeout handling, improving connection stability and retry mechanisms. Default value can be changed via `transport.unicast.open_timeout` parameter.
 
-## Advanced Pub/Sub Heartbeat
+### Advanced Pub/Sub Heartbeat
 
 Advanced Pub/Sub was introduced in [Zenoh v1.1.0](https://zenoh.io/blog/2024-12-12-zenoh-firesong-1.1.0/#advanced-pubsub) to provide end-to-end reliability even in presence of router crashes and networks reconfiguration. In the initial implementation,  when using samples sequencing,   if the last sent sample was lost and no other samples were  published, the AdvancedSubscriber would not  detect the miss. One way to address this issue was to enable periodic queries,  but those are costly.
 
 Zenoh version 1.3.3 introduces a `heartbeat` message that can optionally be sent by the AdvancedPublishers and indicates to the AdvancedSubscribers what are the available samples for recovery. This message can be sent periodically (version 1.3.0) or sporadically (only when new samples are available) with `CongestionControl::Block` to ensure its reception (version 1.3.2).
 
-## Improved locator metadata syntax
+### Improved locator metadata syntax
 
 Link locators support a priority range metadata value (i.e. `prio`) that instructs Zenoh to use the link in question to transmit messages whose priority falls within the given range. For single-value ranges, you can now write `tcp/localhost:0?prio=1` instead of `tcp/localhost:0?prio=1-1` — something that proved confusing and unnatural for users.
 
-## New Interceptors and general interceptor framework improvements
+### New Interceptors and general interceptor framework improvements
 
 In this release we introduce 2 new interceptor types:
 
@@ -140,26 +140,26 @@ In addition existing interceptor framework received some substantial improvement
 
 - All interceptor rules can now be restricted to specific link protocols (i.e. one can define rules which are only applied to TCP or TLS links for example).
 
-## Shared Memory Just Got Better
+### Shared Memory Just Got Better
 
 The shared memory subsystem, first introduced in [Zenoh v1.0.0](https://zenoh.io/blog/2024-10-21-zenoh-firesong/), continues to evolve with new improvements and optimizations aimed at performance and flexibility.
 
-### Mutation Examples in Rust, C, and C++
+#### Mutation Examples in Rust, C, and C++
 
 First up: we’ve added mutation examples for shared memory buffers in [Rust](https://github.com/eclipse-zenoh/zenoh/blob/94e917948914af093eae340ee52118b19fb1671f/examples/examples/z_sub_shm.rs#L91), [C](https://github.com/eclipse-zenoh/zenoh-c/blob/18eed6fecf2c52e8c822b3b8c77d92f620b6e120/examples/z_sub_shm.c#L50), and [C++](https://github.com/eclipse-zenoh/zenoh-cpp/blob/e3f9bfc977a72a03668537eca6f03e4bbbe130c7/examples/zenohc/z_sub_shm.cxx#L58).
 These examples extend our common `z_sub_shm` demo, adding a mutation attempt to show whether the received buffer is actually mutable. This gives developers more insight into how to handle SHM buffer mutation functionality.
 
-### Performance Boosts
+#### Performance Boosts
 
 We’ve also done a lot of under-the-hood optimization. By reducing computational complexity and memory footprint in the SHM internals, we’ve managed to boost message-per-second performance by a solid **35%**.
 
-### New Configuration Option for Initialization Behavior
+#### New Configuration Option for Initialization Behavior
 
 Previously, SHM internal resources were always initialized lazily—the first time your application touched shared memory (typically on the first buffer allocation or reception). This approach worked well for most use cases, keeping memory usage and startup time low. But it introduced a one-time latency spike that wasn’t ideal in latency-sensitive scenarios.
 
 Now, we’ve introduced a [new configuration option](https://github.com/eclipse-zenoh/zenoh/blob/94e917948914af093eae340ee52118b19fb1671f/DEFAULT_CONFIG.json5#L681) to give you control over SHM initialization behavior. You can choose between lazy or eager initialization, depending on what best fits your application.
 
-## Resources consumption improvements
+### Resources consumption improvements
 
 Some major reduction of CPU and memory consumption have been introduced that allow for better scalability.
 
@@ -173,9 +173,9 @@ Here is a graph of CPU and memory consumption running a Zenoh router and 100 ROS
 
 ![CPU and memory consumption](../../img/20250414-zenoh-gozuryu/zenoh_perf.png)
 
-# Zenoh-Pico
+## Zenoh-Pico
 
-## Add p2p unicast support
+### Add p2p unicast support
 
 In the latest release, we have introduced peer-to-peer (P2P) unicast support in Zenoh-Pico, allowing applications to establish unicast links without the need for a central router – thus far, peer-to-peer was only available in combination with the use of UDP multicast.
 
@@ -193,15 +193,15 @@ And run a few other examples as clients:
 
 `./build/examples/z_pub -m peer -e tcp/127.0.0.1:7447`
 
-## Connection restoring
+### Connection restoring
 
 When network disruptions occur, whether due to temporary connectivity issues or router restarts, Zenoh-Pico now automatically attempts to restore its connection. This new functionality, introduced under the `Z_FEATURE_AUTO_RECONNECT` flag (enabled by default), enhances reliability by detecting lost connections and seamlessly reestablishing them. Additionally, it caches declarations and restores them after reconnection, ensuring a smooth recovery without manual intervention. With this improvement, applications using Zenoh-Pico can handle transient failures more gracefully, reducing the risk of silent data loss and aligning Zenoh-Pico’s resilience more closely with Zenoh. For memory-constrained environments, the feature can be disabled to optimize resource usage.
 
-## Querier
+### Querier
 
 Zenoh-Pico now supports queriers, bringing query-side optimizations similar to those available for publishers. Just as publishers enable Zenoh to optimize continuous data dissemination, queriers allow for efficient, stateful querying with features like write-side filtering and matching status. This addition enhances Zenoh-Pico’s ability to interact with distributed systems while maintaining minimal resource usage.
 
-### Declaring a Querier
+#### Declaring a Querier
 
 A querier can be declared on a specific key expression, allowing queries to be issued dynamically:
 
@@ -213,7 +213,7 @@ if (z_declare_querier(z_loan(s), &querier, z_loan(keyexpr), NULL) < 0) {
 }
 ```
 
-### Sending a Query
+#### Sending a Query
 
 Once declared, a querier can retrieve data from matching queryables in the system. Replies are handled asynchronously through a callback:
 
@@ -236,7 +236,7 @@ z_closure(&callback, reply_handler, NULL, NULL);
 z_querier_get(z_loan(querier), params, z_move(closure), NULL);
 ```
 
-### Cleaning Up
+#### Cleaning Up
 
 When no longer needed, the querier should be undeclared to release resources:
 
@@ -246,7 +246,7 @@ z_drop(z_move(querier));
 
 A full example as well as working with the channel can be found [there](https://github.com/eclipse-zenoh/zenoh-pico/blob/main/examples/unix/c11/z_querier.c).
 
-## Matching listeners
+### Matching listeners
 
 Zenoh-Pico now supports matching listeners, allowing publishers and queriers to detect when there are active subscribers or queriable matching their key expression. This feature provides applications with greater awareness of their communication state, optimizing resource usage and enabling more responsive behavior. The same functionality is also available in Zenoh-Cpp, ensuring consistency across implementations.
 
@@ -269,13 +269,13 @@ z_publisher_declare_background_matching_listener(z_loan(pub), z_move(callback));
 
 Alternatively, for more control, `z_publisher_declare_matching_listener` can be used, which allows explicit management of the listener's lifecycle.
 
-## "Take from loaned" operation for callbacks
+### "Take from loaned" operation for callbacks
 
 See the same-named section for Zenoh-C, the Zenoh-Pico API was updated in the same way.
 
-# Zenoh-C
+## Zenoh-C
 
-## Advanced Pub Sub
+### Advanced Pub Sub
 
 We are happy to share that Zenoh-C now supports [Advanced Pub/Sub API]([https://zenoh.io/blog/2024-12-12-zenoh-firesong-1.1.0/#advanced-pubsub](https://zenoh.io/blog/2024-12-12-zenoh-firesong-1.1.0/#advanced-pubsub)) introduced in Zenoh 1.1.0.
 
@@ -374,7 +374,7 @@ Complete examples can be found at [z_advanced_pub.c](https://github.com/eclipse-
 
 **ze_querying_subscriber** and **ze_publication_cache** APIs are now marked as deprecated.
 
-## "Take from loaned" operation for callbacks
+### "Take from loaned" operation for callbacks
 
 The Zenoh-C API makes a strong distinction between "moved" and "loaned" arguments of functions inspired by Rust and introduced to increase code safety. Assume that we define the structure
 
@@ -417,7 +417,7 @@ if (z_declare_subscriber(z_loan(session), &sub, z_loan(keyexpr), z_move(callback
 
 It’s important to notice that the `z_take_from_loaned` function breaks the condition *"function, accepting z_loaned_foo_t* type guarantees that "foo" is valid after the call"* . That’s why this operation is reserved to be used only by developers and it’s strongly discouraged to use it outside of callbacks. The functions of Zenoh-C API itself never perform this operation.
 
-## Other API improvements
+### Other API improvements
 
 We introduced the `z_bytes_get_contiguous_view` function  allowing to get a view (i.e. a pointer and length) of the payload bytes, for contiguous payloads. This function will return an error if payload is not contiguous (most likely due to fragmentation if payload size is too big) - in this case to access payload data without copy one can continue to use either **z_bytes_reader** API or **z_bytes_slice_iterator** API.
 
@@ -432,9 +432,9 @@ if (z_bytes_get_contiguous_view(z_loan(payload), &view) == Z_OK) {
 }
 ```
 
-# Zenoh-Cpp
+## Zenoh-Cpp
 
-## Advanced Pub Sub
+### Advanced Pub Sub
 
 [Advanced Pub/Sub API](https://zenoh.io/blog/2024-12-12-zenoh-firesong-1.1.0/#advanced-pubsub) introduced in Zenoh 1.1.0 is now also available in Zenoh-Cpp, but for the time being only with **Zenoh-C** backend:
 
@@ -501,7 +501,7 @@ Complete examples can be found at [z_advanced_pub.cpp](https://github.com/eclips
 
 **ext::QueryingSubscriber** and **ext::PublicationCache** APIs are now marked as deprecated.
 
-## Custom deleter for external buffer
+### Custom deleter for external buffer
 
 Sometimes it’s necessary to send a large amount of data, which can be inefficient to copy. However, the exact moment when Zenoh deletes the `Buffer` object is unknown: after being sent, the buffer is queued and only deleted once it has actually been transmitted.
 
@@ -519,7 +519,7 @@ Bytes bytes(ptr, 10, deleter);
 session.put("foo/bar", std::move(bytes));
 ```
 
-## Other API improvements
+### Other API improvements
 
 We introduced `Bytes::get_contiguous_view()` method  allowing to get a view (i.e. a pointer and length) of the payload bytes, for contiguous payloads. This function will return an empty `std::optional` if payload is not contiguous (most likely due to fragmentation, if payload size is too big) - in this case to access payload data without copy one can continue to use either **Bytes::Reader** or **Bytes::SliceIterator**.
 
@@ -534,9 +534,9 @@ if (view.has_value()) {
 }
 ```
 
-# Zenoh-Python
+## Zenoh-Python
 
-## Query context manager
+### Query context manager
 
 When using queryable with a channel handler, query objects need to be finalized in order to acknowledge the query response on the querier side. The proper way to do this in Python is by using a context manager, that’s why Query objects can now be used as context managers.
 
@@ -552,9 +552,9 @@ with zenoh.open(conf) as session:
            # do something with query
 ```
 
-# Zenoh-TS
+## Zenoh-TS
 
-## API Polish and alignments
+### API Polish and alignments
 
 In version 1.3.3 we have made some upgrades to the inner workings of the Typescript API, specifically we have added a **KeyExpr** API based on the Rust Zenoh-KeyExpr library, compiling a subset of the KeyExpr library to WASM. This is a first step on the path of integration and code reuse between main Zenoh and Zenoh typescript binding.
 
@@ -598,15 +598,15 @@ let payload = zserialize(input, ZS.map(ZS.bigint(BigIntFormat.Uint64), ZS.string
 let output = zdeserialize(ZD.map(ZD.bigint(BigIntFormat.Uint64), ZD.string()), payload)
 ```
 
-## Example chat application
+### Example chat application
 
 An example browser application demonstrating the key parts of Zenoh Typescript API functionality was added. This is a multiuser chat application which sends/receives chat messages using **pub/sub** API, allows to restore chat history for new connected users using **queryable/get** API and shows list of online users using **liveliness** API.
 
 See ["Build and run examples"](https://github.com/eclipse-zenoh/zenoh-ts?tab=readme-ov-file#build-and-run-examples) section in the github readme for instructions how to run this example
 
-# Zenoh-Java / Zenoh-Kotlin
+## Zenoh-Java / Zenoh-Kotlin
 
-## API Polish and alignments
+### API Polish and alignments
 
 For this release we have mostly worked on Zenoh-Java on aligning the API whose migration guide is now available on [https://zenoh.io/docs/migration_1.0/java/](https://zenoh.io/docs/migration_1.0/java/). We now provide the same features as on the other bindings.
 
@@ -622,7 +622,7 @@ Regarding architectures, we’ve now added support for the aarch64 architecture 
 
 On both Zenoh-Kotlin and Zenoh-Java we have provided a further utility to run the examples, by allowing users to now build them as executable fat JARs.
 
-## Maven Publications
+### Maven Publications
 
 A big improvement was achieved with regards to the packages publication of these libraries which is that we are now publishing to Maven Central! Checkout
 
