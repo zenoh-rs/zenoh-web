@@ -4,7 +4,7 @@ date: 2025-12-11
 menu: "blog"
 weight: 20251211
 description: "11th December, 2025 -- Paris."
-draft: false
+draft: true 
 ---
 
 We are happy to announce the release of Zenoh 1.7.x **Jiāolóng**
