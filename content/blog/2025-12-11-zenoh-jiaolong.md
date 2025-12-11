@@ -11,9 +11,9 @@ We are happy to announce the release of Zenoh 1.7.x **Jiāolóng**
 
 Named after the Chinese flood dragon, Jiāolóng represents transformation and the mastery of powerful forces. Like its namesake navigating between realms, this release bridges the gap between simplicity and power, bringing sophisticated capabilities within easy reach of developers across all platforms.
 
-This release focuses on developer productivity and system reliability with powerful new APIs and optimizations across the Zenoh ecosystem. Query cancellation arrives across all language bindings, giving developers fine-grained control over long-running operations. Zenoh-Pico introduces local message optimization with zero-copy loopback paths and automatic task management, making embedded development simpler and more efficient. The shared memory subsystem becomes even more accessible with the transport SHM provider now available through public APIs in Rust, C, and C++.
+This release focuses on developer productivity and system reliability with powerful new APIs and optimizations across the Zenoh ecosystem. Query cancellation arrives across all language bindings, giving developers fine-grained control over long-running operations. Zenoh-Pico introduces zero-copy co-localization optimization and automatic task management, making embedded development simpler and more efficient. The shared memory subsystem becomes even more accessible with the transport SHM provider now available through public APIs in Rust, C, and C++.
 
-On the plugin front, the DDS bridge adds full DDS Security support for authenticated and encrypted communication, while the Wireshark dissector has been updated for Wireshark 4.6 compatibility. API refinements across the board — including the improved SourceInfo API and locality configuration — make Zenoh 1.7.x more consistent and easier to use.
+On the plugin front, the DDS bridge adds DDS-Security support for authenticated and encrypted communication, while the Wireshark dissector has been updated for Wireshark 4.6 compatibility. API refinements across the board — including the improved SourceInfo API and locality configuration — make Zenoh 1.7.x more consistent and easier to use.
 
 Key highlights of this release include:
 
@@ -29,9 +29,9 @@ Let's break down the enhancements in Jiāolóng!
 
 ## Query cancellation
 
-We introduced cancellation tokens that allow interrupting ongoing get queries.
+We introduced cancellation tokens that allow interrupting ongoing queries -- get operations.
 
-Cancelling a token unregisters the associated get query callback, and if the callback is currently being executed, the cancel operation blocks until execution terminates. Thus, after cancel returns, it is guaranteed that the callback will no longer be called. 
+Cancelling a token unregisters the associated query callback. If the callback is currently being executed, the cancel operation will blocks until execution terminates. Thus, after cancel returns, it is guaranteed that the callback will no longer be called. 
 
 Here's a simple example that cancels a query after a 5-second delay:
 
@@ -123,7 +123,7 @@ try {
 
 ## Source info API change
 
-We slightly altered the `SourceInfo` API. Now both source id and sequence number need to be specified to construct a `SourceInfo` struct (since specifying only one does not make much sense in a distributed system). In addition `Sample::source_info` and `Query::source_info` getters return an `Option<SourceInfo>` which contains a `None` value if it was not set by the sender side.
+The `SourceInfo` API went through some changes. Now both source id and sequence number need to be specified to construct a `SourceInfo` struct. In addition `Sample::source_info` and `Query::source_info` getters return an `Option<SourceInfo>` which contains a `None` value if it was not set by the sender side.
 
 ```rust
 let publisher = session1.declare_publisher("key/expression").await.unwrap();
@@ -390,4 +390,3 @@ You can reach us on [Zenoh's Discord server](https://discord.com/invite/vSDSpqnb
 Like the Jiāolóng commanding the flow of data streams, may your systems flow effortlessly and powerfully,
 
 **– The Zenoh Team**
-
