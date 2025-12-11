@@ -4,7 +4,7 @@ date: 2025-12-11
 menu: "blog"
 weight: 20251211
 description: "11th December, 2025 -- Paris."
-draft: true 
+draft: false 
 ---
 
 We are happy to announce the release of Zenoh 1.7.x **Jiāolóng**
@@ -170,7 +170,7 @@ if (sample_source_info != NULL) {
 
 **Making SHM Easier: Transport Provider Now Public**
 
-We're excited to announce that Zenoh's internal Shared Memory (SHM) Provider, used within the transport layer, is now available via public API ([PR](https://github.com/eclipse-zenoh/zenoh/pull/2221)).
+Zenoh's internal Shared Memory (SHM) Provider, used within the transport layer, is now available via public API ([PR](https://github.com/eclipse-zenoh/zenoh/pull/2221)).
 
 **What does this mean for you?**
 
@@ -315,7 +315,7 @@ if (std::holds_alternative<ShmProviderNotReadyState>(provider_state)) {
 
 ### Local messages optimization
 
-This release features a co-located optimization. PUT/DELETE, query, reply and reply-final messages whose key expressions are declared in the same session are delivered directly without going through the transport layer. This removes serialization, syscalls and network I/O for local flows which helps reduce latency and CPU usage for in-process or single-device use cases.
+This release features a co-locazation optimization. PUT/DELETE, query, reply and reply-final messages whose key expressions are declared in the same session are delivered directly without going through the transport layer. This removes serialization, syscalls and network I/O for local flows which helps reduce latency and CPU usage for in-process or single-device use cases. More importantly this all happens with zero-copies.
 
 Additionally, Zenoh-Pico now exposes a locality selector z_locality_t, to control the locality of publications, subscriptions, etc., where the possible values are:
 
