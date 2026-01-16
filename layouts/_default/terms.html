@@ -1,0 +1,28 @@
+{{ partial "header" . }}
+
+<header class="d-flex flex-column flex-md-row align-items-md-center bg-light ato-lead">
+  <div class="container p-3 p-md-5">
+    <h1 class="ato-title mt-0">{{ .Title }}</h1>
+    {{ with .Description }}
+    <p>{{ . }}</p>
+    {{ end }}
+  </div>
+</header>
+
+<main class="container p-3 p-md-5">
+  {{ .Content }}
+  
+  {{ if .Data.Terms }}
+  <div class="taxonomy-terms">
+    <ul>
+    {{ range .Data.Terms.Alphabetical }}
+      <li>
+        <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> ({{ .Count }})
+      </li>
+    {{ end }}
+    </ul>
+  </div>
+  {{ end }}
+</main>
+
+{{ partial "footer" . }}
