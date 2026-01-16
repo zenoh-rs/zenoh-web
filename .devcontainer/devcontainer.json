@@ -1,0 +1,36 @@
+{
+	"name": "Zenoh Web Documentation",
+	"build": {
+		"dockerfile": "../docker/Dockerfile",
+		"args": {
+			"user": "vscode",
+			"uid": "1000"
+		}
+	},
+	"workspaceMount": "source=${localWorkspaceFolder},target=/src,type=bind",
+	"workspaceFolder": "/src",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {}
+	},
+	"forwardPorts": [1313],
+	"portsAttributes": {
+		"1313": {
+			"label": "Hugo Server",
+			"onAutoForward": "notify"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ritwickdey.LiveServer",
+				"budparr.language-hugo-vscode",
+				"davidanson.vscode-markdownlint"
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "bash"
+			}
+		}
+	},
+	"postCreateCommand": "hugo version",
+	"remoteUser": "vscode"
+}
