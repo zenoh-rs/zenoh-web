@@ -1,115 +1,736 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</title><link>/</link><description>Recent content on Zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 11 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Zenoh Slides, Videos, Papers and More</title><link>/media/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/media/</guid><description>Papers Zenoh: Unifying Communication, Storage and Computation from the Cloud to the Microcontroller Reports ROS 2 RWM Alternate Slides Zenoh Speakerdeck Video Playlists Advanced Zenoh Tutorial Playlist Zenoh User Meeting 2024 Zenoh User Meeting 2023 Zenoh in Robotics Zenoh in Automotive</description></item><item><title>What is Zenoh?</title><link>/docs/overview/what-is-zenoh/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/overview/what-is-zenoh/</guid><description>Zenoh is the Next Big Thing in Internet Computing. You may think this is a bold statement, but hopefully after this short read you&amp;rsquo;ll share the perspective.
-Technically speaking, Zenoh is a pub/sub/query protocol that unifies data in motion, data at rest and computations. That said, one way of thinking about Zenoh is to imagine it as a data liberator protocol. Zenoh liberates data in several dimensions.
-Cloud to the Microcontroller Communication.</description></item><item><title>Zenoh in action</title><link>/docs/overview/zenoh-in-action/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/overview/zenoh-in-action/</guid><description>Let us now look into a sample scenario of Zenoh working. Zenoh supports two paradigms of communication - publish-subscribe and queries.
-Pub/Sub in Zenoh Query in Zenoh Pub/Sub in Zenoh This animation shows a basic pub/sub in action. The subscribers connected to the system receive the values sent by the publishers routed efficicently through the Zenoh network. You can also observe the presence of a sleeping subscriber connected to the network.</description></item><item><title>Your first Zenoh app</title><link>/docs/getting-started/first-app/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/first-app/</guid><description>Let us take a step-by-step approach in putting together your first Zenoh application in Python. As the first step, let us see how we get some data from a temperature sensor in our kitchen. Then we see how we can route this data to store and perform some analytics.
-Before cranking some code, let&amp;rsquo;s define some terminology.
-Zenoh deals with keys/values where each key is a path and is associated to a value.</description></item><item><title>Installation</title><link>/docs/getting-started/installation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/installation/</guid><description>To start playing with Zenoh we need the Zenoh router and/or the Zenoh client library.
-Installing client library To develop your application Zenoh, you need to install a Zenoh client library. Depending on your programming language, pick one of the following API and refer to the installation and usage instructions in here:
-Rust API Python API C API Pico API: A port of Zenoh in C, targeted at low-power devices.</description></item><item><title>Deployment</title><link>/docs/getting-started/deployment/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/deployment/</guid><description>Overview Peer to peer By default Zenoh applications are configured to communicate peer to peer (peer mode). All applications in the local network directly communicate with each other.
-Configuration
-{ mode: &amp;#34;peer&amp;#34;, } Scouting Zenoh applications in peer mode run both multicast and gossip scouting to discover other applications or Zenoh routers and connect them.
-Multicast scouting
-Zenoh applications in peer mode join multicast group 224.0.0.224 on UDP port 7446 and send scout messages on this address to discover local applications and routers.</description></item><item><title>For a quick test using Docker</title><link>/docs/getting-started/quick-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/quick-test/</guid><description>This page describe how to perform a quick test of Zenoh, using a Docker image.
-Run Zenoh router in a Docker container The Zenoh router is also available in a Docker image. You can deploy a single instance on your local host just running:
-docker run --init -p 7447:7447/tcp -p 8000:8000/tcp eclipse/zenoh The ports used by Zenoh are the following:
-7447/tcp : the Zenoh protocol via TCP 8000/tcp : the Zenoh REST API ⚠️ WARNING ⚠️: Docker doesn&amp;rsquo;t support UDP multicast between a container and its host (see cases moby/moby#23659, moby/libnetwork#2397 or moby/libnetwork#552).</description></item><item><title>Troubleshooting</title><link>/docs/getting-started/troubleshooting/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/troubleshooting/</guid><description>Activate logging Activating the Zenoh logging can provide useful information for any troubleshooting. The Zenoh router (zenohd) and all the Zenoh APIs (except zenoh-pico) are developed with a Rust code base. Logging is controlled via the RUST_LOG environment variable that can typically be defined with the desired logging level amongst:
-error - this is the default level if RUST_LOG is not defined warn info debug trace off - to disable all logging More advanced logging directives can be defined via the RUST_LOG.</description></item><item><title>Abstractions</title><link>/docs/manual/abstractions/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/abstractions/</guid><description>Zenoh is a distributed service to define, manage and operate on key/value spaces.
-The main abstractions at the core of Zenoh are the following:
-Key Zenoh operates on key/value pairs. The most important thing to know about Zenoh keys is that / is the hierarchical separator, just like in unix filesystems. While you could set up your own hierarchy using other separators, your Zenoh exchanges would benefit from better performance using /, as it will let Zenoh do clever optimisations (users have informed us in the past that switching from .</description></item><item><title>Configuration</title><link>/docs/manual/configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/configuration/</guid><description>From version 0.6 of Zenoh, configuration has changed in major ways. This page will take you through the new behaviour of configuration, whether you&amp;rsquo;re using Zenoh as a library, or as an executable through zenohd.
-Configuring zenohd There are 3 ways to configure zenohd, which may be used in any combination:
-using a configuration file, through the command line arguments, and by putting values on the configuration through the adminspace. Configuration files zenohd has supported configuration files for a long time now, but with version 0.</description></item><item><title>Zenoh plugins</title><link>/docs/manual/plugins/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugins/</guid><description>The Zenoh router (zenohd executable) supports the loading of plugins at start-up, or at runtime if write permission is configured on its admin space.
-A Zenoh plugin is a library that can be loaded by the Zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular Zenoh rust APIs with the same peer ID.
-Zenoh already provides the following plugins in its default repository:</description></item><item><title>REST plugin</title><link>/docs/manual/plugin-http/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-http/</guid><description>The REST plugin provides access to the Zenoh REST API by enabling an HTTP server on the Zenoh node where it is running.
-Library name: zplugin_rest
-There are two main ways to start this plugin:
-Through startup arguments: zenohd&amp;rsquo;s --rest-http-port=[PORT | IP:PORT | none] argument allows you to choose which port will be listened to by the HTTP server. Note that the default value for this argument is 8000, meaning that unless you specify none explicitly, zenohd will use this plugin by default.</description></item><item><title>Storage manager plugin</title><link>/docs/manual/plugin-storage-manager/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-storage-manager/</guid><description>The storage_manager plugin provides zenohd with the ability to store values associated with a set of keys, allowing other nodes to query the most recent values associated with these keys.
-Library name: zplugin_storage_manager
-Backends and Volumes Since there exist many ways for a Zenoh node to store values it may need to serve later, the storage manager plugin relies on dynamically loaded &amp;ldquo;backends&amp;rdquo; to provide this functionality. Typically, a backend will leverage some third-party technology, such as databases, to handle storage.</description></item><item><title>TLS authentication</title><link>/docs/manual/tls/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/tls/</guid><description>Zenoh supports TLS as a transport protocol. TLS can be configured in two ways:
-server side authentication: clients validate the server TLS certificate but not the other way around, that is, the same way of operating on the web where the web browsers validate the identity of the server via means of the TLS certificate.
-mutual authentication (mTLS): where both server-side and client-side authentication is required.
-The configuration of TLS certificates is done via a configuration file.</description></item><item><title>QUIC transport</title><link>/docs/manual/quic/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/quic/</guid><description>Zenoh supports QUIC as a transport protocol.
-As you may already know, QUIC is a UDP-based, stream-multiplexing, encrypted transport protocol. It natively embeds TLS for encryption, authentication and confidentiality.
-As of today, the only supported TLS authentication mode in Zenoh is server-authentication 1: clients validate the server TLS certificate but not the other way around. That is, the same way of operating on the web where the web browsers validate the identity of the server via means of the TLS certificate.</description></item><item><title>User-Password authentication</title><link>/docs/manual/user-password/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/user-password/</guid><description>Zenoh supports basic user-password authentication. Clients and peers can use user and password for authentication against a router or a peer. Similarly, peers and routers can use user and password for authentication among themselves. The configuration of credentials is done via a configuration file.
-Client configuration The required configuration fields for a client would hence be:
-{ /// The node&amp;#39;s mode (router, peer or client) mode: &amp;#34;client&amp;#34;, transport: { auth: { /// The configuration of authentication.</description></item><item><title>Access Control</title><link>/docs/manual/access-control/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/access-control/</guid><description>NOTE: This documentation covers the Zenoh 1.0 ACL config. For Zenoh 0.11 ACL config, please refer to the Zenoh 0.11 Access Control Rules RFC
-Access control enables Zenoh instances to filter (allow or deny) messages, depending on certain characteristics of individual messages and their respective source or destination. Authentication on the other hand allows Zenoh instances to identify certain characteristics in other instances they connect to, which are used to match the remote instances with configured subjects in the ACL policies and apply the rules accordingly on the exhanged messages.</description></item><item><title>Rust API</title><link>/docs/apis/rust/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/rust/</guid><description> The Rust API documentation is available on docs.rs.</description></item><item><title>C API</title><link>/docs/apis/c/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/c/</guid><description> The C API documentation is available on Read the Docs.</description></item><item><title>Pico API</title><link>/docs/apis/pico/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/pico/</guid><description> The Pico API documentation is available on Read the Docs.</description></item><item><title>C++ API</title><link>/docs/apis/cpp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/cpp/</guid><description> The C++ API documentation is available on Read the Docs.</description></item><item><title>Python API</title><link>/docs/apis/python/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/python/</guid><description> The Python API documentation is available on Read the Docs.</description></item><item><title>REST API</title><link>/docs/apis/rest/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/rest/</guid><description>Zenoh also offers a REST API via the zenoh-rest plugin. When starting Zenoh with default options, this REST plugin is automatically started on port 8000 and ready to answer HTTP requests.
-The full Zenoh key/value space is accessible via this REST API, including the Admin Space under the '@'prefix.
-GET Binds to the get(selector) operation on Zenoh.
-URL: http://host:8000/&amp;lt;selector&amp;gt; body: none headers: none The results are returned as a JSON array of objects containing &amp;quot;key&amp;quot;, &amp;quot;value&amp;quot;and &amp;quot;time&amp;quot;.</description></item><item><title>Kotlin API</title><link>/docs/apis/kotlin/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/kotlin/</guid><description> The Kotlin API documentation is available on https://eclipse-zenoh.github.io/zenoh-kotlin.</description></item><item><title>Migrating from Zenoh v0.5.x to Zenoh v0.6.x</title><link>/docs/migration_0.5_to_0.6/migrationguide-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-v0.5.x-v0.6.x/</guid><description>Key expressions Some key expressions are now considered invalid:
-Heading slashes are forbidden. Example: &amp;quot;/key/expression&amp;quot;. Trailing slashes are forbidden. Example: &amp;quot;key/expression/&amp;quot;. Empty chunks are forbidden. Example: &amp;quot;key//expression&amp;quot;. An error will be returned when trying to use such invalid key expressions.
-APIs In zenoh version 0.6.0, zenoh and zenoh-net APIs have been merged into a single API.
-Configuration In v0.5.x the Zenoh configuration was a list of key/value pairs. In v0.6.x the has a structured format which can be expressed in JSON, JSON5 or YAML.</description></item><item><title>Migrating from Zenoh v0.5.x Rust API to Zenoh v0.6.x Rust API</title><link>/docs/migration_0.5_to_0.6/migrationguide-rust-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-rust-v0.5.x-v0.6.x/</guid><description>In zenoh version 0.6.0, zenoh and zenoh-net APIs have been merged into a single API.
-General considerations about the new Rust v0.6.x zenoh API Resolvables Most of the operations of the new API return builder structs that implement the Resolvable, SyncResolve and AsyncResolve traits. A res function needs to be called on those builders to obtain the final result of the operation. When using Rust sync, the SyncResolve trait needs to be used and the res function directly returns the final result.</description></item><item><title>Migrating from Zenoh-C v0.5.x zenoh-net API to Zenoh-C v0.6.x zenoh API</title><link>/docs/migration_0.5_to_0.6/migrationguide-c-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-c-v0.5.x-v0.6.x/</guid><description>Opening a session All types and operations from the zn_* primitives have been updated and migrated to the z_* primitives.
-zenoh v0.5.x
-zn_properties_t *config = zn_config_default(); zn_session_t *s = zn_open(config); if (s == NULL) { printf(&amp;#34;Unable to open session!\n&amp;#34;); exit(-1); } zenoh v0.6.x
-z_owned_config_t config = z_config_default(); z_owned_session_t s = z_open(z_move(config)); if (!z_check(s)) { printf(&amp;#34;Unable to open session!\n&amp;#34;); exit(-1); } Subscribing For this release, Zenoh-C only supports subscribers with callbacks. It is possible to access samples through a callback by calling the callback function passed as argument on declare_subscriber function.</description></item><item><title>Migrating from Zenoh v0.5.x Python API to Zenoh v0.6.x Python API</title><link>/docs/migration_0.5_to_0.6/migrationguide-python-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-python-v0.5.x-v0.6.x/</guid><description>Explorability In previous releases, the Python bindings were entirely defined in Rust, making it very hard for Pythoners to explore it.
-With 0.6, the bindings have evolved: a &amp;ldquo;private&amp;rdquo; layer is exposed by Rust, and wrapped in Python, with 2 main advantages:
-IDEs can now find available symbols, signatures and documentation more easily. Any dynamic type handling is done in Python, letting you investigate what happens depending on the types of values you pass more easily.</description></item><item><title>Migrating from Zenoh-Pico v0.5.x to Zenoh-Pico v0.6.x</title><link>/docs/migration_0.5_to_0.6/migrationguide-pico-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-pico-v0.5.x-v0.6.x/</guid><description>General considerations about the new Zenoh-Pico v0.6.x API Ownership model The new Zenoh-Pico API, similarly to the Zenoh-C API, introduced a more explicit ownership model to the user. Such model targets a better memory management where e.g. memory leaks can be easily identified and double free can be avoided. The user will have a clear understanding on what is owned by his side of the code, and what has been loaned or moved to the API.</description></item><item><title>Migrating from Zenoh-C to Zenoh-Pico (and vice-versa)</title><link>/docs/migration_0.5_to_0.6/migrationguide-zenohc-zenohpico/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-zenohc-zenohpico/</guid><description>Both Zenoh-C and Zenoh-Pico APIs offer a C client API for the zenoh protocol, thus this release took an extra step to make Zenoh-C code to be compatible with Zenoh-Pico code (and vice-versa). Such approach aids users to easily migrate its Zenoh-based code to microcontrollers and embedded systems.
-Nevertheless, in order to keep your code optimal some minor changes might be required while moving from Zenoh-C to Zenoh-Pico:
-zc_* refers to Zenoh-C API only, while zp_* refers to Zenoh-Pico API only.</description></item><item><title>Concepts</title><link>/docs/migration_1.0/concepts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/concepts/</guid><description>The Zenoh team have been hard at work preparing an official version 1.0.0 of Zenoh!
-This major release comes with several API changes, quality of life improvements and developer conveniences.
-We now have a more stable API and intend to keep backward compatibility in future Zenoh revisions.
-This guide is here to ease the transition to Zenoh 1.0.0 for our users!
-Value is gone, long live ZBytes We have replaced Value with ZBytes and Encoding.</description></item><item><title>Rust</title><link>/docs/migration_1.0/rust/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/rust/</guid><description>Module reorganization We reorganized the module tree, so import paths are not the same as before. The main difference is that everything should be imported via the root path zenoh::. Here are some examples, but you can look into zenoh/src/lib.rs for the complete list of changes.
-// common use use zenoh::config::*; use zenoh::{Config, Error, Result}; // key_expr &amp;amp; selector use zenoh::key_expr::{ format::{kedefine, keformat}, keyexpr, KeyExpr, OwnedKeyExpr, }; // session use zenoh::session::{init, open, EntityId, Session, SessionInfo}; // publisher &amp;amp; subscriber use zenoh::pubsub::{Publisher, Reliability, Subscriber}; // query &amp;amp; queryable &amp;amp; selectors use zenoh::query::{ ConsolidationMode, Parameters, Query, QueryConsolidation, QueryTarget, Queryable, Reply, Selector, }; // ZBytes &amp;amp; encoding use zenoh::bytes::{ZBytes, Encoding}; // sample use zenoh::sample::{Locality, Sample}; // quality of service use zenoh::qos::{CongestionControl, Priority, QoSBuilderTrait}; Removal of the sync and async preludes Zenoh preludes has been deprecated and are no more used in the API.</description></item><item><title>C++</title><link>/docs/migration_1.0/c++/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/c++/</guid><description>Zenoh 1.0.0 brings a number of changes to the API, with a concentrated effort to bring the C++ API to more closely resemble the Rust API in usage.
-The improvements we bring in this update include:
-A simpler organization of the Zenoh classes, abstracting away the notion of View and Closure. Improved and more flexible Error Handling through error codes and exceptions. Support for serialization of common types like strings, numbers, vectors through Codecs.</description></item><item><title>C / Pico</title><link>/docs/migration_1.0/c_pico/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/c_pico/</guid><description>General API changes We have reworked the type naming to clarify how types should be interacted with.
-Owned types Owned types are allocated by the user and it is their responsibility to drop them using z_drop (or z_close for sessions).
-Previously, we were returning Zenoh structures by value. In Zenoh 1.0.0, a reference to memory must be provided. This allows initializing user allocated structures and frees return value for error codes.</description></item><item><title>Python</title><link>/docs/migration_1.0/python/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/python/</guid><description>Highlights The library has been fully rewritten to use only Rust. It should make no difference for users, except for a significant performance improvement.
-The API has also been reworked to feel more pythonic, using notably context managers.
-Context managers and background callbacks You should close the zenoh session after use and the recommended way is through context manager:
-import zenoh with zenoh.open(zenoh.Config()) as session: # `session.close()` will be called at the end of the block Session-managed objects like subscribers or queryables can also be managed using context managers:</description></item><item><title>Java</title><link>/docs/migration_1.0/java/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/java/</guid><description>Java API migration guide for 1.0.0 The API has been extensively modified with the following goals in mind:
-Match the API rework done through the Rust Zenoh API. Abstracting users from the underlying native mechanisms. Making the API more idiomatic, more &amp;ldquo;imperative&amp;rdquo;. Remotion of the builder patterns and options parameters Throughout the 0.11.0 API, we were exposing builders, for instance:
-session.put(keyExpr, value) .congestionControl(CongestionControl.BLOCK) .priority(Priority.REALTIME) .res() This seemed odd, because &amp;ldquo;put&amp;rdquo; is an imperative statement.</description></item><item><title>Kotlin</title><link>/docs/migration_1.0/kotlin/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/kotlin/</guid><description>Kotlin API migration guide for 1.0.0 The API has been extensively modified with the following goals in mind:
-Enhancing the API to be more idiomatic to Kotlin. Match the API rework done through the Rust Zenoh API. Abstracting users from the underlying native mechanisms Default arguments Throughout the 0.11.0 API we were exposing builders, however we decided to replace all of them with the more Kotlin-idiomatic way of the default arguments.</description></item><item><title>A Year Full of Zenoh</title><link>/blog/2020-01-01-zenohtude/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>/blog/2020-01-01-zenohtude/</guid><description>First of all we would like to take a moment to wish all of you a 2020 filled with joy, health, peace and success.
-This year marks a very important landmark for us. After having kicked-off the Eclipse Edge Native working group, last December, we are bringing zenoh to Eclipse and are starting to work a Rust rewrite of the zenoh router. As part for the rewrite we have just about to complete a review of the zenoh protocol and will be updating the specification accordingly in the weeks to come.</description></item><item><title>Zenoh Tidings</title><link>/blog/2020-06-29-zenoh-tidings/</link><pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate><guid>/blog/2020-06-29-zenoh-tidings/</guid><description>In our last blog we had announced a rewrite of zenoh in Rust. The wrote the first version of zenoh in OCaml, a super-neat ML-derived functional programming language. OCaml allowed us to experiment very quickly and have good performances. Yet, one of the major feedback we were receiving from the community was that few people knew this programming language and this was limiting contributions. Beside, we had the desire to make zenoh even faster and smaller.</description></item><item><title>Zenoh Aithusa Hatched Out!</title><link>/blog/2020-10-08-aithusa/</link><pubDate>Thu, 08 Oct 2020 00:00:00 +0000</pubDate><guid>/blog/2020-10-08-aithusa/</guid><description>We have been waiting this very moment for several months. Months of patient dedication, months of hard and creative work. Months in which each and every member of the zenoh team has made his and her best to give our little dragon all it needed to succed in the complicated world of Internet Scale Protocols.
-Today, at about 11.00 Paris Time Zenoh Aithusa Hatched Out!
-Aithusa is the code-name for the first release of our Rust-based zenoh infrastructure, A supercharged of new features and improvements, including better performance, improved network scheduling, ROS2 integration, and DDS Plugin.</description></item><item><title>Minimizing Discovery Overhead in ROS2</title><link>/blog/2021-03-23-discovery/</link><pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate><guid>/blog/2021-03-23-discovery/</guid><description>The amount of discovery traffic generated by ROS2 is a problem that has received an increasing attention in the community. The discovery overhead issue becomes extremely severe when running over wireless technologies, such as WiFi, and in particular in combination with more complex robots, robot swarms and tele-operation. The ROS2 Discovery Service has been proposed as a way to alleviate the problem, not necessarily to solve it.
-In the reminder of this post I&amp;rsquo;ll explain the essence of problem, remind what was tried in the past and unveils a Zenoh based solution that (1) drastically reduces DDS discovery overhead &amp;ndash; from 97% to 99,9% in tested scenarios, (2) allows for peer-to-peer communication when useful, (3) enables efficient Internet-scale routing when necessary, and (3) does not require any changes to your existing ROS2 systems.</description></item><item><title>Integrating ROS2 with Eclipse zenoh</title><link>/blog/2021-04-28-ros2-integration/</link><pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate><guid>/blog/2021-04-28-ros2-integration/</guid><description>In our previous blog we demonstrated how the zenoh bridge for DDS allows to (1) bridge DDS communications through zenoh, and (2) reduce by up to 99.97% the discovery traffic between the nodes.
-The previous blog was focusing on demonstrating the advantages of using zenoh as the mean for ROS2-to-ROS2 communication over wireless technologies. In this blog, we’ll go one step further and will demonstrate how you can easily write native zenoh applications —meaning that has no dependencies on ROS2 — and seamlessly interact with ROS2 applications.</description></item><item><title>Zenoh Reliability, Scalability and Congestion Control</title><link>/blog/2021-06-14-zenoh-reliability/</link><pubDate>Mon, 14 Jun 2021 00:00:00 +0000</pubDate><guid>/blog/2021-06-14-zenoh-reliability/</guid><description>Providing many to many reliable communications over a wide area network is challenging. This may even be an understatement, as theoretically, even simple point to point reliable communication over asynchronous channels requires either infinite amount of memory or giving up progress… but guess what, many real systems can’t afford neither of those restrictions. Thus, trade-offs need to be made regarding reliability for the system to work, scale smoothly and have sufficiently strong guarantees.</description></item><item><title>Zenoh overhead: a story from our community</title><link>/blog/2021-07-05-zenoh-overhead/</link><pubDate>Mon, 05 Jul 2021 00:00:00 +0000</pubDate><guid>/blog/2021-07-05-zenoh-overhead/</guid><description>Zenoh&amp;rsquo;s webpage states that zenoh has a minimal wire overhead of 5 bytes. This is the result of careful considerations in the zenoh design: from using Variable Length Encoding (VLE), to efficient mapping of resource keys and automatic batching.
-If you are intrigued about this and want to know more, rest assured that you are not alone. In fact, the minimal overhead aspect of zenoh attracted a lot of attention and curiosity in our community that led to some interesting discussions on zenoh&amp;rsquo;s Discord Server.</description></item><item><title>Zenoh performance: a stroll in Rust async wonderland</title><link>/blog/2021-07-13-zenoh-performance-async/</link><pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate><guid>/blog/2021-07-13-zenoh-performance-async/</guid><description>Since its very first public release, zenoh provided impressive and easily accessible performances (see here). But instead of resting on laurels, the zenoh team has been relentlessly working on further improving them.
-As a result of this work, we are happy to announce that zenoh delivers at least twice the performances than before:
-more than 3.5M msg/s with 8 bytes payload, more than 45 Gb/s with 1 Megabyte payload, a latency as little as 35 µsec in backlogged scenarios.</description></item><item><title>Indy Autonomous Challenge (IAC): Experiences from the Trenches</title><link>/blog/2021-09-28-iac-experiences-from-the-trenches/</link><pubDate>Tue, 28 Sep 2021 00:00:00 +0000</pubDate><guid>/blog/2021-09-28-iac-experiences-from-the-trenches/</guid><description>The Indy Autonomous Challenge is a competition of autonomous racecars between teams of university students. Even if fully autonomous, each car needs to communicate with its team’s base station to report telemetry, status and to receive commands, such as emergency stop. The communication infrastructure between the cars and the base stations leverages CISCO Ultra-Reliable Wireless Backhaul (CURWB). As all cars share the same infrastructure, some limitations have been imposed on teams in terms of packet rates and bandwidth usage.</description></item><item><title>Zenoh goes embedded with zenoh-pico</title><link>/blog/2021-10-04-zenoh-pico-guide/</link><pubDate>Mon, 04 Oct 2021 00:00:00 +0000</pubDate><guid>/blog/2021-10-04-zenoh-pico-guide/</guid><description>In this post, we will introduce zenoh-pico, a lightweight implementation of Zenoh APIs in C, fully compatible with its Rust counterpart.
-As a result of this work, we are happy to announce that we successfully deployed and tested Zenoh in Zephyr (reel_board and nucleo-f767zi) and Arduino (ESP32) compatible boards, with initial results showcasing a quite remarkable performance within the microcontrollers landscape:
-Memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.</description></item><item><title>ROS 2 and microcontrollers integration via Zenoh-pico</title><link>/blog/2021-11-09-ros2-zenoh-pico/</link><pubDate>Tue, 09 Nov 2021 00:00:00 +0000</pubDate><guid>/blog/2021-11-09-ros2-zenoh-pico/</guid><description>In a previous blog, we showed how you can easily write native Zenoh applications and seamlessly interact with ROS 2 applications. This was exemplified by developing a native Zenoh teleoperation application to control a ROS 2 powered robot, namely a turtlebot or its simulation counterpart turtlesim, from anywhere in the world. In this blog, we will go one step further by trying to make it cool and fun &amp;ndash; together with a bit of nostalgia.</description></item><item><title>DragonBotOne Egg Hatching with Zenoh and Zenoh-Pico</title><link>/blog/2022-02-08-dragonbot/</link><pubDate>Tue, 08 Feb 2022 00:00:00 +0000</pubDate><guid>/blog/2022-02-08-dragonbot/</guid><description>In previous blogs (1)(2), we showed how you can easily develop native Zenoh applications and seamlessly integrate them with ROS2 applications by using Zenoh bridge for DDS. In particular, this was successfully exemplified by using a TurtleBot, a well-known, low-cost, personal robot kit with open-source software and hardware.
-In this blog, we go one step further to show how you can bring Zenoh down to the TurtleBot’s microcontroller and control it from a different geographic location via a Zenoh infrastructure.</description></item><item><title>Mobility, Latency and Energy saving</title><link>/blog/2022-03-30-zenoh-mobility/</link><pubDate>Wed, 30 Mar 2022 00:00:00 +0000</pubDate><guid>/blog/2022-03-30-zenoh-mobility/</guid><description>Connected cars, smart factories, swarms of robots… More and more applications need device mobility and require low latency for local device to device communications. With the increases in energy costs and its constrained availability, there is an increasing necessity to optimize data paths and to avoid unnecessary data transmissions – as just for clarity, communications takes the lion share in energy consumption when compared to computation.
-Cloud centric architectures are energetically greedy and offer poor latency.</description></item><item><title>A Performance Evaluation on Rust Asynchronous Frameworks</title><link>/blog/2022-04-14-rust-async-eval/</link><pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate><guid>/blog/2022-04-14-rust-async-eval/</guid><description>As we previously mentioned in this blog post, Zenoh is written in Rust and leverages the async features to achieve high performance and scalability. At the present stage, we rely on the async_std framework – a decision that we took after a careful performance evaluation of the frameworks available in late 2019. This framework has proven to be quite effective, allowing Zenoh to reach more than 4M msg/s with 8 bytes payload and over 45Gb/s with 1MiB payload while keeping latency of ~30µsS.</description></item><item><title>Zenoh-Pico: Above and Beyond</title><link>/blog/2022-06-09-zenoh-pico-above-and-beyond/</link><pubDate>Thu, 09 Jun 2022 00:00:00 +0000</pubDate><guid>/blog/2022-06-09-zenoh-pico-above-and-beyond/</guid><description>In a previous blog post, we introduced Zenoh-Pico, an implementation of Zenoh for microcontrollers and embedded devices, along with a preliminary performance results and its integration on off-the-shelf robots (by bridging both legacy ROS2+DDS and Zenoh systems or by making it a full-fledged Zenoh system).
-In this post, we will dive deeper on Zenoh-Pico, show, how Zenoh-Pico is capable of:
-exchanging close to 2.5M msg/s for small payloads, and over 25 Gbps for larger messages, achieving end-to-end latency (i.</description></item><item><title>There is Land Besides IP: How to Cross It with Zenoh</title><link>/blog/2022-08-12-zenoh-serial/</link><pubDate>Fri, 12 Aug 2022 00:00:00 +0000</pubDate><guid>/blog/2022-08-12-zenoh-serial/</guid><description>Since the early 2000s the transition towards All-IP networks had been pushed as a natural evolutionary path. Today, IP is the dominant stack for packet-based integrated networks deployed worldwide. However, there is land beyond the ocean…in other words, there is an entire and growing non-IP universe that cannot be ignored. This universe expands at the outskirts of ordinary IP networks, where other protocols shine brighter because of more stringent requirements on overhead, energy-efficienciency, latency / real-time, and cost.</description></item><item><title>Zenoh Bahamut takes flight!</title><link>/blog/2022-09-30-zenoh-bahamut/</link><pubDate>Fri, 30 Sep 2022 00:00:00 +0000</pubDate><guid>/blog/2022-09-30-zenoh-bahamut/</guid><description>The little Zenoh dragon has vigorously grown up in the last year and now craves to take higher flight towards the highest peaks in marvellous lands.
-The new 0.6.0 release of Zenoh is code-named Bahamut: the king of the good dragons. This reflects the major efforts the development team and the community have put in Zenoh to make it grow healthy, strong, wise, and resolute. Bahamut comes with a supercharged list of new features and improvements, including:</description></item><item><title>Keeping storages aligned in Zenoh</title><link>/blog/2022-11-29-zenoh-alignment/</link><pubDate>Tue, 29 Nov 2022 00:00:00 +0000</pubDate><guid>/blog/2022-11-29-zenoh-alignment/</guid><description>Zenoh Bahamut introduced a new experimental feature to support replicated storage alignment. With this feature, Zenoh ensures eventual consistency for storages that subscribe to the same key expression, even in the presence of network partitions and system faults. As promised, today we dig into some details about the storage alignment protocol. We will also give insights on how to efficiently configure a replicated storage in Zenoh.
-Replicated Storages in Zenoh As we already know, Zenoh allows a user to configure storages on a given key expression.</description></item><item><title>Zenoh Charmander is coming to town</title><link>/blog/2023-01-10-zenoh-charmander/</link><pubDate>Tue, 10 Jan 2023 00:00:00 +0000</pubDate><guid>/blog/2023-01-10-zenoh-charmander/</guid><description>The new Zenoh 0.7.0 release, codename Charmander, brings to the table many features requested by the community on the Zenoh’s Discord server. Charmander introduces some long-awaited functionalities:
-Mutual TLS authentication; MQTT plugin; S3 storage backend; some new freshly-landed functionalities:
-Query payload; C++ binding; Connectivity status and notifications; and MISRA-C compliance for Zenoh-Pico.
-Mutual TLS authentication Until now, Zenoh was only supporting server-based authentication. That is the kind of authentication you experience when surfing the web using HTTPS: your browser verifies if the server it is connecting to is legit, but the server does not authenticate your browser.</description></item><item><title>The Blue Dragon meets the Wire’s Shark</title><link>/blog/2023-01-17-zenoh-wireshark/</link><pubDate>Wed, 18 Jan 2023 00:00:00 +0000</pubDate><guid>/blog/2023-01-17-zenoh-wireshark/</guid><description>In this blog post, we will introduce Zenoh’s best friend, the Zenoh protocol dissector for Wireshark. It allows you to inspect and understand the Zenoh packets exchanged in your network. It is especially useful when you need to:
-troubleshoot network problems, examine security issues, verify network applications, debug protocol implementations, and even learn about Zenoh’s protocol internals. But let’s find out more!
-What is Wireshark? Wireshark is a widely-used network protocol analyzer, mostly used to sniff which packets are crossing your network.</description></item><item><title>Data Flow programming with Zenoh-Flow</title><link>/blog/2023-02-10-zenoh-flow/</link><pubDate>Fri, 10 Feb 2023 00:00:00 +0000</pubDate><guid>/blog/2023-02-10-zenoh-flow/</guid><description>Zenoh-Flow was the concluding episode of Zenoh’s webinar series &amp;ldquo;Taming the Dragon&amp;rdquo; released recently and available on ZettaScale’s Youtube channel. In case you haven’t watched the webinar (which you should definitely do!), click here! This blog provides additional insights about Zenoh-Flow: its origin, motivating use-cases, and upcoming features.
-Data Flow Programming As we explained in our webinar, Zenoh-Flow is Zenoh’s native Data Flow Programming framework, offering a common abstraction applicable from the Data Center down to the microcontroller.</description></item><item><title>Comparing the Performance of Zenoh, MQTT, Kafka, and DDS</title><link>/blog/2023-03-21-zenoh-vs-mqtt-kafka-dds/</link><pubDate>Tue, 21 Mar 2023 00:00:00 +0000</pubDate><guid>/blog/2023-03-21-zenoh-vs-mqtt-kafka-dds/</guid><description>Prologue This instalment features a blog contributed by a team of researchers from the prestigious National Taiwan University (NTU). This team has been using Zenoh for some time in R2X and V2X R&amp;amp;D projects and recently did an interesting performance comparison between our blue dragon protocol, MQTT, Kafka and DDS. I&amp;rsquo;d like to thank the NTU team on behalf of the Zenoh community as this evaluation answers a couple of questions we are asked quite often.</description></item><item><title>Securing Zenoh with LetsEncrypt: A Comprehensive Guide</title><link>/blog/2023-04-04-letsencrypt/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>/blog/2023-04-04-letsencrypt/</guid><description>Over the last months, many people have reached out to us in our Discord server to ask if Zenoh was compatible with LetsEncrypt when using TLS as the communication transport. In other words, how to use LetsEncrypt with Zenoh.
-In this blog post we&amp;rsquo;ll show it is indeed possible and we&amp;rsquo;ll go through the steps needed in order to set everything up. If you are already familiar with Transport Layer Security and LetsEncrypt, feel free to skip the explanation and dive straight into the tutorial.</description></item><item><title>Zenoh Charmander Grows Stronger</title><link>/blog/2023-06-05-charmander2/</link><pubDate>Wed, 07 Jun 2023 00:00:00 +0000</pubDate><guid>/blog/2023-06-05-charmander2/</guid><description>The new Zenoh Charmander 0.7.2-rc is out and comes with some aces up the sleeve! This patch release marks as stable the following APIs:
-C++ API Query payload It introduces some new features:
-C++ API is now compatible with both zenoh-c and zenoh-pico TLS supports now Let’s Encrypt and IP-based certificates Key formatters Transport protocol whitelisting It brings to life these experimental features:
-Zenoh and ROS1 bridge Liveliness assertion Transparent compression And it also comes with a load of various bug fixes and improvements.</description></item><item><title>Zenoh Storage Gets a Boost: Empowering Storage with S3 Integration</title><link>/blog/2023-07-17-s3-backend/</link><pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate><guid>/blog/2023-07-17-s3-backend/</guid><description>As we happily announced on the blog post for the Zenoh 0.7.0-rc release (Zenoh Charmander is coming to town), we now provide enhanced backend storage capabilities with the new AmazonS3/MinIO backend implementation.
-This was a requested feature that originated within our community on Discord which soon made its way into the roadmap.
-The S3 backend can be installed by downloading the package from ​​https://download.eclipse.org/zenoh/zenoh-backend-s3/latest/. The source code can be found in our eclipse-zenoh repository: https://github.</description></item><item><title>Zenoh Dragonite Took Off!</title><link>/blog/2023-10-03-zenoh-dragonite/</link><pubDate>Tue, 03 Oct 2023 00:00:00 +0000</pubDate><guid>/blog/2023-10-03-zenoh-dragonite/</guid><description>We are happy to announce the release of Zenoh 0.10.0-rc Dragonite.
-This version introduces new important features and improvements we have been working on the last couple of months. Specifically, this release introduces:
-Improved protocol: The Best Pub/Sub/Query Protocol Gets Better New WireShark Plugin New Kotlin API Support for Ultra Low Latency ROS1 Bridge C++ API Changes &amp;amp; Documentation release The Best Pub/Sub/Query Protocol Gets Better! With this release, Zenoh gets a series of protocol improvements and extensions, such as improved support for multicast and constrained devices.</description></item><item><title>Zenoh-Flow 0.6.0-rc: Getting Started</title><link>/blog/2024-01-31-zenoh-flow-getting-started/</link><pubDate>Wed, 31 Jan 2024 00:00:00 +0000</pubDate><guid>/blog/2024-01-31-zenoh-flow-getting-started/</guid><description>At ZettaScale, we are developing a next-generation middleware called Zenoh. Zenoh gained a lot of traction with very positive feedback from diverse industries, including Robotics, Industrial Automation, Automotive and more. If you haven’t tried it yet and you think it could help you, don’t hesitate, we guarantee it’s easy and worth your time!
-This blog post will focus on another exciting project we are building: Zenoh-Flow. As its name indicates, Zenoh-Flow brings together the control of data flow programming and the power of Zenoh.</description></item><item><title>Streamlining Zenoh router Monitoring with Datadog Integration</title><link>/blog/2024-04-17-datadog-zenoh-router-integration/</link><pubDate>Wed, 17 Apr 2024 00:00:00 +0000</pubDate><guid>/blog/2024-04-17-datadog-zenoh-router-integration/</guid><description>Unlocking Insights, Enhancing Efficiency Today, we&amp;rsquo;re excited to introduce a powerful integration that greatly improves the monitoring experience for Zenoh users. While Zenoh has always prioritized efficiency and performance, our Datadog integration brings a new dimension of visibility and insight to Zenoh deployments. By seamlessly integrating with Datadog, users can now monitor the state of their Zenoh routers with unprecedented ease and efficiency.
-Empowering Zenoh Users The Zenoh Team understands the importance of providing users with the tools they need to manage their distributed systems effectively.</description></item><item><title>Zenoh 0.11.0 "Electrode" release is out!</title><link>/blog/2024-04-30-zenoh-electrode/</link><pubDate>Mon, 13 May 2024 00:00:00 +0000</pubDate><guid>/blog/2024-04-30-zenoh-electrode/</guid><description>During the summer of 2023, we rolled out Zenoh v0.7.0 &amp;lsquo;Charmander,&amp;rsquo; which brought significant enhancements to the Zenoh ecosystem. This was followed by the release of v0.10.0-rc &amp;lsquo;Dragonite&amp;rsquo; in autumn, and a winter update with v0.10.1-rc. This spring, we are pleased to announce Zenoh v0.11.0 “Electrode”. This release introduces several new features, some key improvements. Next will come the much-anticipated version 1.0.0, planned for June 2024🎉!
-But let’s see what comes with Zenoh Electrode.</description></item><item><title>Zenoh 1.0.0 "Firesong" is ready to rock!</title><link>/blog/2024-10-21-zenoh-firesong/</link><pubDate>Tue, 01 Oct 2024 00:00:00 +0000</pubDate><guid>/blog/2024-10-21-zenoh-firesong/</guid><description>As a result of an incredible effort from the whole Zenoh team and Zenoh community, we can finally announce that Zenoh 1.0.0 Firesong is out!
-This release marks an incredible milestone for Zenoh and comes with a lot of features and improvements:
-API stabilization. Great attention has been given to the API, its revision and rework to provide the necessary level of stability and future extensibility. The very first alpha version of the new TypeScript API.</description></item><item><title>Zenoh 1.1.0: Firesong Keeps Rocking 🎸</title><link>/blog/2024-12-12-zenoh-firesong-1.1.0/</link><pubDate>Thu, 12 Dec 2024 00:00:00 +0000</pubDate><guid>/blog/2024-12-12-zenoh-firesong-1.1.0/</guid><description>This latest release of Zenoh 1.1.0 brings exciting new features, some of them were already introduced in the 1.0.1, 1.0.2, 1.0.3, and 1.0.4 releases. The key features are:
-API Stabilization of liveliness API support. Liveliness has been part of Zenoh for quite some time but the API was still marked as unstable. We have now stabilized it. New unstable querier API for automatic queries optimization. A new unstable advanced publisher/subscriber on zenoh-ext supporting non-blocking fault tolerance end-to-end.</description></item><item><title>Introducing Raspberry Pi Pico Support in Zenoh-Pico</title><link>/blog/2025-01-08-introducing-raspberry-pi-pico-support-in-zenoh-pico/</link><pubDate>Wed, 08 Jan 2025 00:00:00 +0000</pubDate><guid>/blog/2025-01-08-introducing-raspberry-pi-pico-support-in-zenoh-pico/</guid><description>Introducing Raspberry Pi Pico Support in Zenoh-Pico We’re excited to announce that Zenoh-Pico now supports the Raspberry Pi Pico series, including the Pico W and Pico 2 W variants! Zenoh already runs seamlessly on platforms like the Raspberry Pi Zero, providing robust communication solutions for IoT. Now, with the addition of Raspberry Pi Pico support, we’ve expanded the Zenoh ecosystem to even smaller and more constrained devices.
-What is Zenoh-Pico? Zenoh-Pico is the lightweight, native C implementation of the Eclipse Zenoh protocol, designed specifically for constrained devices.</description></item><item><title>Zenoh Gozuryū is Here!</title><link>/blog/2025-04-14-zenoh-gozuryu/</link><pubDate>Mon, 14 Apr 2025 00:00:00 +0000</pubDate><guid>/blog/2025-04-14-zenoh-gozuryu/</guid><description>We are thrilled to announce the release of Zenoh 1.3.3 – Gozuryū!
-Named after the legendary &amp;ldquo;Five-Headed Dragon&amp;rdquo;, this release brings a powerful set of new capabilities across the entire Zenoh ecosystem, with improvements touching everything from core routing and shared memory to the language bindings and Zenoh-Pico for constrained devices.
-Let’s dive into the highlights of this release.
-Namespace Prefix Support: Isolate Zenoh sessions with namespace prefixes — ideal for multi-robot and multi-instance setups.</description></item><item><title>Zenoh-Pico performance improvements</title><link>/blog/2025-04-09-zenoh-pico-performance/</link><pubDate>Wed, 30 Apr 2025 00:00:00 +0000</pubDate><guid>/blog/2025-04-09-zenoh-pico-performance/</guid><description>Improving Zenoh-Pico performance Last year, after the long-awaited release of Zenoh 1.0 which included a unified C API with Zenoh-C and Zenoh-Pico, we decided to dedicate some time to measure and improve the performance and efficiency of Zenoh-Pico. These modifications were released with Zenoh 1.1 earlier this year and we present the results to you with this blog post.
-What is Zenoh-Pico? Zenoh-Pico is the lightweight, native C implementation of the Eclipse Zenoh protocol, designed specifically for constrained devices.</description></item><item><title>Zenoh-Pico Peer to Peer Improvements</title><link>/blog/2025-07-11-zenoh-pico-peer-to-peer-unicast/</link><pubDate>Wed, 09 Jul 2025 00:00:00 +0000</pubDate><guid>/blog/2025-07-11-zenoh-pico-peer-to-peer-unicast/</guid><description>As hinted at in our previous blog post on Zenoh-Pico performance improvements, we’ve now introduced a long-requested peer-to-peer unicast mode for Zenoh-Pico! Let&amp;rsquo;s dive into how it works.
-What is Zenoh-Pico? Zenoh-Pico is the lightweight, native C implementation of the Zenoh protocol, designed specifically for constrained devices. It provides a streamlined, low-resource API while supporting all abstractions from Rust Zenoh: pub, sub and query, advanced pub/sub and so on. Zenoh-Pico already supports a broad range of platforms and protocols, making it a versatile choice for embedded systems development.</description></item><item><title>Zenoh 1.5.0: Hong, the Red Dragon's Power</title><link>/blog/2025-07-28-zenoh-hong/</link><pubDate>Sun, 27 Jul 2025 00:00:00 +0000</pubDate><guid>/blog/2025-07-28-zenoh-hong/</guid><description>Named after the Red Dragon, a symbol of power, protection, and passion, this release delivers significant improvements across the entire Zenoh ecosystem. Hong brings substantial performance enhancements—we&amp;rsquo;ve broken the 10M msg/sec barrier—and our shared memory implementation has 25% performance throughput gains along with a simplified API and improved safety mechanisms. Configuration management has been streamlined with better validation and the ability to provide full configurations via command line. The installation process has been modernized with signed Debian repositories for enhanced security.</description></item><item><title>Zenoh 1.6.x: Imoogi</title><link>/blog/2025-10-20-zenoh-imoogi/</link><pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate><guid>/blog/2025-10-20-zenoh-imoogi/</guid><description>We are thrilled to announce the release of Zenoh 1.6.x – Imoogi!
-Named after the Korean dragon that ascends to greatness, this release elevates the Zenoh ecosystem with powerful refinements and critical improvements. Imoogi focuses on stabilizing and extending the groundbreaking features introduced in version 1.5.0, bringing enhanced shared memory capabilities, improved configuration management, better scalability, and expanded language binding support.
-Key highlights of this release include:
-Shared Memory Evolution: Comprehensive SHM API improvements with typed buffers, better allocator performance, flexible allocation builders, buffer resize capabilities, implicit SHM optimization for large payloads, and precommit SHM pages — delivering major throughput improvements.</description></item><item><title>Zenoh 1.7.x: Jiāolóng</title><link>/blog/2025-12-11-zenoh-jiaolong/</link><pubDate>Thu, 11 Dec 2025 00:00:00 +0000</pubDate><guid>/blog/2025-12-11-zenoh-jiaolong/</guid><description>We are happy to announce the release of Zenoh 1.7.x Jiāolóng
-Named after the Chinese flood dragon, Jiāolóng represents transformation and the mastery of powerful forces. Like its namesake navigating between realms, this release bridges the gap between simplicity and power, bringing sophisticated capabilities within easy reach of developers across all platforms.
-This release focuses on developer productivity and system reliability with powerful new APIs and optimizations across the Zenoh ecosystem.</description></item><item><title>The Zenoh Community</title><link>/community/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/community/</guid><description>Communication The Zenoh community is most readily found on its Discord server, where you&amp;rsquo;re welcome to ask questions, report problems, or pitch ideas.
-Issues GitHub is used for tracking issues.
-If your issue is related to the Zenoh protocol, the infrastructure or the REST API, the primary location is https://github.com/eclipse-zenoh/zenoh/issues.
-If your issue is related to an API, please use the GitHub issues related to the API:
-Python API C API If your issue is instead related to a plugin, please use the GitHub issues related to the plugin:</description></item><item><title>Zenoh Adopters</title><link>/adopters/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/adopters/</guid><description>Below is a list of companies, research institutes and foundations that adopted, supported or contributed to Zenoh. If you cannot find your logo, please post a message on the Zenoh&amp;rsquo;s discord server and we&amp;rsquo;ll add it right away.</description></item><item><title>Zenoh Use Cases</title><link>/usecases/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/usecases/</guid><description> Controlling a robot using Zenoh Zenoh in robotics Indy autonomous challenge Autonomous train Autonomous car in simulator An auditable register Zenoh in academics</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</title><link>/</link><description>Recent content on Zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol.</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 11 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Zenoh Slides, Videos, Papers and More</title><link>/media/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/media/</guid><description>&lt;h1 id="papers">Papers&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="https://bit.ly/3P0DJ3N">Zenoh: Unifying Communication, Storage and Computation from the Cloud to the Microcontroller&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="reports">Reports&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="https://discourse.openrobotics.org/uploads/short-url/o9ihvSjCwB8LkzRklpKdeesRTDi.pdf">ROS 2 RWM Alternate&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="slides">Slides&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="https://speakerdeck.com/kydos">Zenoh Speakerdeck&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="video-playlists">Video Playlists&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="https://www.youtube.com/playlist?list=PLZDEtJusUvAYteLLzmJv1_lA16mKGoklc">Advanced Zenoh Tutorial Playlist&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.youtube.com/playlist?list=PLZDEtJusUvAYq9543F3vQVOuahOAtNWuG">Zenoh User Meeting 2024&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.youtube.com/playlist?list=PLZDEtJusUvAZ1ISiU0qAQ011m-wuDwNtC">Zenoh User Meeting 2023&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.youtube.com/playlist?list=PLZDEtJusUvAZxKtGHC-aIQB0bwExxt5fD">Zenoh in Robotics&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://www.youtube.com/playlist?list=PLZDEtJusUvAZ9WUXa79V4fdU0lxHfnbH_">Zenoh in Automotive&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>What is Zenoh?</title><link>/docs/overview/what-is-zenoh/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/overview/what-is-zenoh/</guid><description>&lt;p>Zenoh is the Next Big Thing in Internet Computing. You may think this is a bold statement, but hopefully after this short read you&amp;rsquo;ll share the perspective.&lt;/p>
+&lt;p>Technically speaking, Zenoh is a pub/sub/query protocol that unifies data in motion, data at rest and computations. That said, one way of thinking about Zenoh is to imagine it as a data liberator protocol. Zenoh liberates data in several dimensions.&lt;/p>
+&lt;p>&lt;strong>Cloud to the Microcontroller Communication.&lt;/strong> Zenoh is the only protocol available on the market that can work efficiently and perform from server-grade hardware and networks to the embedded microcontroller and extremely constrained networks. As a consequence, Zenoh liberates the data allowing it to freely flow vertically and horizontally from the microcontroller to the data-center. Likewise, it liberates developers from the need to integrate technologies to bridge the communication between the enterprise and the embedded world..&lt;/p></description></item><item><title>Zenoh in action</title><link>/docs/overview/zenoh-in-action/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/overview/zenoh-in-action/</guid><description>&lt;p>Let us now look into a sample scenario of Zenoh working.
+Zenoh supports two paradigms of communication - publish-subscribe and queries.&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#pubsub-in-zenoh">Pub/Sub in Zenoh&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#queries-in-zenoh">Query in Zenoh&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="pubsub-in-zenoh">Pub/Sub in Zenoh&lt;/h2>
+&lt;p>&lt;img src="./img/zenoh-pub-sub.gif" alt="Zenoh pub/sub in action" title="Zenoh pub/sub in action">&lt;/p>
+&lt;p>This animation shows a basic pub/sub in action. The subscribers connected to the system receive the values sent by the publishers routed efficicently through the Zenoh network.
+You can also observe the presence of a sleeping subscriber connected to the network. Once the subscriber awakes, the nearest Zenoh node will send the pending publications.&lt;/p></description></item><item><title>Your first Zenoh app</title><link>/docs/getting-started/first-app/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/first-app/</guid><description>&lt;p>Let us take a step-by-step approach in putting together your first Zenoh application in Python.
+As the first step, let us see how we get some data from a temperature sensor in our kitchen.
+Then we see how we can route this data to store and perform some analytics.&lt;/p>
+&lt;p>Before cranking some code, let&amp;rsquo;s define some terminology.&lt;/p>
+&lt;p>&lt;!-- raw HTML omitted -->Zenoh&lt;!-- raw HTML omitted --> deals with &lt;!-- raw HTML omitted -->keys/values&lt;!-- raw HTML omitted --> where each key is a &lt;!-- raw HTML omitted -->path&lt;!-- raw HTML omitted --> and is associated to a &lt;!-- raw HTML omitted -->value&lt;!-- raw HTML omitted -->. A key looks like just a Unix file system path, such as &lt;code>myhome/kitchen/temp&lt;/code>. The value can be defined with different
+encodings (string, JSON, raw bytes buffer&amp;hellip;).&lt;/p></description></item><item><title>Installation</title><link>/docs/getting-started/installation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/installation/</guid><description>&lt;p>To start playing with &lt;!-- raw HTML omitted -->Zenoh&lt;!-- raw HTML omitted --> we need the Zenoh router and/or the Zenoh client library.&lt;/p>
+&lt;h2 id="installing-client-library">Installing client library&lt;/h2>
+&lt;p>To develop your application Zenoh, you need to install a Zenoh client library.
+Depending on your programming language, pick one of the following API and refer to the installation and usage instructions in here:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://crates.io/crates/zenoh">Rust API&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-python">Python API&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-c">C API&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-pico">Pico API&lt;/a>: A port of Zenoh in C, targeted at low-power devices.&lt;/li>
+&lt;/ul>
+&lt;p>Note that if you wish to always have access to all of Zenoh&amp;rsquo;s latest features, Rust is Zenoh&amp;rsquo;s original language, and will therefore always be the most feature-complete version.&lt;/p></description></item><item><title>Deployment</title><link>/docs/getting-started/deployment/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/deployment/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>&lt;img src="./img/topology_anim.gif" alt="topology animation" title="topology animation">&lt;/p>
+&lt;h2 id="peer-to-peer">Peer to peer&lt;/h2>
+&lt;p>By default Zenoh applications are configured to communicate peer to peer (&lt;code>peer&lt;/code> mode). All applications in the local network directly communicate with each other.&lt;/p>
+&lt;p>&lt;img src="./img/peer_to_peer.png" alt="peer to peer" title="peer to peer">&lt;/p>
+&lt;p>&lt;strong>Configuration&lt;/strong>&lt;/p>
+&lt;pre tabindex="0">&lt;code>{
+ mode: &amp;#34;peer&amp;#34;,
+}
+&lt;/code>&lt;/pre>&lt;h3 id="scouting">Scouting&lt;/h3>
+&lt;p>Zenoh applications in &lt;code>peer&lt;/code> mode run both &lt;code>multicast&lt;/code> and &lt;code>gossip&lt;/code> scouting to discover other applications or Zenoh routers and connect them.&lt;/p>
+&lt;p>&lt;strong>Multicast scouting&lt;/strong>&lt;/p>
+&lt;p>Zenoh applications in &lt;code>peer&lt;/code> mode join multicast group &lt;code>224.0.0.224&lt;/code> on UDP port &lt;code>7446&lt;/code> and send scout messages on this address to discover local applications and routers. They automatically connect to all accessible &lt;code>peer&lt;/code> mode applications and routers they discover. The scouting address and behavior can be configured.&lt;/p></description></item><item><title>For a quick test using Docker</title><link>/docs/getting-started/quick-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/quick-test/</guid><description>&lt;p>This page describe how to perform a quick test of Zenoh, using a Docker image.&lt;/p>
+&lt;h2 id="run-zenoh-router-in-a-docker-container">Run Zenoh router in a Docker container&lt;/h2>
+&lt;p>The Zenoh router is also available in a Docker image. You can deploy a single instance on your local host just running:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker run --init -p 7447:7447/tcp -p 8000:8000/tcp eclipse/zenoh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The ports used by Zenoh are the following:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>7447/tcp&lt;/strong> : the Zenoh protocol via TCP&lt;/li>
+&lt;li>&lt;strong>8000/tcp&lt;/strong> : the Zenoh REST API&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>⚠️ WARNING ⚠️&lt;/strong>: &lt;em>Docker doesn&amp;rsquo;t support UDP multicast between a container and its host (see cases &lt;a href="https://github.com/moby/moby/issues/23659">moby/moby#23659&lt;/a>, &lt;a href="https://github.com/moby/libnetwork/issues/2397">moby/libnetwork#2397&lt;/a> or &lt;a href="https://github.com/moby/libnetwork/issues/552">moby/libnetwork#552&lt;/a>). The only case where it works is on Linux using the &lt;code>--net=host&lt;/code> option to make the container to share the host&amp;rsquo;s networking space (i.e. run: &lt;code>docker run --init --net=host eclipse/zenoh&lt;/code>).&lt;/em>&lt;br>
+&lt;em>The implication of not having UDP multicast working for the Zenoh router is that you need to configure your Zenoh applications (peer or client) with the router&amp;rsquo;s locator as &lt;code>peer&lt;/code>:&lt;/em>&lt;/p></description></item><item><title>Troubleshooting</title><link>/docs/getting-started/troubleshooting/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/troubleshooting/</guid><description>&lt;h2 id="activate-logging">Activate logging&lt;/h2>
+&lt;p>Activating the Zenoh logging can provide useful information for any troubleshooting. The Zenoh router (&lt;code>zenohd&lt;/code>) and all the Zenoh APIs (except zenoh-pico) are developed with a Rust code base. Logging is controlled via the &lt;code>RUST_LOG&lt;/code> environment variable that can typically be defined with the desired logging level amongst:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>error&lt;/code> - this is the default level if &lt;code>RUST_LOG&lt;/code> is not defined&lt;/li>
+&lt;li>&lt;code>warn&lt;/code>&lt;/li>
+&lt;li>&lt;code>info&lt;/code>&lt;/li>
+&lt;li>&lt;code>debug&lt;/code>&lt;/li>
+&lt;li>&lt;code>trace&lt;/code>&lt;/li>
+&lt;li>&lt;code>off&lt;/code> - to disable all logging&lt;/li>
+&lt;/ul>
+&lt;p>More advanced logging directives can be defined via the &lt;code>RUST_LOG&lt;/code>. For more details see this &lt;a href="https://docs.rs/env_logger/latest/env_logger/#enabling-logging">page&lt;/a>.&lt;br>
+Note that the logs are written on &lt;code>stderr&lt;/code>.&lt;/p></description></item><item><title>Abstractions</title><link>/docs/manual/abstractions/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/abstractions/</guid><description>&lt;p>Zenoh is a &lt;strong>distributed service&lt;/strong> to define, manage and operate on &lt;strong>key/value&lt;/strong> spaces.&lt;/p>
+&lt;p>The main abstractions at the core of Zenoh are the following:&lt;/p>
+&lt;h2 id="key">Key&lt;/h2>
+&lt;p>Zenoh operates on &lt;strong>key/value&lt;/strong> pairs. The most important thing to know about Zenoh keys is that &lt;code>/&lt;/code> is the hierarchical separator, just like in unix filesystems.
+While you could set up your own hierarchy using other separators, your Zenoh exchanges would benefit from better performance using &lt;code>/&lt;/code>, as it will let Zenoh do clever optimisations (users have informed us in the past that switching from &lt;code>.&lt;/code> to &lt;code>/&lt;/code> as their hierarchy-separator almost divided their CPU usage by 2).&lt;/p></description></item><item><title>Configuration</title><link>/docs/manual/configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/configuration/</guid><description>&lt;p>From version 0.6 of Zenoh, configuration has changed in major ways. This page will take you through the new behaviour of configuration, whether you&amp;rsquo;re using Zenoh as a library, or as an executable through &lt;code>zenohd&lt;/code>.&lt;/p>
+&lt;h1 id="configuring-zenohd">Configuring &lt;code>zenohd&lt;/code>&lt;/h1>
+&lt;p>There are 3 ways to configure &lt;code>zenohd&lt;/code>, which may be used in any combination:&lt;/p>
+&lt;ul>
+&lt;li>using a &lt;a href="#configuration-files">configuration file&lt;/a>,&lt;/li>
+&lt;li>through the &lt;a href="#command-line-arguments">command line arguments&lt;/a>,&lt;/li>
+&lt;li>and by putting values on the configuration through the &lt;a href="#adminspace-configuration">adminspace&lt;/a>.&lt;/li>
+&lt;/ul>
+&lt;h2 id="configuration-files">Configuration files&lt;/h2>
+&lt;p>&lt;code>zenohd&lt;/code> has supported configuration files for a long time now, but with version 0.6, we hope to make this the primary interface for configuring your Zenoh infrastructure.&lt;/p></description></item><item><title>Zenoh plugins</title><link>/docs/manual/plugins/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugins/</guid><description>&lt;p>The Zenoh router (&lt;code>zenohd&lt;/code> executable) supports the loading of plugins at start-up, or at runtime if write permission is configured on its admin space.&lt;/p>
+&lt;p>A Zenoh plugin is a library that can be loaded by the Zenoh router at start-up. It shares a runtime with it, allowing the plugin to use the regular Zenoh rust APIs with the same peer ID.&lt;/p>
+&lt;p>Zenoh already provides the following plugins in its default repository:&lt;/p></description></item><item><title>REST plugin</title><link>/docs/manual/plugin-http/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-http/</guid><description>&lt;p>The REST plugin provides access to the Zenoh &lt;a href="../../apis/rest/">REST API&lt;/a> by enabling an HTTP server on the Zenoh node where it is running.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>Library name:&lt;/strong> &lt;code>zplugin_rest&lt;/code>&lt;/p>
+&lt;hr>
+&lt;p>There are two main ways to start this plugin:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Through startup arguments&lt;/strong>: &lt;code>zenohd&lt;/code>&amp;rsquo;s &lt;code>--rest-http-port=[PORT | IP:PORT | none]&lt;/code> argument allows you to choose which port will be listened to by the HTTP server. Note that the default value for this argument is &lt;code>8000&lt;/code>, meaning that unless you specify &lt;code>none&lt;/code> explicitly, &lt;code>zenohd&lt;/code> will use this plugin by default.&lt;/p></description></item><item><title>Storage manager plugin</title><link>/docs/manual/plugin-storage-manager/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/plugin-storage-manager/</guid><description>&lt;p>The &lt;code>storage_manager&lt;/code> plugin provides &lt;code>zenohd&lt;/code> with the ability to store values associated with a set of keys, allowing other nodes to query the most recent values associated with these keys.&lt;/p>
+&lt;hr>
+&lt;p>&lt;strong>Library name:&lt;/strong> &lt;code>zplugin_storage_manager&lt;/code>&lt;/p>
+&lt;hr>
+&lt;h2 id="backends-and-volumes">Backends and Volumes&lt;/h2>
+&lt;p>Since there exist many ways for a Zenoh node to store values it may need to serve later, the storage manager plugin relies on dynamically loaded &amp;ldquo;backends&amp;rdquo; to provide this functionality. Typically, a backend will leverage some third-party technology, such as databases, to handle storage. A possibly convenient side effect of using databases as backends is that they may also be used as an interface between your Zenoh infrastructure and an external infrastructure that may interact independently with the database.&lt;/p></description></item><item><title>TLS authentication</title><link>/docs/manual/tls/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/tls/</guid><description>&lt;p>Zenoh supports TLS as a transport protocol.
+TLS can be configured in two ways:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>server side authentication: clients validate the server TLS certificate but not the other way around, that is, the same way of operating on the web where the web browsers validate the identity of the server via means of the TLS certificate.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>mutual authentication (mTLS): where both server-side and client-side authentication is required.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>The configuration of TLS certificates is done via a &lt;a href="../configuration">configuration file&lt;/a>.&lt;/p></description></item><item><title>QUIC transport</title><link>/docs/manual/quic/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/quic/</guid><description>&lt;p>Zenoh supports QUIC as a transport protocol.&lt;/p>
+&lt;p>As you may already know, QUIC is a UDP-based, stream-multiplexing, encrypted transport protocol.
+It natively embeds TLS for encryption, authentication and confidentiality.&lt;/p>
+&lt;p>As of today, the only supported TLS authentication mode in Zenoh is server-authentication &lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>: clients validate the server TLS certificate but not the other way around.
+That is, the same way of operating on the web where the web browsers validate the identity of the server via means of the TLS certificate.&lt;/p></description></item><item><title>User-Password authentication</title><link>/docs/manual/user-password/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/user-password/</guid><description>&lt;p>Zenoh supports basic &lt;em>user-password authentication&lt;/em>.
+Clients and peers can use &lt;em>user&lt;/em> and &lt;em>password&lt;/em> for authentication against a router or a peer.
+Similarly, peers and routers can use &lt;em>user&lt;/em> and &lt;em>password&lt;/em> for authentication among themselves.
+The configuration of credentials is done via a &lt;a href="../configuration">configuration file&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;h2 id="client-configuration">Client configuration&lt;/h2>
+&lt;p>The required configuration fields for a &lt;em>client&lt;/em> would hence be:&lt;/p>
+&lt;pre tabindex="0">&lt;code>{
+ /// The node&amp;#39;s mode (router, peer or client)
+ mode: &amp;#34;client&amp;#34;,
+ transport: {
+ auth: {
+ /// The configuration of authentication.
+ /// A password implies a username is required.
+ usrpwd: {
+ user: &amp;#34;clientusername&amp;#34;,
+ password: &amp;#34;clientpassword&amp;#34;,
+ },
+ },
+ },
+}
+&lt;/code>&lt;/pre>&lt;p>When using such configuration, the client will use the provided &lt;strong>user&lt;/strong> and &lt;strong>password&lt;/strong> to authenticate against any peer or router.&lt;/p></description></item><item><title>Access Control</title><link>/docs/manual/access-control/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/access-control/</guid><description>&lt;p>&lt;em>NOTE: This documentation covers the Zenoh 1.0 ACL config. For Zenoh 0.11 ACL config,
+please refer to the &lt;a href="https://github.com/eclipse-zenoh/roadmap/blob/ca841fe219890bf73289089b520271d70ded89b6/rfcs/ALL/Access%20Control%20Rules.md">Zenoh 0.11 Access Control Rules RFC&lt;/a>&lt;/em>&lt;/p>
+&lt;p>&lt;em>Access control&lt;/em> enables Zenoh instances to filter (allow or deny) messages,
+depending on certain characteristics of individual messages and their respective source or destination.
+&lt;em>Authentication&lt;/em> on the other hand allows Zenoh instances to identify certain characteristics in other instances they connect to,
+which are used to match the remote instances with configured subjects in the ACL policies and apply the rules accordingly on the exhanged messages.&lt;/p></description></item><item><title>Rust API</title><link>/docs/apis/rust/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/rust/</guid><description>The Rust API documentation is available on 
+&lt;a href="https://docs.rs/zenoh/latest/zenoh/" target="_blank">docs.rs&lt;/a>.</description></item><item><title>C API</title><link>/docs/apis/c/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/c/</guid><description>The C API documentation is available on 
+&lt;a href="https://zenoh-c.readthedocs.io/" target="_blank">Read the Docs&lt;/a>.</description></item><item><title>Pico API</title><link>/docs/apis/pico/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/pico/</guid><description>The Pico API documentation is available on 
+&lt;a href="https://zenoh-pico.readthedocs.io/" target="_blank">Read the Docs&lt;/a>.</description></item><item><title>C++ API</title><link>/docs/apis/cpp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/cpp/</guid><description>The C++ API documentation is available on 
+&lt;a href="https://zenoh-cpp.readthedocs.io/" target="_blank">Read the Docs&lt;/a>.</description></item><item><title>Python API</title><link>/docs/apis/python/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/python/</guid><description>The Python API documentation is available on 
+&lt;a href="https://zenoh-python.readthedocs.io/" target="_blank">Read the Docs&lt;/a>.</description></item><item><title>REST API</title><link>/docs/apis/rest/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/rest/</guid><description>&lt;p>Zenoh also offers a REST API via the zenoh-rest plugin. When starting Zenoh with default options,
+this REST plugin is automatically started on port 8000 and ready to answer HTTP requests.&lt;br>
+The full Zenoh key/value space is accessible via this REST API, including the Admin Space under the &lt;code>'@'&lt;/code>prefix.&lt;/p>
+&lt;h3 id="get">GET&lt;/h3>
+&lt;p>Binds to the &lt;strong>get(selector)&lt;/strong> operation on Zenoh.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>URL&lt;/strong>: &lt;code>http://host:8000/&amp;lt;selector&amp;gt;&lt;/code>&lt;/li>
+&lt;li>&lt;strong>body&lt;/strong>: none&lt;/li>
+&lt;li>&lt;strong>headers&lt;/strong>: none&lt;/li>
+&lt;/ul>
+&lt;p>The results are returned as a JSON array of objects containing &lt;code>&amp;quot;key&amp;quot;&lt;/code>, &lt;code>&amp;quot;value&amp;quot;&lt;/code>and &lt;code>&amp;quot;time&amp;quot;&lt;/code>.&lt;/p></description></item><item><title>Kotlin API</title><link>/docs/apis/kotlin/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/kotlin/</guid><description>The Kotlin API documentation is available on
+&lt;a href="https://eclipse-zenoh.github.io/zenoh-kotlin" target="_blank">https://eclipse-zenoh.github.io/zenoh-kotlin&lt;/a>.</description></item><item><title>Migrating from Zenoh v0.5.x to Zenoh v0.6.x</title><link>/docs/migration_0.5_to_0.6/migrationguide-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-v0.5.x-v0.6.x/</guid><description>&lt;h2 id="key-expressions">Key expressions&lt;/h2>
+&lt;p>Some key expressions are now considered invalid:&lt;/p>
+&lt;ul>
+&lt;li>Heading slashes are forbidden. Example: &lt;code>&amp;quot;/key/expression&amp;quot;&lt;/code>.&lt;/li>
+&lt;li>Trailing slashes are forbidden. Example: &lt;code>&amp;quot;key/expression/&amp;quot;&lt;/code>.&lt;/li>
+&lt;li>Empty chunks are forbidden. Example: &lt;code>&amp;quot;key//expression&amp;quot;&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;p>An error will be returned when trying to use such invalid key expressions.&lt;/p>
+&lt;h2 id="apis">APIs&lt;/h2>
+&lt;p>In zenoh version 0.6.0, zenoh and zenoh-net APIs have been merged into a single API.&lt;/p>
+&lt;h2 id="configuration">Configuration&lt;/h2>
+&lt;p>In v0.5.x the Zenoh configuration was a list of key/value pairs.
+In v0.6.x the has a structured format which can be expressed in JSON, JSON5 or YAML.&lt;/p></description></item><item><title>Migrating from Zenoh v0.5.x Rust API to Zenoh v0.6.x Rust API</title><link>/docs/migration_0.5_to_0.6/migrationguide-rust-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-rust-v0.5.x-v0.6.x/</guid><description>&lt;p>In zenoh version 0.6.0, zenoh and zenoh-net APIs have been merged into a single API.&lt;/p>
+&lt;h2 id="general-considerations-about-the-new-rust-v06x-zenoh-api">General considerations about the new Rust v0.6.x zenoh API&lt;/h2>
+&lt;h3 id="resolvables">Resolvables&lt;/h3>
+&lt;p>Most of the operations of the new API return builder structs that implement the &lt;code>Resolvable&lt;/code>, &lt;code>SyncResolve&lt;/code> and &lt;code>AsyncResolve&lt;/code> traits. A &lt;code>res&lt;/code> function needs to be called on those builders to obtain the final result of the operation. When using Rust sync, the &lt;code>SyncResolve&lt;/code> trait needs to be used and the &lt;code>res&lt;/code> function directly returns the final result. When using Rust async/await, &lt;code>AsyncResolve&lt;/code> trait needs to be used and the &lt;code>res&lt;/code> function returns a &lt;code>Future&lt;/code>.&lt;/p></description></item><item><title>Migrating from Zenoh-C v0.5.x zenoh-net API to Zenoh-C v0.6.x zenoh API</title><link>/docs/migration_0.5_to_0.6/migrationguide-c-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-c-v0.5.x-v0.6.x/</guid><description>&lt;h3 id="opening-a-session">Opening a session&lt;/h3>
+&lt;p>All types and operations from the &lt;code>zn_*&lt;/code> primitives have been updated and migrated to the &lt;code>z_*&lt;/code> primitives.&lt;/p>
+&lt;p>&lt;em>zenoh v0.5.x&lt;/em>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-C" data-lang="C">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#078;font-weight:bold">zn_properties_t&lt;/span> &lt;span style="color:#555">*&lt;/span>config &lt;span style="color:#555">=&lt;/span> &lt;span style="color:#c0f">zn_config_default&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#078;font-weight:bold">zn_session_t&lt;/span> &lt;span style="color:#555">*&lt;/span>s &lt;span style="color:#555">=&lt;/span> &lt;span style="color:#c0f">zn_open&lt;/span>(config);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#069;font-weight:bold">if&lt;/span> (s &lt;span style="color:#555">==&lt;/span> &lt;span style="color:#366">NULL&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c0f">printf&lt;/span>(&lt;span style="color:#c30">&amp;#34;Unable to open session!&lt;/span>&lt;span style="color:#c30;font-weight:bold">\n&lt;/span>&lt;span style="color:#c30">&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c0f">exit&lt;/span>(&lt;span style="color:#555">-&lt;/span>&lt;span style="color:#f60">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;em>zenoh v0.6.x&lt;/em>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-C" data-lang="C">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#078;font-weight:bold">z_owned_config_t&lt;/span> config &lt;span style="color:#555">=&lt;/span> &lt;span style="color:#c0f">z_config_default&lt;/span>();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#078;font-weight:bold">z_owned_session_t&lt;/span> s &lt;span style="color:#555">=&lt;/span> &lt;span style="color:#c0f">z_open&lt;/span>(&lt;span style="color:#c0f">z_move&lt;/span>(config));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#069;font-weight:bold">if&lt;/span> (&lt;span style="color:#555">!&lt;/span>&lt;span style="color:#c0f">z_check&lt;/span>(s)) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c0f">printf&lt;/span>(&lt;span style="color:#c30">&amp;#34;Unable to open session!&lt;/span>&lt;span style="color:#c30;font-weight:bold">\n&lt;/span>&lt;span style="color:#c30">&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c0f">exit&lt;/span>(&lt;span style="color:#555">-&lt;/span>&lt;span style="color:#f60">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="subscribing">Subscribing&lt;/h3>
+&lt;p>For this release, Zenoh-C only supports subscribers with callbacks. It is possible to access samples through a callback by calling the &lt;code>callback&lt;/code> function passed as argument on &lt;code>declare_subscriber&lt;/code> function.&lt;/p></description></item><item><title>Migrating from Zenoh v0.5.x Python API to Zenoh v0.6.x Python API</title><link>/docs/migration_0.5_to_0.6/migrationguide-python-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-python-v0.5.x-v0.6.x/</guid><description>&lt;h2 id="explorability">Explorability&lt;/h2>
+&lt;p>In previous releases, the Python bindings were entirely defined in Rust, making it very hard for Pythoners to explore it.&lt;/p>
+&lt;p>With 0.6, the bindings have evolved: a &amp;ldquo;private&amp;rdquo; layer is exposed by Rust, and wrapped in Python, with 2 main advantages:&lt;/p>
+&lt;ul>
+&lt;li>IDEs can now find available symbols, signatures and documentation more easily.&lt;/li>
+&lt;li>Any dynamic type handling is done in Python, letting you investigate what happens depending on the types of values you pass more easily.&lt;/li>
+&lt;/ul>
+&lt;h2 id="handling-raii">Handling RAII&lt;/h2>
+&lt;p>The bindings are generated through &lt;code>pyo3&lt;/code>, which among other things ensures that the destructors of the wrapped Rust types get called when a value becomes inaccessible.&lt;/p></description></item><item><title>Migrating from Zenoh-Pico v0.5.x to Zenoh-Pico v0.6.x</title><link>/docs/migration_0.5_to_0.6/migrationguide-pico-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-pico-v0.5.x-v0.6.x/</guid><description>&lt;h2 id="general-considerations-about-the-new-zenoh-pico-v06x-api">General considerations about the new Zenoh-Pico v0.6.x API&lt;/h2>
+&lt;h3 id="ownership-model">Ownership model&lt;/h3>
+&lt;p>The new Zenoh-Pico API, similarly to the Zenoh-C API, introduced a more explicit ownership model to the user. Such model targets a better memory management where e.g. memory leaks can be easily identified and double free can be avoided. The user will have a clear understanding on what is owned by his side of the code, and what has been loaned or moved to the API.&lt;/p></description></item><item><title>Migrating from Zenoh-C to Zenoh-Pico (and vice-versa)</title><link>/docs/migration_0.5_to_0.6/migrationguide-zenohc-zenohpico/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-zenohc-zenohpico/</guid><description>&lt;p>Both Zenoh-C and Zenoh-Pico APIs offer a C client API for the zenoh protocol, thus this release took an extra step to make Zenoh-C code to be compatible with Zenoh-Pico code (and vice-versa). Such approach aids users to easily migrate its Zenoh-based code to microcontrollers and embedded systems.&lt;/p>
+&lt;p>Nevertheless, in order to keep your code optimal some minor changes might be required while moving from Zenoh-C to Zenoh-Pico:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>zc_*&lt;/strong> refers to Zenoh-C API only, while &lt;strong>zp_*&lt;/strong> refers to Zenoh-Pico API only.&lt;/li>
+&lt;li>Zenoh &lt;strong>configurations&lt;/strong> are handled in a different way.&lt;/li>
+&lt;li>&lt;strong>Read&lt;/strong> and &lt;strong>Lease&lt;/strong> tasks must be spawn and destroyed explicitly by the user.&lt;/li>
+&lt;li>Keyexpr to_string vs resolve&lt;/li>
+&lt;/ul>
+&lt;p>Everything else should be copy-paste friendly. Note that, although the API between Zenoh-C and Zenoh-Pico are the same, their ABI is different w.r.t. how parameters are passed to functions. Still, &lt;strong>z_loan&lt;/strong> and &lt;strong>z_move&lt;/strong> hide those differences from the user.&lt;/p></description></item><item><title>Concepts</title><link>/docs/migration_1.0/concepts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/concepts/</guid><description>&lt;p>The Zenoh team have been hard at work preparing an official version 1.0.0 of Zenoh!&lt;br>
+This major release comes with several API changes, quality of life improvements and developer conveniences.&lt;/p>
+&lt;p>We now have a more stable API and intend to keep backward compatibility in future Zenoh revisions.&lt;br>
+This guide is here to ease the transition to Zenoh 1.0.0 for our users!&lt;/p>
+&lt;h2 id="value-is-gone-long-live-zbytes">Value is gone, long live ZBytes&lt;/h2>
+&lt;p>We have replaced &lt;code>Value&lt;/code> with &lt;code>ZBytes&lt;/code> and &lt;code>Encoding&lt;/code>.&lt;br>
+&lt;code>ZBytes&lt;/code> is the type core to data representation in Zenoh, all API&amp;rsquo;s have been reworked to accept &lt;code>ZBytes&lt;/code> or something that can be converted into a &lt;code>ZBytes&lt;/code>.&lt;br>
+We have added a number of conversion implementations for language primitives as well as methods to seamlessly allow user defined structs to be serialized into &lt;code>ZBytes&lt;/code>.&lt;br>
+&lt;code>Sample&lt;/code>&amp;rsquo;s payloads are now &lt;code>ZBytes&lt;/code>. &lt;code>Publisher&lt;/code>, &lt;code>Queryable&lt;/code> and &lt;code>Subscriber&lt;/code> now expect &lt;code>ZBytes&lt;/code> for all their interfaces. The &lt;a href="#attachment">Attachment&lt;/a> API also now accepts &lt;code>ZBytes&lt;/code>.&lt;/p></description></item><item><title>Rust</title><link>/docs/migration_1.0/rust/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/rust/</guid><description>&lt;h2 id="module-reorganization">Module reorganization&lt;/h2>
+&lt;p>We reorganized the module tree, so import paths are not the same as before. The main difference is that everything should be imported via the root path &lt;code>zenoh::&lt;/code>. Here are some examples, but you can look into &lt;code>zenoh/src/lib.rs&lt;/code> for the complete list of changes.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-rust" data-lang="rust">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">// common use
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::config::&lt;span style="color:#555">*&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::{Config,&lt;span style="color:#bbb"> &lt;/span>Error,&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#366">Result&lt;/span>};&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// key_expr &amp;amp; selector
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::key_expr::{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>format::{kedefine,&lt;span style="color:#bbb"> &lt;/span>keformat},&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>keyexpr,&lt;span style="color:#bbb"> &lt;/span>KeyExpr,&lt;span style="color:#bbb"> &lt;/span>OwnedKeyExpr,&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>};&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// session
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::session::{init,&lt;span style="color:#bbb"> &lt;/span>open,&lt;span style="color:#bbb"> &lt;/span>EntityId,&lt;span style="color:#bbb"> &lt;/span>Session,&lt;span style="color:#bbb"> &lt;/span>SessionInfo};&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// publisher &amp;amp; subscriber
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::pubsub::{Publisher,&lt;span style="color:#bbb"> &lt;/span>Reliability,&lt;span style="color:#bbb"> &lt;/span>Subscriber};&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// query &amp;amp; queryable &amp;amp; selectors
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::query::{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>ConsolidationMode,&lt;span style="color:#bbb"> &lt;/span>Parameters,&lt;span style="color:#bbb"> &lt;/span>Query,&lt;span style="color:#bbb"> &lt;/span>QueryConsolidation,&lt;span style="color:#bbb"> &lt;/span>QueryTarget,&lt;span style="color:#bbb"> &lt;/span>Queryable,&lt;span style="color:#bbb"> &lt;/span>Reply,&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>Selector,&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>};&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// ZBytes &amp;amp; encoding
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::bytes::{ZBytes,&lt;span style="color:#bbb"> &lt;/span>Encoding};&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// sample
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::sample::{Locality,&lt;span style="color:#bbb"> &lt;/span>Sample};&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// quality of service
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::qos::{CongestionControl,&lt;span style="color:#bbb"> &lt;/span>Priority,&lt;span style="color:#bbb"> &lt;/span>QoSBuilderTrait};&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="removal-of-the-sync-and-async-preludes">Removal of the sync and async preludes&lt;/h2>
+&lt;p>Zenoh preludes has been deprecated and are no more used in the API. The API has also been made asynchronous first: all operations like put/get/etc. can be awaited directly.
+Making synchronous calls now requires to import &lt;code>zenoh::Wait&lt;/code>, and use &lt;code>wait()&lt;/code> method, replacing the old &lt;code>res()&lt;/code> method.
+To make the migration easier, there is a deprecation prompt if you use the old API convention.&lt;/p></description></item><item><title>C++</title><link>/docs/migration_1.0/c++/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/c++/</guid><description>&lt;p>Zenoh 1.0.0 brings a number of changes to the API, with a concentrated effort to bring the C++ API to more closely resemble the Rust API in usage.&lt;/p>
+&lt;p>The improvements we bring in this update include:&lt;/p>
+&lt;ul>
+&lt;li>A simpler organization of the Zenoh classes, abstracting away the notion of View and Closure.&lt;/li>
+&lt;li>Improved and more flexible Error Handling through error codes and exceptions.&lt;/li>
+&lt;li>Support for serialization of common types like strings, numbers, vectors through Codecs.&lt;/li>
+&lt;li>Ability for users to define their own Codecs (for their own types or to overwrite the default one)!&lt;/li>
+&lt;li>Improved stream handlers and callback support.&lt;/li>
+&lt;li>Simpler attachment API.&lt;/li>
+&lt;/ul>
+&lt;p>Now that the &lt;em>amuse bouche&lt;/em> is served, let&amp;rsquo;s get into the main course!&lt;/p></description></item><item><title>C / Pico</title><link>/docs/migration_1.0/c_pico/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/c_pico/</guid><description>&lt;h2 id="general-api-changes">General API changes&lt;/h2>
+&lt;p>We have reworked the type naming to clarify how types should be interacted with.&lt;/p>
+&lt;h3 id="owned-types">Owned types&lt;/h3>
+&lt;p>Owned types are allocated by the user and it is their responsibility to drop them using &lt;code>z_drop&lt;/code> (or &lt;code>z_close&lt;/code> for sessions).&lt;/p>
+&lt;p>Previously, we were returning Zenoh structures by value. In Zenoh 1.0.0, a reference to memory must be provided. This allows initializing user allocated structures and frees return value for error codes.&lt;/p></description></item><item><title>Python</title><link>/docs/migration_1.0/python/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/python/</guid><description>&lt;h2 id="highlights">Highlights&lt;/h2>
+&lt;p>The library has been fully rewritten to use only Rust. It should make no difference for users, except for a significant performance improvement.&lt;/p>
+&lt;p>The API has also been reworked to feel more pythonic, using notably context managers.&lt;/p>
+&lt;h2 id="context-managers-and-background-callbacks">Context managers and background callbacks&lt;/h2>
+&lt;p>You &lt;em>should&lt;/em> close the zenoh session after use and the recommended way is through context manager:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#069;font-weight:bold">import&lt;/span> &lt;span style="color:#0cf;font-weight:bold">zenoh&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#069;font-weight:bold">with&lt;/span> zenoh&lt;span style="color:#555">.&lt;/span>open(zenoh&lt;span style="color:#555">.&lt;/span>Config()) &lt;span style="color:#069;font-weight:bold">as&lt;/span> session:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#09f;font-style:italic"># `session.close()` will be called at the end of the block&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Session-managed objects like subscribers or queryables can also be managed using context managers:&lt;/p></description></item><item><title>Java</title><link>/docs/migration_1.0/java/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/java/</guid><description>&lt;h1 id="java-api-migration-guide-for-100">Java API migration guide for 1.0.0&lt;/h1>
+&lt;p>The API has been extensively modified with the following goals in mind:&lt;/p>
+&lt;ul>
+&lt;li>Match the API rework done through the Rust Zenoh API.&lt;/li>
+&lt;li>Abstracting users from the underlying native mechanisms.&lt;/li>
+&lt;li>Making the API more idiomatic, more &amp;ldquo;imperative&amp;rdquo;.&lt;/li>
+&lt;/ul>
+&lt;h2 id="remotion-of-the-builder-patterns-and-options-parameters">Remotion of the builder patterns and options parameters&lt;/h2>
+&lt;p>Throughout the 0.11.0 API, we were exposing builders, for instance:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>session.&lt;span style="color:#309">put&lt;/span>(keyExpr,&lt;span style="color:#bbb"> &lt;/span>value)&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>.&lt;span style="color:#309">congestionControl&lt;/span>(CongestionControl.&lt;span style="color:#309">BLOCK&lt;/span>)&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>.&lt;span style="color:#309">priority&lt;/span>(Priority.&lt;span style="color:#309">REALTIME&lt;/span>)&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>.&lt;span style="color:#309">res&lt;/span>()&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This seemed odd, because &amp;ldquo;put&amp;rdquo; is an imperative statement. This could lead to confusions
+since it&amp;rsquo;s not evident that instead of performing the put operation, that function returns
+a builder that must be built with a &amp;lsquo;res()&amp;rsquo; (from resolve) function.
+After some deliberation, we opted for the following approach:&lt;/p></description></item><item><title>Kotlin</title><link>/docs/migration_1.0/kotlin/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/kotlin/</guid><description>&lt;h1 id="kotlin-api-migration-guide-for-100">Kotlin API migration guide for 1.0.0&lt;/h1>
+&lt;p>The API has been extensively modified with the following goals in mind:&lt;/p>
+&lt;ul>
+&lt;li>Enhancing the API to be more idiomatic to Kotlin.&lt;/li>
+&lt;li>Match the API rework done through the Rust Zenoh API.&lt;/li>
+&lt;li>Abstracting users from the underlying native mechanisms&lt;/li>
+&lt;/ul>
+&lt;h2 id="default-arguments">Default arguments&lt;/h2>
+&lt;p>Throughout the 0.11.0 API we were exposing builders, however we decided to replace all of them with the more Kotlin-idiomatic way of the default arguments.&lt;/p></description></item><item><title>A Year Full of Zenoh</title><link>/blog/2020-01-01-zenohtude/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>/blog/2020-01-01-zenohtude/</guid><description>&lt;p>First of all we would like to take a moment to wish all of you a 2020 filled with joy, health, peace and success.&lt;/p>
+&lt;p>This year marks a very important landmark for us. After having kicked-off the &lt;a href="http://edgenative.eclipse.org">Eclipse Edge Native&lt;/a> working group, last December, we are bringing &lt;a href="https://projects.eclipse.org/proposals/eclipse-zenoh">zenoh&lt;/a> to Eclipse and are starting to work a &lt;a href="https://www.rust-lang.org">Rust&lt;/a> rewrite of the &lt;strong>zenoh&lt;/strong> router.
+As part for the rewrite we have just about to complete a review of the &lt;strong>zenoh&lt;/strong> protocol and will be updating the specification accordingly in the weeks to come.&lt;/p></description></item><item><title>Zenoh Tidings</title><link>/blog/2020-06-29-zenoh-tidings/</link><pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate><guid>/blog/2020-06-29-zenoh-tidings/</guid><description>&lt;p>In our last blog we had announced a rewrite of &lt;a href="http://zenoh.io">&lt;strong>zenoh&lt;/strong>&lt;/a> in &lt;a href="http://rust-lang.org">Rust&lt;/a>. The wrote the first version of zenoh in &lt;a href="http://ocaml.org">OCaml&lt;/a>, a super-neat ML-derived functional programming language. &lt;a href="http://ocaml.org">OCaml&lt;/a> allowed us to experiment very quickly and have good performances. Yet, one of the major feedback we were receiving from the community was that few people knew this programming language and this was limiting contributions. Beside, we had the desire to make zenoh even faster and smaller. One obvious choice would have been to write the new version in C/C++, yet something we did not want to loose were the safety properties we enjoyed with &lt;a href="http://ocaml.org">OCaml&lt;/a>. Additionally, if we had to leave our beloved &lt;a href="http://ocaml.org">OCaml&lt;/a>, we did not want to completely give away high level abstractions. We also wanted to avoid languages that had a heavy runtime and a garbage collector. We had already looked at &lt;a href="http://rust-lang.org">Rust&lt;/a> back in 2015, but at the point we did not feel it was the right choice for us. The improvements introduced in the programming language with the 2018 edition along with the introduction at a language level &lt;strong>async&lt;/strong> make &lt;a href="http://rust-lang.org">Rust&lt;/a> a perfect choice for zenoh.&lt;/p></description></item><item><title>Zenoh Aithusa Hatched Out!</title><link>/blog/2020-10-08-aithusa/</link><pubDate>Thu, 08 Oct 2020 00:00:00 +0000</pubDate><guid>/blog/2020-10-08-aithusa/</guid><description>&lt;p>We have been waiting this very moment for several months. Months of patient
+dedication, months of hard and creative work. Months in which each and every
+member of the &lt;strong>zenoh&lt;/strong> team has made his and her best to give our little dragon all
+it needed to succed in the complicated world of Internet Scale Protocols.&lt;/p>
+&lt;p>Today, at about 11.00 Paris Time &lt;strong>Zenoh Aithusa&lt;/strong> Hatched Out!&lt;/p>
+&lt;p>Aithusa is the code-name for the first release of our Rust-based zenoh infrastructure,
+A supercharged of new features and improvements, including better performance,
+improved network scheduling, ROS2 integration, and DDS Plugin.&lt;/p></description></item><item><title>Minimizing Discovery Overhead in ROS2</title><link>/blog/2021-03-23-discovery/</link><pubDate>Tue, 23 Mar 2021 00:00:00 +0000</pubDate><guid>/blog/2021-03-23-discovery/</guid><description>&lt;p>The amount of discovery traffic generated by ROS2 is a problem that has
+received an increasing attention in the community. The discovery overhead
+issue becomes extremely severe when running over wireless technologies,
+such as WiFi, and in particular in combination with more complex robots, robot
+swarms and tele-operation. The &lt;a href="https://docs.ros.org/en/foxy/Tutorials/Discovery-Server/Discovery-Server.html">ROS2 Discovery Service&lt;/a> has been proposed
+as a way to alleviate the problem, not necessarily to solve it.&lt;/p>
+&lt;p>In the reminder of this post I&amp;rsquo;ll explain the essence of problem,
+remind what was tried in the past and unveils a &lt;a href="https://github.com/eclipse-zenoh/zenoh">&lt;strong>Zenoh&lt;/strong>&lt;/a> based solution that
+(1) drastically reduces DDS discovery overhead &amp;ndash; from 97% to 99,9% in tested scenarios,
+(2) allows for peer-to-peer communication when useful,
+(3) enables efficient Internet-scale routing when necessary, and
+(3) does not require any changes to your existing ROS2 systems.&lt;/p></description></item><item><title>Integrating ROS2 with Eclipse zenoh</title><link>/blog/2021-04-28-ros2-integration/</link><pubDate>Wed, 28 Apr 2021 00:00:00 +0000</pubDate><guid>/blog/2021-04-28-ros2-integration/</guid><description>&lt;p>In our &lt;a href="./2021-03-23-discovery/">previous blog&lt;/a> we demonstrated how the &lt;a href="https://github.com/eclipse-zenoh/zenoh-plugin-dds">zenoh bridge for DDS&lt;/a> allows to (1) bridge DDS communications through zenoh, and (2) reduce by up to 99.97% the discovery traffic between the nodes.&lt;/p>
+&lt;p>The previous blog was focusing on demonstrating the advantages of using zenoh as the mean for ROS2-to-ROS2 communication over wireless technologies. In this blog, we’ll go one step further and will demonstrate how you can easily write native zenoh applications —meaning that has no dependencies on ROS2 — and seamlessly interact with &lt;a href="https://docs.ros.org/en/foxy/index.html">ROS2&lt;/a> applications. Finally, we will show how you can extend your communication to Internet scale, allowing to cover all the typical cases for Robot-to-anything (R2X) communication.&lt;/p></description></item><item><title>Zenoh Reliability, Scalability and Congestion Control</title><link>/blog/2021-06-14-zenoh-reliability/</link><pubDate>Mon, 14 Jun 2021 00:00:00 +0000</pubDate><guid>/blog/2021-06-14-zenoh-reliability/</guid><description>&lt;p>Providing many to many reliable communications over a wide area network is challenging. This may even be an understatement, as theoretically, even simple point to point reliable communication over asynchronous channels requires either infinite amount of memory or giving up progress… but guess what, many real systems can’t afford neither of those restrictions. Thus, trade-offs need to be made regarding reliability for the system to work, scale smoothly and have sufficiently strong guarantees. System&amp;rsquo;s heterogeneity, with respect to network capabilities and nodes resources, has important consequences and requires proper strategies to avoid a slow node to impact the entire system.&lt;/p></description></item><item><title>Zenoh overhead: a story from our community</title><link>/blog/2021-07-05-zenoh-overhead/</link><pubDate>Mon, 05 Jul 2021 00:00:00 +0000</pubDate><guid>/blog/2021-07-05-zenoh-overhead/</guid><description>&lt;p>Zenoh&amp;rsquo;s webpage states that zenoh has a minimal wire overhead of &lt;strong>5 bytes&lt;/strong>. This is the result of careful considerations in the zenoh design: from using &lt;strong>Variable Length Encoding (VLE)&lt;/strong>, to efficient &lt;strong>mapping of resource keys&lt;/strong> and &lt;strong>automatic batching&lt;/strong>.&lt;/p>
+&lt;p>If you are intrigued about this and want to know more, rest assured that you are not alone. In fact, the minimal overhead aspect of zenoh attracted a lot of attention and curiosity in our community that led to some interesting discussions on zenoh&amp;rsquo;s &lt;a href="https://discord.gg/cY4nVjUd">Discord Server&lt;/a>.&lt;/p></description></item><item><title>Zenoh performance: a stroll in Rust async wonderland</title><link>/blog/2021-07-13-zenoh-performance-async/</link><pubDate>Tue, 13 Jul 2021 00:00:00 +0000</pubDate><guid>/blog/2021-07-13-zenoh-performance-async/</guid><description>&lt;p>Since its very first public release, zenoh provided impressive and easily accessible performances (see &lt;strong>&lt;a href="https://zenoh.io/blog/2020-06-29-zenoh-tidings/">here&lt;/a>&lt;/strong>).
+But instead of resting on laurels, the zenoh team has been relentlessly working on further improving them.&lt;/p>
+&lt;p>As a result of this work, we are happy to announce that zenoh delivers at least twice the performances than before:&lt;/p>
+&lt;ul>
+&lt;li>more than &lt;strong>3.5M msg/s&lt;/strong> with 8 bytes payload,&lt;/li>
+&lt;li>more than &lt;strong>45 Gb/s&lt;/strong> with 1 Megabyte payload,&lt;/li>
+&lt;li>a latency as little as &lt;strong>35 µsec&lt;/strong> in backlogged scenarios.&lt;/li>
+&lt;/ul>
+&lt;p>The reminder of this post will take you through the journey of zenoh profiling along with the nuts and bolts of Rust async programming.
+If you are unfamiliar with Rust and you are just interested in the results, you can jump directly &lt;strong>&lt;a href="#looking-at-the-results">here&lt;/a>&lt;/strong>.&lt;/p></description></item><item><title>Indy Autonomous Challenge (IAC): Experiences from the Trenches</title><link>/blog/2021-09-28-iac-experiences-from-the-trenches/</link><pubDate>Tue, 28 Sep 2021 00:00:00 +0000</pubDate><guid>/blog/2021-09-28-iac-experiences-from-the-trenches/</guid><description>&lt;p>The &lt;a href="https://www.indyautonomouschallenge.com/">Indy Autonomous Challenge&lt;/a> is a competition of autonomous racecars between teams of university students. Even if fully autonomous, each car needs to communicate with its team’s base station to report telemetry, status and to receive commands, such as emergency stop. The communication infrastructure between the cars and the base stations leverages &lt;a href="https://www.youtube.com/watch?v=EFvkFx1lwoY&amp;amp;ab_channel=Cisco">CISCO Ultra-Reliable Wireless Backhaul (CURWB)&lt;/a>. As all cars share the same infrastructure, some limitations have been imposed on teams in terms of packet rates and bandwidth usage.&lt;/p></description></item><item><title>Zenoh goes embedded with zenoh-pico</title><link>/blog/2021-10-04-zenoh-pico-guide/</link><pubDate>Mon, 04 Oct 2021 00:00:00 +0000</pubDate><guid>/blog/2021-10-04-zenoh-pico-guide/</guid><description>&lt;p>In this post, we will introduce &lt;a href="https://github.com/eclipse-zenoh/zenoh-pico">zenoh-pico&lt;/a>, &lt;strong>a lightweight implementation of Zenoh APIs in C, fully compatible with its Rust counterpart&lt;/strong>.&lt;/p>
+&lt;p>As a result of this work, we are happy to announce that we successfully deployed and tested Zenoh in &lt;a href="https://www.zephyrproject.org">Zephyr&lt;/a> (reel_board and nucleo-f767zi) and &lt;a href="https://www.arduino.cc">Arduino&lt;/a> (ESP32) compatible boards, with initial results showcasing a quite remarkable performance within the microcontrollers landscape:&lt;/p>
+&lt;ul>
+&lt;li>Memory footprint of only ~2.8% (nucleo-f767zi), ~9.2% (reel_board), and ~0.9% (ESP32).&lt;/li>
+&lt;li>Deliver more than 5.2k msg/s with a 8 bytes payload in ESP32.&lt;/li>
+&lt;li>Application-level throughput of ~9.2 Mbps (thus, saturating a 10 Mbps Ethernet link) with nucleo-f767zi.&lt;/li>
+&lt;/ul>
+&lt;p>The reminder of this post will get you started with the environment setup, library installation, and project creation for your microcontrollers.&lt;/p></description></item><item><title>ROS 2 and microcontrollers integration via Zenoh-pico</title><link>/blog/2021-11-09-ros2-zenoh-pico/</link><pubDate>Tue, 09 Nov 2021 00:00:00 +0000</pubDate><guid>/blog/2021-11-09-ros2-zenoh-pico/</guid><description>&lt;p>In a &lt;a href="https://zenoh.io/blog/2021-04-28-ros2-integration/">previous blog&lt;/a>, we showed how you can easily write native Zenoh applications and seamlessly interact with ROS 2 applications. This was exemplified by developing a native Zenoh teleoperation application to control a ROS 2 powered robot, namely a &lt;a href="https://www.robot-advance.com/EN/actualite-turtlebot3-burger-by-robotis-149.htm">turtlebot&lt;/a> or its simulation counterpart &lt;a href="http://wiki.ros.org/turtlesim">turtlesim&lt;/a>, from anywhere in the world. In this blog, we will go one step further by trying to make it cool and fun &amp;ndash; together with a bit of nostalgia.&lt;/p></description></item><item><title>DragonBotOne Egg Hatching with Zenoh and Zenoh-Pico</title><link>/blog/2022-02-08-dragonbot/</link><pubDate>Tue, 08 Feb 2022 00:00:00 +0000</pubDate><guid>/blog/2022-02-08-dragonbot/</guid><description>&lt;p>In previous blogs &lt;a href="https://zenoh.io/blog/2021-04-28-ros2-integration/">(1)&lt;/a>&lt;a href="https://zenoh.io/blog/2021-11-09-ros2-zenoh-pico/">(2)&lt;/a>, we showed how you can easily develop native Zenoh applications and seamlessly integrate them with ROS2 applications by using Zenoh bridge for DDS. In particular, this was successfully exemplified by using a TurtleBot, a well-known, low-cost, personal robot kit with open-source software and hardware.&lt;/p>
+&lt;p>In this blog, we go one step further to show how you can bring Zenoh down to the TurtleBot’s microcontroller and control it from a different geographic location via a Zenoh infrastructure. By following a native Zenoh approach, you can rely on better decentralization concepts where no translation semantics are required.&lt;/p></description></item><item><title>Mobility, Latency and Energy saving</title><link>/blog/2022-03-30-zenoh-mobility/</link><pubDate>Wed, 30 Mar 2022 00:00:00 +0000</pubDate><guid>/blog/2022-03-30-zenoh-mobility/</guid><description>&lt;p>Connected cars, smart factories, swarms of robots… More and more applications need device mobility and require low latency for local device to device communications. With the increases in energy costs and its constrained availability, there is an increasing necessity to optimize data paths and to avoid unnecessary data transmissions – as just for clarity, communications takes the lion share in energy consumption when compared to computation.&lt;/p>
+&lt;p>Cloud centric architectures are energetically greedy and offer poor latency. Decentralization becomes an increasingly pressing necessity. In this blog post we will see why mobility raises complex challenges in decentralized deployments and how zenoh, with its efficient discovery and dynamic routing, can offer seamless session migration and overcome those obstacles.&lt;/p></description></item><item><title>A Performance Evaluation on Rust Asynchronous Frameworks</title><link>/blog/2022-04-14-rust-async-eval/</link><pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate><guid>/blog/2022-04-14-rust-async-eval/</guid><description>&lt;p>As we previously mentioned in &lt;a href="https://zenoh.io/blog/2021-07-13-zenoh-performance-async/">this blog post&lt;/a>, Zenoh is written in &lt;strong>Rust&lt;/strong> and leverages the &lt;strong>async&lt;/strong> features to achieve high performance and scalability. At the present stage, we rely on the &lt;a href="https://async.rs/">async_std&lt;/a> framework – a decision that we took after a careful performance evaluation of the frameworks available in late 2019. This framework has proven to be quite effective, allowing Zenoh to reach more than &lt;strong>4M&lt;/strong> msg/s with 8 bytes payload and over &lt;strong>45Gb/s&lt;/strong> with 1MiB payload while keeping latency of &lt;strong>~30µsS&lt;/strong>.&lt;/p></description></item><item><title>Zenoh-Pico: Above and Beyond</title><link>/blog/2022-06-09-zenoh-pico-above-and-beyond/</link><pubDate>Thu, 09 Jun 2022 00:00:00 +0000</pubDate><guid>/blog/2022-06-09-zenoh-pico-above-and-beyond/</guid><description>&lt;p>In a &lt;a href="https://zenoh.io/blog/2021-10-04-zenoh-pico-guide/">previous blog post&lt;/a>, we introduced Zenoh-Pico, an implementation of Zenoh for microcontrollers and embedded devices, along with a preliminary performance results and its integration on off-the-shelf robots (by bridging both legacy ROS2+DDS and Zenoh systems or by making it a full-fledged Zenoh system).&lt;/p>
+&lt;p>In this post, we will dive deeper on Zenoh-Pico, show, how Zenoh-Pico is capable of:&lt;/p>
+&lt;ul>
+&lt;li>exchanging close to &lt;strong>2.5M msg/s&lt;/strong> for small payloads, and over &lt;strong>25 Gbps&lt;/strong> for larger messages,&lt;/li>
+&lt;li>achieving end-to-end latency (i.e., one way delay) as small as &lt;strong>45 µsec&lt;/strong> and &lt;strong>15 µsec&lt;/strong> for unicast and multicast transports, respectively,&lt;/li>
+&lt;li>minimizing the overhead in the wire down to &lt;strong>5 bytes&lt;/strong> per data transmission,&lt;/li>
+&lt;li>fitting all its capabilities in less than &lt;strong>50KB&lt;/strong> footprint, which can be quickly reduced to &lt;strong>~15KB&lt;/strong> in tailored compilation setups, and&lt;/li>
+&lt;li>provides &lt;strong>simple&lt;/strong> to use and yet &lt;strong>powerful APIs&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;p>The remainder of this post will compare Zenoh-Pico against technologies currently used in embedded devices, and more specifically with DDS-XRCE, MQTT, and OPC-UA. We will depart from higher layers analyzing the ergonomics and simplicity of the APIs, we will then look into performances and compare throughput, latency, wire overhead, and flash memory footprint.&lt;/p></description></item><item><title>There is Land Besides IP: How to Cross It with Zenoh</title><link>/blog/2022-08-12-zenoh-serial/</link><pubDate>Fri, 12 Aug 2022 00:00:00 +0000</pubDate><guid>/blog/2022-08-12-zenoh-serial/</guid><description>&lt;p>Since the early 2000s the transition towards All-IP networks had been pushed as a natural evolutionary path. Today, IP is the dominant stack for packet-based integrated networks deployed worldwide. However, there is land beyond the ocean…in other words, &lt;strong>there is an entire and growing non-IP universe that cannot be ignored&lt;/strong>. This universe expands at the outskirts of ordinary IP networks, where other protocols shine brighter because of more stringent requirements on &lt;strong>overhead, energy-efficienciency, latency / real-time, and cost&lt;/strong>.&lt;/p></description></item><item><title>Zenoh Bahamut takes flight!</title><link>/blog/2022-09-30-zenoh-bahamut/</link><pubDate>Fri, 30 Sep 2022 00:00:00 +0000</pubDate><guid>/blog/2022-09-30-zenoh-bahamut/</guid><description>&lt;p>The little Zenoh dragon has vigorously grown up in the last year and now craves to take higher flight towards the highest peaks in marvellous lands.&lt;/p>
+&lt;p>&lt;img src="../../img/zenoh-dragon-small.png" alt="Zenoh logo">&lt;/p>
+&lt;p>The new 0.6.0 release of Zenoh is code-named Bahamut: the king of the good dragons. This reflects the major efforts the development team and the community have put in Zenoh to make it grow healthy, strong, wise, and resolute. Bahamut comes with a supercharged list of new features and improvements, including:&lt;/p></description></item><item><title>Keeping storages aligned in Zenoh</title><link>/blog/2022-11-29-zenoh-alignment/</link><pubDate>Tue, 29 Nov 2022 00:00:00 +0000</pubDate><guid>/blog/2022-11-29-zenoh-alignment/</guid><description>&lt;p>&lt;a href="https://zenoh.io/blog/2022-09-30-zenoh-bahamut/#replicated-storages">Zenoh Bahamut&lt;/a> introduced a new experimental feature to support replicated storage alignment. With this feature, Zenoh ensures eventual consistency for storages that subscribe to the same key expression, even in the presence of network partitions and system faults. As promised, today we dig into some details about the storage alignment protocol. We will also give insights on how to efficiently configure a replicated storage in Zenoh.&lt;/p>
+&lt;hr>
+&lt;h1 id="replicated-storages-in-zenoh">Replicated Storages in Zenoh&lt;/h1>
+&lt;p>As we already know, Zenoh allows a user to configure storages on a given key expression. For critical data, users can decide to have several copies (called replicas) at multiple locations. Moreover, users can transparently use different storage technologies at different locations to replicate their data!&lt;/p></description></item><item><title>Zenoh Charmander is coming to town</title><link>/blog/2023-01-10-zenoh-charmander/</link><pubDate>Tue, 10 Jan 2023 00:00:00 +0000</pubDate><guid>/blog/2023-01-10-zenoh-charmander/</guid><description>&lt;p>The new &lt;a href="https://github.com/eclipse-zenoh/zenoh/releases/tag/0.7.0-rc">Zenoh 0.7.0 release&lt;/a>, codename Charmander, brings to the table many features requested by the community on the &lt;a href="https://discord.gg/2GJ958VuHs">Zenoh’s Discord server&lt;/a>.
+Charmander introduces some long-awaited functionalities:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#mutual-tls-authentication">Mutual TLS authentication&lt;/a>;&lt;/li>
+&lt;li>&lt;a href="#mqtt-plugin">MQTT plugin&lt;/a>;&lt;/li>
+&lt;li>&lt;a href="#s3-storage-backend">S3 storage backend&lt;/a>;&lt;/li>
+&lt;/ul>
+&lt;p>some new freshly-landed functionalities:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#query-payload">Query payload&lt;/a>;&lt;/li>
+&lt;li>&lt;a href="#c-bindings">C++ binding&lt;/a>;&lt;/li>
+&lt;li>&lt;a href="#connectivity-status-and-notifications">Connectivity status and notifications&lt;/a>;&lt;/li>
+&lt;/ul>
+&lt;p>and &lt;a href="#zenoh-pico-and-misra-c">MISRA-C compliance for Zenoh-Pico&lt;/a>.&lt;/p>
+&lt;hr>
+&lt;h1 id="mutual-tls-authentication">Mutual TLS authentication&lt;/h1>
+&lt;p>Until now, Zenoh was only supporting server-based authentication.
+That is the kind of authentication you experience when surfing the web using HTTPS: your browser verifies if the server it is connecting to is legit, but the server does not authenticate your browser.
+That’s why you need to use the user and password if you want to authenticate to the service itself.
+In Zenoh, it was the same until now as shown in the figure below.
+As a client or peer you could verify the authenticity of the router by using &lt;a href="https://zenoh.io/docs/manual/tls/">TLS&lt;/a>, but then the router would use &lt;a href="https://zenoh.io/docs/manual/user-password/">user and password authentication&lt;/a> to validate the clients, peers as well as other routers.&lt;/p></description></item><item><title>The Blue Dragon meets the Wire’s Shark</title><link>/blog/2023-01-17-zenoh-wireshark/</link><pubDate>Wed, 18 Jan 2023 00:00:00 +0000</pubDate><guid>/blog/2023-01-17-zenoh-wireshark/</guid><description>&lt;p>In this blog post, we will introduce Zenoh’s best friend, the &lt;strong>&lt;a href="https://github.com/ZettaScaleLabs/zenoh-dissector">Zenoh protocol dissector for Wireshark&lt;/a>&lt;/strong>. It allows you to inspect and understand the Zenoh packets exchanged in your network. It is especially useful when you need to:&lt;/p>
+&lt;ul>
+&lt;li>troubleshoot network problems,&lt;/li>
+&lt;li>examine security issues,&lt;/li>
+&lt;li>verify network applications,&lt;/li>
+&lt;li>debug protocol implementations,&lt;/li>
+&lt;li>and even learn about Zenoh’s protocol internals.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="../../img/20230117-blog-zenoh-wireshark/zenoh-wireshark.png" alt="Filter Zenoh">&lt;/p>
+&lt;p>But let’s find out more!&lt;/p>
+&lt;h1 id="what-is-wireshark">What is Wireshark?&lt;/h1>
+&lt;p>&lt;a href="https://www.wireshark.org/">Wireshark&lt;/a> is a &lt;strong>widely-used network protocol analyzer&lt;/strong>, mostly used to sniff which packets are crossing your network. In other words, it &lt;strong>captures packets and represents them in a human-understandable format&lt;/strong>. This capability of understanding what packets are being exchanged in your network is helpful in a multitude of situations, including troubleshooting network problems, examining security issues, verifying network applications, debugging protocol implementations, and even learning about the network protocol internals.
+Zenoh, as a pub/sub/query protocol, is the ideal stack for implementing distributed applications in the Cloud to Thing continuum. Thus, &lt;strong>understanding the network&lt;/strong> and what happens at Zenoh-level communications will allow you to &lt;strong>better understand your applications behavior&lt;/strong>.&lt;/p></description></item><item><title>Data Flow programming with Zenoh-Flow</title><link>/blog/2023-02-10-zenoh-flow/</link><pubDate>Fri, 10 Feb 2023 00:00:00 +0000</pubDate><guid>/blog/2023-02-10-zenoh-flow/</guid><description>&lt;p>&lt;a href="https://github.com/eclipse-zenoh/zenoh-flow">Zenoh-Flow&lt;/a> was the concluding episode of Zenoh’s webinar series &amp;ldquo;Taming the Dragon&amp;rdquo; released recently and available on ZettaScale’s Youtube channel. In case you haven’t watched the webinar (which you should definitely do!), click &lt;a href="https://www.youtube.com/playlist?list=PLZDEtJusUvAY04pwmpY8uqCG5iQ7NgSrR">here&lt;/a>!
+This blog provides additional insights about Zenoh-Flow: its origin, motivating use-cases, and upcoming features.&lt;/p>
+&lt;h2 id="data-flow-programming">Data Flow Programming&lt;/h2>
+&lt;p>As we explained in our webinar, Zenoh-Flow is Zenoh’s native Data Flow Programming framework, offering a common abstraction applicable from the Data Center down to the microcontroller.&lt;/p></description></item><item><title>Comparing the Performance of Zenoh, MQTT, Kafka, and DDS</title><link>/blog/2023-03-21-zenoh-vs-mqtt-kafka-dds/</link><pubDate>Tue, 21 Mar 2023 00:00:00 +0000</pubDate><guid>/blog/2023-03-21-zenoh-vs-mqtt-kafka-dds/</guid><description>&lt;h3 id="prologue">Prologue&lt;/h3>
+&lt;p>This instalment features a blog contributed by a team of researchers from the prestigious
+&lt;a href="https://www.ntu.edu.tw/english/">National Taiwan University (NTU)&lt;/a>. This team has been using
+Zenoh for some time in R2X and V2X R&amp;amp;D projects and recently did an interesting performance comparison
+between our blue dragon protocol, MQTT, Kafka and DDS. I&amp;rsquo;d like to thank the NTU team on behalf of the
+Zenoh community as this evaluation answers a couple of questions we are asked quite often.&lt;/p></description></item><item><title>Securing Zenoh with LetsEncrypt: A Comprehensive Guide</title><link>/blog/2023-04-04-letsencrypt/</link><pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate><guid>/blog/2023-04-04-letsencrypt/</guid><description>&lt;p>Over the last months, many people have reached out to us in our &lt;a href="https://discord.gg/vSDSpqnbkm">Discord server&lt;/a> to ask if Zenoh was compatible with LetsEncrypt when using TLS as the communication transport. In other words, how to use LetsEncrypt with Zenoh.&lt;/p>
+&lt;p>In this blog post we&amp;rsquo;ll show it is indeed possible and we&amp;rsquo;ll go through the steps needed in order to set everything up. If you are already familiar with Transport Layer Security and LetsEncrypt, feel free to skip the explanation and &lt;a href="#how-to-use-letsencrypt-with-zenoh">dive straight into the tutorial&lt;/a>.&lt;/p></description></item><item><title>Zenoh Charmander Grows Stronger</title><link>/blog/2023-06-05-charmander2/</link><pubDate>Wed, 07 Jun 2023 00:00:00 +0000</pubDate><guid>/blog/2023-06-05-charmander2/</guid><description>&lt;p>The new &lt;a href="https://zenoh.io">Zenoh&lt;/a> Charmander 0.7.2-rc is out and comes with some aces up the sleeve! This patch release marks as stable the following APIs:&lt;/p>
+&lt;ul>
+&lt;li>C++ API&lt;/li>
+&lt;li>Query payload&lt;/li>
+&lt;/ul>
+&lt;p>It introduces some new features:&lt;/p>
+&lt;ul>
+&lt;li>C++ API is now compatible with both zenoh-c and zenoh-pico&lt;/li>
+&lt;li>TLS supports now Let’s Encrypt and IP-based certificates&lt;/li>
+&lt;li>Key formatters&lt;/li>
+&lt;li>Transport protocol whitelisting&lt;/li>
+&lt;/ul>
+&lt;p>It brings to life these experimental features:&lt;/p>
+&lt;ul>
+&lt;li>Zenoh and ROS1 bridge&lt;/li>
+&lt;li>Liveliness assertion&lt;/li>
+&lt;li>Transparent compression&lt;/li>
+&lt;/ul>
+&lt;p>And it also comes with a load of various bug fixes and improvements.&lt;/p></description></item><item><title>Zenoh Storage Gets a Boost: Empowering Storage with S3 Integration</title><link>/blog/2023-07-17-s3-backend/</link><pubDate>Mon, 17 Jul 2023 00:00:00 +0000</pubDate><guid>/blog/2023-07-17-s3-backend/</guid><description>&lt;p>As we happily announced on the blog post for the Zenoh 0.7.0-rc release (&lt;a href="https://zenoh.io/blog/2023-01-10-zenoh-charmander/">Zenoh Charmander is coming to town&lt;/a>), we now provide enhanced backend storage capabilities with the new AmazonS3/MinIO backend implementation.&lt;/p>
+&lt;p>This was a requested feature that originated within &lt;a href="https://discord.gg/2GJ958VuHs">our community on Discord&lt;/a> which soon made its way into the &lt;a href="https://github.com/eclipse-zenoh/roadmap">roadmap&lt;/a>.&lt;/p>
+&lt;p>The S3 backend can be installed by downloading the package from ​​&lt;a href="https://download.eclipse.org/zenoh/zenoh-backend-s3/latest/">https://download.eclipse.org/zenoh/zenoh-backend-s3/latest/&lt;/a>. The source code can be found in our eclipse-zenoh repository: &lt;a href="https://github.com/eclipse-zenoh/zenoh-backend-s3">https://github.com/eclipse-zenoh/zenoh-backend-s3&lt;/a>. Inside you will find a README with detailed instructions on how to set up this backend for both Amazon S3 and MinIO.&lt;/p></description></item><item><title>Zenoh Dragonite Took Off!</title><link>/blog/2023-10-03-zenoh-dragonite/</link><pubDate>Tue, 03 Oct 2023 00:00:00 +0000</pubDate><guid>/blog/2023-10-03-zenoh-dragonite/</guid><description>&lt;p>We are happy to announce the release of Zenoh 0.10.0-rc &lt;strong>Dragonite&lt;/strong>.&lt;/p>
+&lt;p>This version introduces new important features and improvements we have been working on the last couple of months. Specifically, this release introduces:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#the-best-pubsubquery-protocol-gets-better">Improved protocol: &lt;em>The Best Pub/Sub/Query Protocol Gets Better&lt;/em>&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#new-zenoh-wireshark-plugin">New WireShark Plugin&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#zenoh-kotlin-api">New Kotlin API&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#support-for-ultra-low-latency">Support for Ultra Low Latency&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#ros1-bridge">ROS1 Bridge&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#c-documentation--api-changes">C++ API Changes &amp;amp; Documentation release&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h1 id="the-best-pubsubquery-protocol-gets-better">The Best Pub/Sub/Query Protocol Gets Better!&lt;/h1>
+&lt;figure class="figure-inline">&lt;img src="../../img/20231003-blog-zenoh-dragonite/comic_august_2023.jpg"
+ alt="Zenoh Comic" width="40%"height="auto"
+ />
+&lt;/figure>
+
+&lt;p>With this release, Zenoh gets a series of protocol improvements and extensions, such as improved support for multicast and constrained devices. Additionally, some new mechanisms have been introduced to make it easier to add protocol extensions in the future without compromising backward compatibility.&lt;/p></description></item><item><title>Zenoh-Flow 0.6.0-rc: Getting Started</title><link>/blog/2024-01-31-zenoh-flow-getting-started/</link><pubDate>Wed, 31 Jan 2024 00:00:00 +0000</pubDate><guid>/blog/2024-01-31-zenoh-flow-getting-started/</guid><description>&lt;p>At ZettaScale, we are developing a next-generation middleware called &lt;a href="https://zenoh.io/docs/getting-started/first-app/">Zenoh&lt;/a>. Zenoh gained a lot of traction with very positive feedback from diverse industries, including Robotics, Industrial Automation, Automotive and more. If you haven’t tried it yet and you think it could help you, don’t hesitate, we guarantee it’s easy and worth your time!&lt;/p>
+&lt;p>This blog post will focus on another exciting project we are building: Zenoh-Flow. As its name indicates, Zenoh-Flow brings together the control of data flow programming and the power of Zenoh. Think of distributed applications where you don’t have to know the exact location of your computing units, but simply agree on the name (and type) of the resources they are going to exchange, how they are connected and, if needed, the properties of the host(s) on which they are going to run. Add to this list a validation step, uniquely named resources, great performance and you would start to have a good idea of what Zenoh-Flow has to offer!&lt;/p></description></item><item><title>Streamlining Zenoh router Monitoring with Datadog Integration</title><link>/blog/2024-04-17-datadog-zenoh-router-integration/</link><pubDate>Wed, 17 Apr 2024 00:00:00 +0000</pubDate><guid>/blog/2024-04-17-datadog-zenoh-router-integration/</guid><description>&lt;figure class="figure-inline">&lt;img src="../../img/20240417-Datadog-Zenoh-Router-Integration/1-dashboard.png"
+ alt="Integration Dashboard"height="auto"
+ />
+&lt;/figure>
+
+&lt;h2 id="unlocking-insights-enhancing-efficiency">Unlocking Insights, Enhancing Efficiency&lt;/h2>
+&lt;p>Today, we&amp;rsquo;re excited to introduce a powerful integration that greatly improves the monitoring experience for &lt;a href="https://zenoh.io/">Zenoh&lt;/a> users. While Zenoh has always prioritized efficiency and performance, our &lt;a href="https://docs.datadoghq.com/integrations/zenoh_router/">Datadog integration&lt;/a> brings a new dimension of visibility and insight to Zenoh deployments. By seamlessly integrating with Datadog, users can now monitor the state of their Zenoh routers with unprecedented ease and efficiency.&lt;/p>
+&lt;h2 id="empowering-zenoh-users">Empowering Zenoh Users&lt;/h2>
+&lt;p>The Zenoh Team understands the importance of providing users with the tools they need to manage their distributed systems effectively. With this integration, we&amp;rsquo;re empowering Zenoh users to gain valuable insights into router performance, network dynamics, and system health without sacrificing efficiency. By leveraging the robust monitoring capabilities of Datadog, users can optimize their Zenoh deployments with confidence.&lt;/p></description></item><item><title>Zenoh 0.11.0 "Electrode" release is out!</title><link>/blog/2024-04-30-zenoh-electrode/</link><pubDate>Mon, 13 May 2024 00:00:00 +0000</pubDate><guid>/blog/2024-04-30-zenoh-electrode/</guid><description>&lt;p>During the summer of 2023, we rolled out Zenoh v0.7.0 &amp;lsquo;Charmander,&amp;rsquo; which brought significant enhancements to the Zenoh ecosystem. This was followed by the release of v0.10.0-rc &amp;lsquo;Dragonite&amp;rsquo; in autumn, and a winter update with v0.10.1-rc.
+This spring, we are pleased to announce Zenoh v0.11.0 “Electrode”. This release introduces several new features, some key improvements. Next will come the much-anticipated version 1.0.0, planned for June 2024🎉!&lt;/p>
+&lt;p>But let’s see what comes with Zenoh Electrode.&lt;/p></description></item><item><title>Zenoh 1.0.0 "Firesong" is ready to rock!</title><link>/blog/2024-10-21-zenoh-firesong/</link><pubDate>Tue, 01 Oct 2024 00:00:00 +0000</pubDate><guid>/blog/2024-10-21-zenoh-firesong/</guid><description>&lt;p>As a result of an incredible effort from the whole Zenoh team and Zenoh community, we can finally announce that Zenoh 1.0.0 &lt;em>Firesong&lt;/em> is out!&lt;/p>
+&lt;figure class="responsive-figure figure-inline">&lt;img src="../../img/20241021-blog-zenoh-firesong/comic-october-2024.png"
+ alt="Zenoh comic October 2024" width="100%"height="auto"
+ />
+&lt;/figure>
+
+
+
+
+&lt;style>
+.responsive-figure {
+ display: flex;
+ justify-content: center;
+}
+
+.responsive-figure img {
+ max-width: 720px;
+ height: auto;
+}
+&lt;/style>
+
+
+&lt;p>This release marks an incredible milestone for Zenoh and comes with a lot of features and improvements:&lt;/p>
+&lt;ul>
+&lt;li>API stabilization. Great attention has been given to the API, its revision and rework to provide the necessary level of stability and future extensibility.&lt;/li>
+&lt;li>The very first alpha version of the new TypeScript API.&lt;/li>
+&lt;li>A full rework of the Shared Memory subsystem in Zenoh, with a new API and more supported topologies.&lt;/li>
+&lt;li>Improved batching and jitter performance for high frequency publications.&lt;/li>
+&lt;li>Improved protocol for write-side filtering.&lt;/li>
+&lt;/ul>
+&lt;p>Let us take a closer look at what Zenoh 1.0.0 brings to the table.&lt;/p></description></item><item><title>Zenoh 1.1.0: Firesong Keeps Rocking 🎸</title><link>/blog/2024-12-12-zenoh-firesong-1.1.0/</link><pubDate>Thu, 12 Dec 2024 00:00:00 +0000</pubDate><guid>/blog/2024-12-12-zenoh-firesong-1.1.0/</guid><description>&lt;p>This latest release of Zenoh 1.1.0 brings exciting new features, some of them were already introduced in the 1.0.1, 1.0.2, 1.0.3, and 1.0.4 releases. The key features are:&lt;/p>
+&lt;h3 id="api">API&lt;/h3>
+&lt;ul>
+&lt;li>Stabilization of liveliness API support. Liveliness has been part of Zenoh for quite some time but the API was still marked as unstable. We have now stabilized it.&lt;/li>
+&lt;li>New unstable querier API for automatic queries optimization.&lt;/li>
+&lt;li>A new unstable advanced publisher/subscriber on zenoh-ext supporting non-blocking fault tolerance end-to-end.&lt;/li>
+&lt;/ul>
+&lt;h3 id="zenoh-pico">Zenoh-Pico&lt;/h3>
+&lt;ul>
+&lt;li>New unstable manual batching for zenoh-pico for improved throughput.&lt;/li>
+&lt;li>Added liveliness support to align with the other Zenoh APIs.&lt;/li>
+&lt;li>Performance improvement due to some internal code refactoring.&lt;/li>
+&lt;li>Added support for Raspberry Pi Pico board.&lt;/li>
+&lt;/ul>
+&lt;h3 id="ros-2-bridge">ROS 2 Bridge&lt;/h3>
+&lt;ul>
+&lt;li>Better support of ROS 2 Iron and Jazzy.&lt;/li>
+&lt;li>A ROS 2 Service Client can more easily call a Zenoh Queryable via the bridge.&lt;/li>
+&lt;/ul>
+&lt;h3 id="protocol-updates">Protocol Updates&lt;/h3>
+&lt;ul>
+&lt;li>Backward-compatible fix of protocol fragmentation in case of messages drop. The issue was resulting in some large messages being malformed after defragmentation. This is now fixed.&lt;/li>
+&lt;li>Fix serial link to support connection re-establishment. Serial connections struggled to be reestablished upon link failure. This has been improved.&lt;/li>
+&lt;/ul>
+&lt;h3 id="commercial-support-and-tools">Commercial Support and Tools&lt;/h3>
+&lt;ul>
+&lt;li>ZettaScale provides commercial support as well as extended lifetime support for v1.x.&lt;/li>
+&lt;li>ZettaScale now provides a commercial of Zenoh for QNX.&lt;/li>
+&lt;li>Zetta Control Center (ZettaC2) is now available to visualise, monitor and manage your running Zenoh System from the cloud to the microcontroller.&lt;/li>
+&lt;/ul>
+&lt;h2 id="querier">Querier&lt;/h2>
+&lt;p>The querier has been added to Zenoh to serve a similar purpose of the publisher but for queries. For example, a publisher allows Zenoh to perform some optimization for continuous publications like &lt;a href="https://www.google.com/url?q=https://zenoh.io/blog/2024-10-21-zenoh-firesong/%23interest-protocol&amp;amp;sa=D&amp;amp;source=docs&amp;amp;ust=1733925165202597&amp;amp;usg=AOvVaw1piF0-TzhbWXLP5chS1fKO">write-side filtering&lt;/a> and &lt;a href="https://docs.rs/zenoh/latest/zenoh/pubsub/struct.Publisher.html#method.matching_status">matching status&lt;/a>. These kinds of optimizations are now also available for queries through the new querier API. A Rust example is provided below and &lt;a href="https://github.com/eclipse-zenoh/zenoh/blob/main/examples/examples/z_querier.rs">here&lt;/a>. The same example is also available in &lt;a href="https://github.com/eclipse-zenoh/zenoh-c/blob/main/examples/z_querier.c">C&lt;/a>, &lt;a href="https://github.com/eclipse-zenoh/zenoh-cpp/blob/main/examples/zenohc/z_querier.cxx">C++&lt;/a>, and &lt;a href="https://github.com/eclipse-zenoh/zenoh-python/blob/main/examples/z_querier.py">Python&lt;/a>.&lt;/p></description></item><item><title>Introducing Raspberry Pi Pico Support in Zenoh-Pico</title><link>/blog/2025-01-08-introducing-raspberry-pi-pico-support-in-zenoh-pico/</link><pubDate>Wed, 08 Jan 2025 00:00:00 +0000</pubDate><guid>/blog/2025-01-08-introducing-raspberry-pi-pico-support-in-zenoh-pico/</guid><description>&lt;h1 id="introducing-raspberry-pi-pico-support-in-zenoh-pico">Introducing Raspberry Pi Pico Support in Zenoh-Pico&lt;/h1>
+&lt;p>We’re excited to announce that Zenoh-Pico now supports the Raspberry Pi Pico series, including the Pico W and Pico 2 W variants! Zenoh already runs seamlessly on platforms like the Raspberry Pi Zero, providing robust communication solutions for IoT. Now, with the addition of Raspberry Pi Pico support, we’ve expanded the Zenoh ecosystem to even smaller and more constrained devices.&lt;/p>
+&lt;figure class="figure-inline">&lt;img src="../../img/20250108-Introducing-Raspberry-Pi-Pico-Support-in-Zenoh-Pico/pico-family.jpg"
+ alt="Raspberry Pi Pico Family"height="auto"
+ />
+&lt;/figure>
+
+&lt;h2 id="what-is-zenoh-pico">What is Zenoh-Pico?&lt;/h2>
+&lt;p>Zenoh-Pico is the lightweight, native C implementation of the&lt;a href="http://zenoh.io"> Eclipse Zenoh&lt;/a> protocol, designed specifically for constrained devices. It provides a streamlined, low-resource API while maintaining compatibility with the main&lt;a href="https://github.com/eclipse-zenoh/zenoh"> Rust Zenoh implementation&lt;/a>. Zenoh-Pico already supports a broad range of platforms and protocols, making it a versatile choice for embedded systems development.&lt;/p></description></item><item><title>Zenoh Gozuryū is Here!</title><link>/blog/2025-04-14-zenoh-gozuryu/</link><pubDate>Mon, 14 Apr 2025 00:00:00 +0000</pubDate><guid>/blog/2025-04-14-zenoh-gozuryu/</guid><description>&lt;p>We are thrilled to announce the release of Zenoh 1.3.3 – &lt;strong>Gozuryū&lt;/strong>!&lt;/p>
+&lt;p>Named after the legendary &amp;ldquo;Five-Headed Dragon&amp;rdquo;, this release brings a powerful set of new capabilities across the entire Zenoh ecosystem, with improvements touching everything from core routing and shared memory to the language bindings and Zenoh-Pico for constrained devices.&lt;/p>
+&lt;p>Let’s dive into the highlights of this release.&lt;/p>
+&lt;p>&lt;strong>Namespace Prefix Support&lt;/strong>: Isolate Zenoh sessions with namespace prefixes — ideal for multi-robot and multi-instance setups.&lt;/p></description></item><item><title>Zenoh-Pico performance improvements</title><link>/blog/2025-04-09-zenoh-pico-performance/</link><pubDate>Wed, 30 Apr 2025 00:00:00 +0000</pubDate><guid>/blog/2025-04-09-zenoh-pico-performance/</guid><description>&lt;h1 id="improving-zenoh-pico-performance">Improving Zenoh-Pico performance&lt;/h1>
+&lt;p>Last year, after the long-awaited release of Zenoh 1.0 which included a unified C API with Zenoh-C and Zenoh-Pico, we decided to dedicate some time to measure and improve the performance and efficiency of Zenoh-Pico. These modifications were released with Zenoh 1.1 earlier this year and we present the results to you with this blog post.&lt;/p>
+&lt;h2 id="what-is-zenoh-pico">What is Zenoh-Pico?&lt;/h2>
+&lt;p>Zenoh-Pico is the lightweight, native C implementation of the&lt;a href="http://zenoh.io"> Eclipse Zenoh&lt;/a> protocol, designed specifically for constrained devices. It provides a streamlined, low-resource API while maintaining compatibility with the main&lt;a href="https://github.com/eclipse-zenoh/zenoh"> Rust Zenoh implementation&lt;/a>. Zenoh-Pico already supports a broad range of platforms and protocols, making it a versatile choice for embedded systems development.&lt;/p></description></item><item><title>Zenoh-Pico Peer to Peer Improvements</title><link>/blog/2025-07-11-zenoh-pico-peer-to-peer-unicast/</link><pubDate>Wed, 09 Jul 2025 00:00:00 +0000</pubDate><guid>/blog/2025-07-11-zenoh-pico-peer-to-peer-unicast/</guid><description>&lt;p>As hinted at in our &lt;a href="http://localhost:1313/blog/2025-04-09-zenoh-pico-performance/">previous blog&lt;/a> post on Zenoh-Pico performance improvements, we’ve now introduced a long-requested peer-to-peer unicast mode for Zenoh-Pico! Let&amp;rsquo;s dive into how it works.&lt;/p>
+&lt;h2 id="what-is-zenoh-pico">What is Zenoh-Pico?&lt;/h2>
+&lt;p>Zenoh-Pico is the lightweight, native C implementation of the &lt;a href="http://github.com/eclipse-zenoh/zenoh">Zenoh&lt;/a> protocol, designed specifically for constrained devices. It provides a streamlined, low-resource API while supporting all abstractions from &lt;a href="https://github.com/eclipse-zenoh/zenoh">Rust Zenoh&lt;/a>: pub, sub and query, advanced pub/sub and so on. Zenoh-Pico already supports a broad range of platforms and protocols, making it a versatile choice for embedded systems development.&lt;/p></description></item><item><title>Zenoh 1.5.0: Hong, the Red Dragon's Power</title><link>/blog/2025-07-28-zenoh-hong/</link><pubDate>Sun, 27 Jul 2025 00:00:00 +0000</pubDate><guid>/blog/2025-07-28-zenoh-hong/</guid><description>&lt;p>Named after the Red Dragon, a symbol of power, protection, and passion, this release delivers significant improvements across the entire Zenoh ecosystem. Hong brings substantial performance enhancements—we&amp;rsquo;ve broken the 10M msg/sec barrier—and our shared memory implementation has 25% performance throughput gains along with a simplified API and improved safety mechanisms. Configuration management has been streamlined with better validation and the ability to provide full configurations via command line. The installation process has been modernized with signed Debian repositories for enhanced security.&lt;/p></description></item><item><title>Zenoh 1.6.x: Imoogi</title><link>/blog/2025-10-20-zenoh-imoogi/</link><pubDate>Mon, 20 Oct 2025 00:00:00 +0000</pubDate><guid>/blog/2025-10-20-zenoh-imoogi/</guid><description>&lt;p>We are thrilled to announce the release of Zenoh 1.6.x – &lt;strong>Imoogi&lt;/strong>!&lt;/p>
+&lt;p>Named after the Korean dragon that ascends to greatness, this release elevates the Zenoh ecosystem with powerful refinements and critical improvements. Imoogi focuses on stabilizing and extending the groundbreaking features introduced in version 1.5.0, bringing enhanced shared memory capabilities, improved configuration management, better scalability, and expanded language binding support.&lt;/p>
+&lt;p>Key highlights of this release include:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Shared Memory Evolution&lt;/strong>: Comprehensive SHM API improvements with typed buffers, better allocator performance, flexible allocation builders, buffer resize capabilities, implicit SHM optimization for large payloads, and precommit SHM pages — delivering major throughput improvements.&lt;/li>
+&lt;li>&lt;strong>Configuration Consistency&lt;/strong>: Refined configuration parameters for improved usability, including renamed &lt;code>congestion_control&lt;/code> value &amp;ldquo;blockfirst&amp;rdquo; to &amp;ldquo;block_first&amp;rdquo; and enhanced downsampling controls.&lt;/li>
+&lt;li>&lt;strong>Extended Language Support&lt;/strong>: Full shared memory API introduced in Zenoh-Python, comprehensive SHM updates in Zenoh-C, matching API in Zenoh-TS, and streamlined plugin interfaces.&lt;/li>
+&lt;li>&lt;strong>Zenoh-Pico Enhancements:&lt;/strong> Advanced Pub/Sub support with TLS security, bringing enterprise-grade security and reliability features to constrained devices.&lt;/li>
+&lt;li>&lt;strong>Scalability Enhancements&lt;/strong>: Fixed critical peer-to-peer topology issues and optimized discovery message processing, drastically reducing CPU consumption especially for ROS 2 use cases.&lt;/li>
+&lt;li>&lt;strong>Nu Integration:&lt;/strong> NuZe combines Nushell&amp;rsquo;s powerful structured data scripting with Zenoh commands, providing a convenient tool for testing, debugging, and building interactive Zenoh applications.&lt;/li>
+&lt;li>&lt;strong>Documentation &amp;amp; Tooling&lt;/strong>: Significantly expanded Rust documentation with usage examples and cross-references, improved README structure, Rust 1.75 compatibility enhancements, and better plugin diagnostics.&lt;/li>
+&lt;/ul>
+&lt;p>Let&amp;rsquo;s explore what Imoogi brings to the Zenoh ecosystem!&lt;/p></description></item><item><title>Zenoh 1.7.x: Jiāolóng</title><link>/blog/2025-12-11-zenoh-jiaolong/</link><pubDate>Thu, 11 Dec 2025 00:00:00 +0000</pubDate><guid>/blog/2025-12-11-zenoh-jiaolong/</guid><description>&lt;p>We are happy to announce the release of Zenoh 1.7.x &lt;strong>Jiāolóng&lt;/strong>&lt;/p>
+&lt;p>Named after the Chinese flood dragon, Jiāolóng represents transformation and the mastery of powerful forces. Like its namesake navigating between realms, this release bridges the gap between simplicity and power, bringing sophisticated capabilities within easy reach of developers across all platforms.&lt;/p>
+&lt;p>This release focuses on developer productivity and system reliability with powerful new APIs and optimizations across the Zenoh ecosystem. Query cancellation arrives across all language bindings, giving developers fine-grained control over long-running operations. Zenoh-Pico introduces zero-copy co-localization optimization and automatic task management, making embedded development simpler and more efficient. The shared memory subsystem becomes even more accessible with the transport SHM provider now available through public APIs in Rust, C, and C++.&lt;/p></description></item><item><title>The Zenoh Community</title><link>/community/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/community/</guid><description>&lt;h1 id="communication">Communication&lt;/h1>
+&lt;p>The Zenoh community is most readily found on
+&lt;a href="https://discord.gg/cRFZDJfS3g">its Discord server&lt;/a>, where you&amp;rsquo;re welcome to
+ask questions, report problems, or pitch ideas.&lt;/p>
+&lt;h1 id="issues">Issues&lt;/h1>
+&lt;p>GitHub is used for tracking issues.&lt;br>
+If your issue is related to the Zenoh protocol, the infrastructure or the REST API, the primary location is &lt;a href="https://github.com/eclipse-zenoh/zenoh/issues">https://github.com/eclipse-zenoh/zenoh/issues&lt;/a>.&lt;br>
+If your issue is related to an API, please use the GitHub issues related to the API:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-python/issues">Python API&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-c/issues">C API&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>If your issue is instead related to a plugin, please use the GitHub issues related to the plugin:&lt;/p></description></item><item><title>Zenoh Adopters</title><link>/adopters/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/adopters/</guid><description>&lt;p>Below is a list of companies, research institutes and foundations that adopted, supported or contributed to Zenoh. If you cannot find your logo, please post a message on the &lt;a href="https://discord.gg/cY4nVjUd">Zenoh&amp;rsquo;s discord server&lt;/a> and we&amp;rsquo;ll add it right away.&lt;/p>
+&lt;h1>&lt;/h1>
+
+
+&lt;div class="d-flex flex-wrap align-items-center justify-content-between">
+ &lt;div class="p-2">
+ &lt;a href="https://nxp.com/" target=="_blank">
+ &lt;img align="center" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/NXP-Logo.svg" 
+ alt="ROS 2" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.intrinsic.ai" target=="_blank">
+ &lt;img align="center" src="https://logosandtypes.com/wp-content/uploads/2024/02/intrinsic.svg" 
+ alt="Intrinsic" width="200"/>
+ &lt;/a>
+ &lt;/div> 
+ &lt;div class="p-2">
+ &lt;a href="https://www.ros.org" target=="_blank">
+ &lt;img align="center" src="https://raw.githubusercontent.com/ros-infrastructure/artwork/refs/heads/master/ros_logo.svg" 
+ alt="ROS 2" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://stalw.art/" target=="_blank">
+ &lt;img align="center" src="https://raw.githubusercontent.com/stalwartlabs/stalwart/main/img/logo-red.svg" alt="StalWart" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.bosch.com/" target=="_blank">
+ &lt;img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-bosch.svg" alt="BOSCH" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.gm.com/" target=="_blank">
+ &lt;img align="center" src="./img/adopters/GM_Brandmark_Wordmark_Lockup_Blue_Vertical_RGB.jpg" alt="Neobotix" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.volocopter.com/" target=="_blank">
+ &lt;img align="center" src="./img/adopters/volocopter.png" alt="Neobotix" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.foxconn.com/en-us/" target=="_blank">
+ &lt;img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-foxconn.png" alt="FOXCONN" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.futurewei.com" target=="_blank">
+ &lt;img align="center" src="./img/adopters/futurewei-logo.png" alt="FutureWei" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.farobottech.com/" target=="_blank">
+ &lt;img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-farobot.png" alt="FARobot" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.adlinktech.com" target=="_blank">
+ &lt;img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-adlink.svg" alt="ADLINK" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.tractonomy.com/" target=="_blank">
+ &lt;img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-tractonomy-robotics.png" alt="Tractonomy" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://flecs-technologies.com" target=="_blank">
+ &lt;img align="center" src="./img/adopters/flecs-logo_rgb_color.svg" alt="FLECS" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://filics.eu/" target=="_blank">
+ &lt;img align="center" src="./img/adopters/Filics_Logo_grun.svg" alt="Filics" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.neobotix-robots.com/" target=="_blank">
+ &lt;img align="center" src="./img/adopters/Neobotix.png" alt="Neobotix" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://amperecomputing.com/" target=="_blank">
+ &lt;img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-amperecomputing.png" alt="Ampere" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://f1tenth.org/" target=="_blank">
+ &lt;img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-f1tenth.png" alt="F1-Tenth" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://openadx.eclipse.org/" target=="_blank">
+ &lt;img align="center" align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-openadx.png" alt="OpenADX" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.irt-systemx.fr" target=="_blank">
+ &lt;img align="center" src="./img/adopters/systemx-logo.png" alt="SystemX" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.5gcity.eu/" target=="_blank">
+ &lt;img align="center" src="./img/adopters/5GCityLogo.png" alt="5GCity" width="200"/>
+ &lt;/a>
+ &lt;/div>
+&lt;!-- 5g-coral.eu website has been hijacked... remove this logo and link until back to normal
+ &lt;div class="p-2">
+ &lt;a href="http://5g-coral.eu/" target=="_blank">
+ &lt;img align="center" src="http://5g-coral.eu/wp-content/uploads/2017/05/cropped-cropped-logo-coral-1-2.png" alt="5G-Coral" width="200"/>
+ &lt;/a>
+ &lt;/div>
+-->
+ &lt;div class="p-2">
+ &lt;a href="https://5g-dive.eu/" target=="_blank">
+ &lt;img align="center" src="./img/adopters/5g-dive.png" alt="5G-Dive" width="200"/>
+ &lt;!-- &lt;img align="center" src="https://5g-dive.eu/wp-content/uploads/2019/10/cropped-5G-Dive_rgb_horizontal-1.png" alt="5G-Dive" width="200"/> -->
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://h2020daemon.eu/" target=="_blank">
+ &lt;img align="center" src="./img/adopters/daemonlogo-300x80-1.webp" alt="Daemon" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.l2s.centralesupelec.fr/en/" target=="_blank">
+ &lt;img align="center" src="https://api.eclipse.org/adopters/assets/images/adopters/logo-centralesupelec.png" alt="CentraleSupelec" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.icos-project.eu/" target=="_blank">
+ &lt;img align="center" src="./img/adopters/ICOS_logo_bright-61fe1c68-338w.webp" alt="ICOS" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://empyrean-horizon.eu/" target=="_blank">
+ &lt;img align="center" src="./img/adopters/Empyrean-logo.png" alt="EMPYREAN" width="200"/>
+ &lt;/a>
+ &lt;/div>
+ &lt;div class="p-2">
+ &lt;a href="https://www.ecomobility-project.eu/" target=="_blank">
+ &lt;img align="center" src="./img/adopters/eco_mobility_logo_goood-01.png" alt="EcoMobility" width="200"/>
+ &lt;/a>
+ &lt;/div>
+&lt;/div>
+&lt;p>&lt;/p></description></item><item><title>Zenoh Use Cases</title><link>/usecases/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/usecases/</guid><description>&lt;div class="row align-items-center justify-content-center">
+ &lt;div class="col">
+ &lt;h3>
+ Controlling a robot using Zenoh
+ &lt;/h3>
+ &lt;iframe src="../img/blog-dragonbot/DragonBotOne.gif" width="320" height="240" allow="autoplay">&lt;/iframe>
+ &lt;/div>
+ &lt;div class="col">
+ &lt;h3>
+ Zenoh in robotics
+ &lt;/h3>
+ &lt;iframe src="https://www.youtube.com/embed/1NE8cU72frk" width="320" height="240" allow="autoplay">&lt;/iframe>
+ &lt;/div>
+ &lt;div class="col">
+ &lt;h3>
+ Indy autonomous challenge
+ &lt;/h3>
+ &lt;iframe src="https://drive.google.com/file/d/12EtaDcnIL-3KqeSYauCNkEzRb5vcQejc/preview" width="320" height="240" allow="autoplay">&lt;/iframe>
+ &lt;/div>
+ &lt;div class="col">
+ &lt;h3>
+ Autonomous train
+ &lt;/h3>
+ &lt;iframe src="https://drive.google.com/file/d/1SMlvm4X28d0uu6Py4sQBH0sN_Z7dLBkD/preview" width="320" height="240" allow="autoplay">&lt;/iframe>
+ &lt;/div>
+ &lt;div class="col">
+ &lt;h3>
+ Autonomous car in simulator
+ &lt;/h3>
+ &lt;iframe src="https://drive.google.com/file/d/18hjgofUAFMnTmZa9MVSwxEGYY7F1lUQG/preview" width="320" height="240" allow="autoplay">&lt;/iframe>
+ &lt;/div>
+ &lt;div class="col">
+ &lt;h3>
+ An auditable register
+ &lt;/h3>
+ &lt;iframe src="https://www.youtube.com/embed/b4wHwg0SWMI" width="320" height="240" allow="autoplay">&lt;/iframe>
+ &lt;/div>
+ &lt;div class="col">
+ &lt;h3>
+ Zenoh in academics
+ &lt;/h3>
+ &lt;iframe src="https://www.youtube.com/embed/rNTY3nxcpc8" width="320" height="240" allow="autoplay">&lt;/iframe>
+ &lt;/div>
+&lt;/div></description></item></channel></rss>
