@@ -59,6 +59,17 @@ docker build -f docker/Dockerfile --build-arg user=$(id -un) --build-arg uid=$(i
 docker run --rm -v $(pwd):/src -p 1313:1313 zenoh_web
 ```
 
+## Development
+
+### Spell Check
+
+This project uses [codespell](https://github.com/codespell-project/codespell) to automatically check for common spelling errors in documentation.
+The spell check is initiated and verified on every pull request via [GitHub Actions workflow](.github/workflows/codespell.yml).
+
+- [codespell.cfg](codespell.cfg) - Main configuration that defines dictionaries, ignore patterns, and skip directories
+- [codespell_whitelist.txt](codespell_whitelist.txt) - Words to ignore (e.g., technical terms, Zenoh release names like "aithusa", "bahamut")
+- [codespell_dictionary.txt](codespell_dictionary.txt) - Custom corrections for common typos (e.g., `colcn->colcon`, `rosabg->rosbag`)
+
 ## License
 
 This project is licensed under the [Eclipse Public License 2.0](LICENSE)

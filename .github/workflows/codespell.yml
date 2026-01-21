@@ -1,0 +1,27 @@
+name: Codespell
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches-ignore:
+      - master
+  workflow_dispatch:
+
+jobs:
+  spellcheck:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Install codespell
+        run: pip install codespell==2.4.1
+
+      - name: Run codespell
+        run: codespell --config codespell.cfg
