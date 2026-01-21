@@ -1,0 +1,40 @@
+name: Build Test
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches-ignore:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true  # Fetch Hugo themes
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.145.0'
+          # extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Verify build output
+        run: |
+          if [ ! -d "public" ]; then
+            echo "Error: public directory not created"
+            exit 1
+          fi
+          if [ ! -f "public/index.html" ]; then
+            echo "Error: index.html not found in public directory"
+            exit 1
+          fi
+          echo "Build successful!"
