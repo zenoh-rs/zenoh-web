@@ -66,7 +66,7 @@ In addition to enabling peer-to-peer unicast, we improved general library CPU ut
 Note that the Zenoh-Pico configuration used for testing deviates from the default. Here are the changes:
 
 * `Z_FEATURE_SESSION_CHECK` set to 0 (default 1): Skips the publisher’s session reference upgrade. This is risky if you use the publisher after closing the session.
-* `Z_FEATURE_BATCH_TX_MUTEX` set to 1 (default 0): Allows the batching mechanism to hold the mutex, which can prevent the lease task from sending keep-alives, triggering connection closure.
+* `Z_FEATURE_BATCH_TX_MUTEX` set to 1 (default 0): Allows the batching mechanism to hold the mutex, which can prevent the lease task from sending keep-alive, triggering connection closure.
 * `Z_FEATURE_RX_CACHE` set to 1 (default 0): Activates the RX LRU cache. It consumes some memory to store results of key expressions that trigger callbacks—useful in repetitive, high-throughput scenarios.
 
 ### Results

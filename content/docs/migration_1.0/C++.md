@@ -104,13 +104,13 @@ void receive_bytes(const Sample &sample) {
 };
 ```
 
-Additionally `zenoh::ext` namespace provides support for serialization/deserialziation of typed data to/into `Bytes`:
+Additionally `zenoh::ext` namespace provides support for serialization/deserialization of typed data to/into `Bytes`:
 
 ```cpp
 // arithmetic types
 double pi = 3.1415926;
 Bytes b = ext::serialize(pi);
-assert(ext::deserialize<doulbe>(b) == pi);
+assert(ext::deserialize<double>(b) == pi);
 
 // Composite types
 std::vector<float> v = {0.1f, 0.2f, 0.3f};

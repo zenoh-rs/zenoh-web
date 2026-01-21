@@ -35,7 +35,7 @@ session.put(keyExpr,
 )
 ```
 
-_Notice that the `.res()` function has been removed. Now functions exposed by the API execute imediately, without the need of `.res()`. i.e. When doing `session.put(...)` the put is run immediately._ 
+_Notice that the `.res()` function has been removed. Now functions exposed by the API execute immediately, without the need of `.res()`. i.e. When doing `session.put(...)` the put is run immediately._ 
 
 This applies to all the builders being present on 0.11.0. Generally [^1] all the parameters present on each builder have now their corresponding argument available in the functions.
 

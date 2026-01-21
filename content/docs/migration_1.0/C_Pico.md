@@ -452,7 +452,7 @@ char *value = "Some data to publish on Zenoh";
 
 z_put_options_t options = z_put_options_default();
 z_owned_bytes_map_t map = z_bytes_map_new();
-z_bytes_map_insert_by_alias(&map, _z_bytes_wrap((uint8_t *)"test", 2), _z_bytes_wrap((uint8_t *)"attachement", 5));
+z_bytes_map_insert_by_alias(&map, _z_bytes_wrap((uint8_t *)"test", 2), _z_bytes_wrap((uint8_t *)"attachment", 5));
 options.attachment = z_bytes_map_as_attachment(&map);
 
 if (z_put(z_loan(s), z_keyexpr(keyexpr), (const uint8_t *)value, strlen(value), &options) < 0) {
@@ -502,7 +502,7 @@ kv_pair_t attachment_kvs[2] = {;
 }
 
 z_owned_bytes_t payload, attachment;
-// serialzie key value pairs as attachment
+// serialize key value pairs as attachment
 
 ze_owned_serializer_t serializer;
 ze_serializer_empty(&serializer);
@@ -830,7 +830,7 @@ if (!z_check(shmbuf)) {
 ```c
 // buffer size and alignment
 const size_t alloc_size = 1024;
-// Diffrence: allocation now respects alignment
+// Difference: allocation now respects alignment
 z_alloc_alignment_t alignment = {0};
 
 // allocate SHM buffer

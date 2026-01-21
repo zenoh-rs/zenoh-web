@@ -22,7 +22,7 @@ In a nutshell,
 
 ### Private functions, types and constants
 In the new Zenoh-Pico API, any private function, type or constant is prefixed with a `_z_*` or `_Z_*`. The user **must not use them**, since we will not guarantee their stability or even existence. Users might solely use any function, type or constant that starts with a `z_*` or `Z_*`
-Also, any struct members denotated with a `_` are also private and **must not be used**. All the remaning members can be used, and we plan to keep them stable.
+Also, any struct members denotated with a `_` are also private and **must not be used**. All the remaining members can be used, and we plan to keep them stable.
 
 ## Migrating from Zenoh-Pico v0.5.x zenoh-net API to Zenoh-Pico v0.6.x zenoh API
 

@@ -118,7 +118,7 @@ For this purpose, we recently introduced a new option in the zenoh/DDS bridge:
    - *"float"* is the maximum frequency in Hertz; if publication rate is higher, downsampling will occur when routing.
  
 This option can be used multiple times for different frequency per-topic.  
-For instance, if we want such limtations (topic names are fictitious):  
+For instance, if we want such limitations (topic names are fictitious):  
  - from the racecar, we want to re-publish over zenoh those topics with a maximum frequency for each:
    - `position`: 10Hz
    - `speed`: 10Hz

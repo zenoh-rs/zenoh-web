@@ -265,7 +265,7 @@ query.reply(reply_err).res().await.unwrap();
 
 ```rust
 // No need to send Result
-// For sending Succesful Reply to Query
+// For sending Successful Reply to Query
 query.reply(key_expr.clone(), payload.clone()).await.unwrap();  // Success
 // For sending Error Reply to Query
 query.reply_err(payload.clone()).await.unwrap();                // Failure
@@ -317,7 +317,7 @@ while let Ok(reply) = replies.recv_async().await {
 }
 ```
 
-We have also added the ability to get underlying Handlers from `Queryables`, so that users have direct acces to the receiver of the data channel. 
+We have also added the ability to get underlying Handlers from `Queryables`, so that users have direct access to the receiver of the data channel. 
 
 ```rust
 let queryable = session
@@ -500,7 +500,7 @@ let mut manager = SharedMemoryManager::make(id, shmem_size).unwrap();
 // Create an SHM backend...
 let shmem_size = 1024*1024;
 // Difference: each SHM Provider needs a backend that defines it's implementation
-// details, like SHM system API used and allocation startegy
+// details, like SHM system API used and allocation strategy
 let backend = PosixShmProviderBackend::builder()
     .with_size(shmem_size)
     .unwrap()

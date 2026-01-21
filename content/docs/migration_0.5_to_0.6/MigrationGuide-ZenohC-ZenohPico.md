@@ -68,7 +68,7 @@ zp_send_join(z_loan(session), NULL);
 
 ## Keyexpr to_string vs resolve
 
-Zenoh-C and Zenoh-Pico store keyexpr in a sligly different way. While Zenon-C stores full expanded string for the keyexprs, Zenoh-Pico might store them in their declared form as a requirement for contrained devices. Thus, Zenoh-Pico requires to reconstruct the full expanded string for the keyexpr by using the `z_keyexpr_resolve`. In turn, Zenoh-C is able to return a pointer to the already full expanded string (by using `z_keyexpr_to_string`). Note that, in both cases extra memory allocations are performed that **must** be released by the user.
+Zenoh-C and Zenoh-Pico store keyexpr in a sligly different way. While Zenon-C stores full expanded string for the keyexprs, Zenoh-Pico might store them in their declared form as a requirement for constrained devices. Thus, Zenoh-Pico requires to reconstruct the full expanded string for the keyexpr by using the `z_keyexpr_resolve`. In turn, Zenoh-C is able to return a pointer to the already full expanded string (by using `z_keyexpr_to_string`). Note that, in both cases extra memory allocations are performed that **must** be released by the user.
 
 ## zc_init_logger
 

@@ -18,7 +18,7 @@ With 0.6, the bindings have evolved: a "private" layer is exposed by Rust, and w
 
 The bindings are generated through `pyo3`, which among other things ensures that the destructors of the wrapped Rust types get called when a value becomes inaccessible.
 
-This may lead to somewhat surprising behaviours comming from Python, where RAII is uncommon, as this implies that, for instance, subscribers will be undeclared as soon as no variable points to them anymore.
+This may lead to somewhat surprising behaviours coming from Python, where RAII is uncommon, as this implies that, for instance, subscribers will be undeclared as soon as no variable points to them anymore.
 
 A typical case for that is `subscriber = session.declare_subscriber("key/expr", callback)`: unless that `subscriber =` is there, the subscriber will indeed be declared, but it will be
 undeclared the moment the method returns.

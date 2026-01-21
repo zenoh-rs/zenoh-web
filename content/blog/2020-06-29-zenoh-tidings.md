@@ -35,10 +35,10 @@ The upcoming version of **zenoh** comes with a few improvements and some new fea
 
 **Generalised Peer-to-Peer and Client Communication**. In the upcoming version of **zenoh** an application can decide at runtime to behave like a peer or a client. Peers route information between themselves and can also route on behalf of clients -- in other terms peers can behave like routers. Peers-to-peer communication is supported for arbitrary connectivity graphs and supports cliques as a special case. 
 
-**Closure-based Discovery**. Discovery in **zenoh** is supported by the **scouting** protocol, in order to ease the deployment of system that wants to leverage a clique connectivity, for cases in which multicast is not avaiable, or desirable, we support now a clousure-based discovery. In other terms starting from a single peer, we can discover its closure, or in other terms the peers that can be reached directly or indirectly from this starting point.
+**Closure-based Discovery**. Discovery in **zenoh** is supported by the **scouting** protocol, in order to ease the deployment of system that wants to leverage a clique connectivity, for cases in which multicast is not available, or desirable, we support now a clousure-based discovery. In other terms starting from a single peer, we can discover its closure, or in other terms the peers that can be reached directly or indirectly from this starting point.
 
 **Region-Based Routing**
-The new version of **zenoh** supports region-based routing. As depicted in the diagram below, this really means two things, (1) routing information required to build and maintain our routing tables scales with the size of the region, and (2) each region can decide wether to route over an arbitrary connectivity graph of assume a clique. This approach to routing will greatly improve scalability and performance by allowing to use the most appropriate routing technique within a region.
+The new version of **zenoh** supports region-based routing. As depicted in the diagram below, this really means two things, (1) routing information required to build and maintain our routing tables scales with the size of the region, and (2) each region can decide whether to route over an arbitrary connectivity graph of assume a clique. This approach to routing will greatly improve scalability and performance by allowing to use the most appropriate routing technique within a region.
 ![zenoh-routing](../../img/routing.png)
 
 ## Performances
