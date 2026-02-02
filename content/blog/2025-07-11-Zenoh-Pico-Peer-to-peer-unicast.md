@@ -92,7 +92,7 @@ Alongside peer-to-peer unicast, we’ve implemented a multicast declaration feat
 * Use declared key expression, reducing bandwidth usage and improving throughput by up to **30%** for small payloads.
 * Implement write filtering, where publishers wait for at least one subscriber before sending messages.
 
-This feature is disabled by default and can be enabled by setting `Z_FEATURE_MULTICAST_DECLARATIONS`to 1. It's off by default because, for it to work correctly, all existing nodes must redeclare all key expressions and subscriptions whenever a new node joins the network—which can lead to congestion.
+This feature is disabled by default and can be enabled by setting `Z_FEATURE_MULTICAST_DECLARATIONS` to 1. It's off by default because, for it to work correctly, all existing nodes must redeclare all key expressions and subscriptions whenever a new node joins the network—which can lead to congestion.
 
 ## Memory Allocation Improvements
 
