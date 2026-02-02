@@ -89,7 +89,7 @@ var keyExprB = KeyExpr::tryFrom("A/C/D");
 session.declareSubscriber(keyExprB, { sample -> System.out.println("Receiving sample on 'A/C/D': " + sample.getPayload() + ")") }); // No variable is associated to the declared session, on 0.11.0 it would have been instantly dropped
 ```
 
-Therfore, when receiving a 'hello' message on `A/**` we would still see:
+Therefore, when receiving a 'hello' message on `A/**` we would still see:
 
 ```
 >> Receiving sample on 'A/B/C': hello

@@ -88,7 +88,7 @@ let mut formatter = temperatures::formatter();
 let ke = zenoh::keformat!(formatter, factory = 5, sensor = 42).unwrap();
 ```
 
-- Or use it to parse incoming KEs to extract the informations you actually care about:
+- Or use it to parse incoming KEs to extract the information you actually care about:
 
 ```rust
 let parsed = temperatures::parse(ke).unwrap();

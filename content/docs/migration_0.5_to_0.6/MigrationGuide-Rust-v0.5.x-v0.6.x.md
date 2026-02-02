@@ -149,7 +149,7 @@ while let Ok(reply) = replies.recv_async().await {
 
 The `register_eval` operation has been replaced by a `declare_queryable` operation. 
 It now accepts any type that implements `TryInto<KeyExpr>` as parameter. 
-The `reply_async` operation has been replaced by a `relpy` operation that now accepts
+The `reply_async` operation has been replaced by a `reply` operation that now accepts
 a `Result<Sample>` as parameter.
 
 Note: `declare_queryable` by default returns a `Handler` that derefs to a `flume::Receiver<Query>`. 
@@ -309,7 +309,7 @@ session
 The `declare_publisher` now accepts any type that implements `TryInto<KeyExpr>` as parameter. 
 It now has a `put` operation that only takes any type that implements `Into<Value>` as parameter,
 a `delete` operation that takes no parameter and
-a `write` operation that takes both a `SampleKind` as first paramerter and any type that implements `Into<Value>` as second parameter.
+a `write` operation that takes both a `SampleKind` as first parameter and any type that implements `Into<Value>` as second parameter.
 
 *zenoh-net v0.5.x*
 ```rust
@@ -366,8 +366,8 @@ while let Ok(reply) = replies.recv_async().await {
 ### Queryable
 
 The `declare_queryable` operation now accepts any type that implements `TryInto<KeyExpr>` as first parameter. 
-It takes a single parameter. Finer configuration is perfromed with the help of a builder pattern.
-The `reply_async` operation has been replaced by a `relpy` operation that now accepts a `Result<Sample>` as parameter.
+It takes a single parameter. Finer configuration is performed with the help of a builder pattern.
+The `reply_async` operation has been replaced by a `reply` operation that now accepts a `Result<Sample>` as parameter.
 
 Note: `declare_queryable` by default returns a `Handler` that derefs to a `flume::Receiver<Query>`. 
 Queries can be accessed through flume `recv` and `recv_async` operations. 

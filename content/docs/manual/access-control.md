@@ -12,7 +12,7 @@ please refer to the [Zenoh 0.11 Access Control Rules RFC](https://github.com/ecl
 *Access control* enables Zenoh instances to filter (allow or deny) messages,
 depending on certain characteristics of individual messages and their respective source or destination.
 *Authentication* on the other hand allows Zenoh instances to identify certain characteristics in other instances they connect to,
-which are used to match the remote instances with configured subjects in the ACL policies and apply the rules accordingly on the exhanged messages.
+which are used to match the remote instances with configured subjects in the ACL policies and apply the rules accordingly on the exchanged messages.
 
 The configuration of access control policies is done via a [configuration file](../configuration).
 
@@ -151,7 +151,7 @@ To demonstrate these logical combinations, below is an example of a subject conf
 }
 ```
 
-Note that any of the three lists presented above can be ommited, and will be interpreted as a wildcard (i.e matches with all possible values of that authentication method). This implies that the empty subject below is a wildcard that will match any Zenoh instance.
+Note that any of the three lists presented above can be omitted, and will be interpreted as a wildcard (i.e matches with all possible values of that authentication method). This implies that the empty subject below is a wildcard that will match any Zenoh instance.
 
 ```json
 {

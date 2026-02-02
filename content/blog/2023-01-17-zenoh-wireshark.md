@@ -28,7 +28,7 @@ Fear not, as now you have a **Zenoh protocol dissector that you can use with Wir
 # How to Install the Zenoh Protocol Dissector?
 Zenoh’s dissector is written in Lua to make it easy to install on any of the Wireshark supported platforms –  Wireshark has a built-in Lua interpreter. As such,  the installation process is as simple as copying the `zenoh.lua` file to the [Wireshark plugin folder](https://www.wireshark.org/docs/wsug_html_chunked/ChPluginFolders.html).
 
-We recommend cloning the [Zenoh protocol dissector Github repository](https://github.com/ZettaScaleLabs/zenoh-dissector) and creating a symbolic link of `zenoh.lua` file to the Wireshark plugin folder. In this way, everytime you fetch the latest changes from the Github repository, it will immediately update the file already being loaded by Wireshark.
+We recommend cloning the [Zenoh protocol dissector Github repository](https://github.com/ZettaScaleLabs/zenoh-dissector) and creating a symbolic link of `zenoh.lua` file to the Wireshark plugin folder. In this way, every time you fetch the latest changes from the Github repository, it will immediately update the file already being loaded by Wireshark.
 
 ```bash
 git clone https://github.com/ZettaScaleLabs/zenoh-dissector <WORKING_DIR>/zenoh-dissector

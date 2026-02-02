@@ -197,7 +197,7 @@ For more details on the configuration file, see https://github.com/eclipse-zenoh
 
 In zenoh version 0.5.0 the admin space was returning router information on `@/router/<router_id>`, but was mainly used for management of Backends and Storages with put/delete/get on `@/router/<router_id>/plugin/storages/backend/<backend_id>` for Backends and `@/router/<router_id>/plugin/storages/backend/<backend_id>/storage/<storage_id>` for Storages.
 
-In zenoh version 0.6.0 the admin space is splitted in 3 parts:
+In zenoh version 0.6.0 the admin space is split in 3 parts:
  - `@/router/<router_id>` : **read-only** key returning the status of the router itself
  - `@/router/<router_id>/config/**` : **write-only** subset of keys to change the configuration. The keys under this prefix exactly map the configuration file structure. Not all configuration keys can be changed, but the storages plugin configuration can in order to add/remove Backends and Storages (see below).
  - `@/router/<router_id>/status/plugins/**` : **read-only** subset of keys to retrieve the status of plugins (and Backends and Storages)
@@ -219,7 +219,7 @@ A plugin can also be dynamically configured and loaded at runtime, publishing it
 
 ### Backends/Storages configurations
 
-Zenoh 0.5.0 was not making the distinction between the Backend library, and an instanciation of this library. Thus, it was not possible for instance to configure for the same router twice the InfluxDB backend but with different URL to disctinct InfluxDB servers.
+Zenoh 0.5.0 was not making the distinction between the Backend library, and an instantiation of this library. Thus, it was not possible for instance to configure for the same router twice the InfluxDB backend but with different URL to distinct InfluxDB servers.
 Zenoh 0.6.0 introduces the concept of Volume as an instance of a Backend library.
 To summarize:
  - a **Backend** is a dynamic library (.so file) implementing Zenoh storages with the help of a specific technology (e.g. InfluxDB, RocksDB or the local file system)

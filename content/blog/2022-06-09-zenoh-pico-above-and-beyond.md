@@ -30,7 +30,7 @@ Protocols used today to build these systems, such as MQTT, DDS, CoAP and even HT
 
 # Zenoh API for constrained devices
 
-APIs should provide a minimal set of well defined and composable primitives. That's easily said but takes a deep understanding of the problem space and the patience necessary to refine the solution. In Zenoh, we went through a careful thought process in order to understand the abstractions and primitives that must or must not be provided to the users, hiding irrelevant details while not reducing its expressiveness. As a result, Zenoh-Pico provides exactly the same set of primitives as provided by the Zenoh Rust-implementation and its binding, making in fact 99% of Zenoh-C source-code copyable into Zenoh-Pico code.
+APIs should provide a minimal set of well defined and composable primitives. That's easily said but takes a deep understanding of the problem space and the patience necessary to refine the solution. In Zenoh, we went through a careful thought process in order to understand the abstractions and primitives that must or must not be provided to the users, hiding irrelevant details while not reducing its expressiveness. As a result, Zenoh-Pico provides exactly the same set of primitives as provided by the Zenoh Rust-implementation and its binding, making in fact 99% of Zenoh-C source-code copiable into Zenoh-Pico code.
 
 > “(Software design is) a craft...and it has a lot to do with valuing simplicity over complexity. Many people do have a tendency to make things more complicated than they need to be.”
 
@@ -277,7 +277,7 @@ Except for the session opening and closing, Zenoh offers the lowest overhead in 
 
 Still, the most important operation is publishing data, and **Zenoh overhead in the wire is 98%, 75% and 64% smaller when compared to OPC-UA, XRCE-DDS and MQTT**. In doing so, Zenoh is considerably less expensive if we consider long-lived sessions that periodically publish information (e.g., IoT sensoring systems making use of Low Throughput Networks). 
 
-As for the keep-alives, in Zenoh they are not sent if any message is transmitted between the session peers in the corresponding lease window, making its overhead non-existent for periodic publishers.
+As for the keep-alive, in Zenoh they are not sent if any message is transmitted between the session peers in the corresponding lease window, making its overhead non-existent for periodic publishers.
 
 ## Flash Memory Overhead
 Flash memory might be an extremely restrictive element in constrained devices like IoT devices, not comprising more than 1MB of flash memory. This means that all the compiled software (including the user code and libraries), firmware and any other data the device can download needs to fit in such a small amount of space.

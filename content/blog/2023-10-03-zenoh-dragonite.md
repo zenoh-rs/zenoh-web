@@ -50,7 +50,7 @@ The new [zenoh-dissector](https://github.com/ZettaScaleLabs/zenoh-dissector) mak
     alt="Zenoh Kotlin"
     width="30%" >}}
 
-This release introduces Zenoh to the world of Kotlin, and viceversa ;-). The [Zenoh Kotlin API](https://github.com/eclipse-zenoh/zenoh-kotlin) targets the JVM environment and essentially opens the use of Zenoh to all the JVM-based programming languages.
+This release introduces Zenoh to the world of Kotlin, and vice-versa ;-). The [Zenoh Kotlin API](https://github.com/eclipse-zenoh/zenoh-kotlin) targets the JVM environment and essentially opens the use of Zenoh to all the JVM-based programming languages.
 In this alpha version, you’ll find most of Zenoh’s features. You'll be able to publish, subscribe and query data.
 Next we will be working on platform independent packaging and Android support.
 

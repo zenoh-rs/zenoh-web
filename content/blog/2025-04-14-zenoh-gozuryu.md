@@ -248,7 +248,7 @@ A full example as well as working with the channel can be found [there](https://
 
 ### Matching listeners
 
-Zenoh-Pico now supports matching listeners, allowing publishers and queriers to detect when there are active subscribers or queriable matching their key expression. This feature provides applications with greater awareness of their communication state, optimizing resource usage and enabling more responsive behavior. The same functionality is also available in Zenoh-Cpp, ensuring consistency across implementations.
+Zenoh-Pico now supports matching listeners, allowing publishers and queriers to detect when there are active subscribers or queryable matching their key expression. This feature provides applications with greater awareness of their communication state, optimizing resource usage and enabling more responsive behavior. The same functionality is also available in Zenoh-Cpp, ensuring consistency across implementations.
 
 A matching listener can be declared using `z_publisher_declare_background_matching_listener`, which registers a callback that is triggered when the first subscriber connects or when the last subscriber disconnects:
 

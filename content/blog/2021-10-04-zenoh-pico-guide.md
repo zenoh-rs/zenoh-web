@@ -223,7 +223,7 @@ The scarce memory and flash resources in microcontrollers stresses out the impor
 
 |                                |   |   | **reel_board (Zephyr)** |   |   | **nucleo-f767zi (Zephyr)** |   |   | **ESP32-D0WDQ6 (Arduino)** |
 |--------------------------------|---|---|:-----------------------:|---|---|:--------------------------:|---|---|:--------------------------:|
-|       **Build-in Flash**       |   |   |           1MiB          |   |   |            2MiB            |   |   |            4MiB            |
+|       **Built-in Flash**       |   |   |           1MiB          |   |   |            2MiB            |   |   |            4MiB            |
 | **Empty Binary (Zephyr-only)** |   |   |       68166 bytes       |   |   |        127344 bytes        |   |   |        385859 bytes        |
 |          **Zenoh Publisher**   |   |   |       164654 bytes      |   |   |        186942 bytes        |   |   |        423161 bytes        |
 

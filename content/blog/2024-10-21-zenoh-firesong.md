@@ -100,7 +100,7 @@ let string = String::from_utf8_lossy(sample.value.contiguous());
 Zenoh 1.0.0:
 ```rust
 // Publisher
-// “My Value” is a string that can be diretly converted in bytes, no encoding is automatically set
+// “My Value” is a string that can be directly converted in bytes, no encoding is automatically set
 session.put(“test/foo”, “My Value”).attachment(“My attachment”).await.unwrap(); 
 
 // Subscriber
@@ -634,7 +634,7 @@ Zenoh 1.0.0 adds comprehensive shared memory support with a rich yet unstable AP
 The SHM subsystem is heavily reworked both on the API and implementation side. 
 Shared memory API is currently available in Rust, C and C++ API.
 
-Some key featuers that have been introduced are:
+Some key features that have been introduced are:
 - Decentralised architecture: this provides process isolation to meet safety requirements.
 - No topological constraints: now SHM can be used in any topology (included multi-hop routing networks) as long as data reside in the same shared memory domain;
 - SHM routing with seamless SHM to non-SHM conversion: in case data need to leave the SHM domain, Zenoh will automatically convert it to non-SHM;
@@ -871,7 +871,7 @@ The rationale is to avoid comparing information that, in fact, cannot be compare
 
 ## TLS/mTLS/QUIC Configuration
 
-In Zenoh 1.0.0 we have changed the configuration parameters for TLS/mTLS/QUIC to faciliate the configuration.
+In Zenoh 1.0.0 we have changed the configuration parameters for TLS/mTLS/QUIC to facilitate the configuration.
 
 The following configuration illustrates the changes:
 
@@ -892,7 +892,7 @@ The following configuration illustrates the changes:
   }
 ```
 
-For users already using a TLS configuration, it is sufficient to change the configuration parametes accoring to the following table:
+For users already using a TLS configuration, it is sufficient to change the configuration parameters according to the following table:
 
 |  Old | New  | 
 |---|---|
@@ -907,7 +907,7 @@ For users already using a TLS configuration, it is sufficient to change the conf
 
 ## Zenoh-Pico
 
-Zenoh-Pico implementes now the new [C API](#c-api) as well the new [interest protocol](#interest-protocol) when operating in client mode.
+Zenoh-Pico implements now the new [C API](#c-api) as well the new [interest protocol](#interest-protocol) when operating in client mode.
 Therefore, Zenoh-Pico publishers will now start sending messages on the network only once at least one subscriber is detected, saving energy and bandwidth in case of nodody is interested in the actual data.
 The interest feature will be implemented also for peer mode in the future.
 

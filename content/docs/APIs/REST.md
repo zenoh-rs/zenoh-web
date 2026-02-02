@@ -68,7 +68,7 @@ Binds to the **declare_subscriber(key_expression)** operation on Zenoh.
 - **body**: none
 - **headers**: `Accept: text/event-stream`
 
-The connection will be upgraded to an SSE (Server-Sent Events), letting Zenoh keep on forwarding samples mathing your key expressions in JSON format.
+The connection will be upgraded to an SSE (Server-Sent Events), letting Zenoh keep on forwarding samples matching your key expressions in JSON format.
 
 ### PUT
 

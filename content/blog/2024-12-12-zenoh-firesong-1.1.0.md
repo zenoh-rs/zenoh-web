@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-### Rasberry Pi Pico
+### Raspberry Pi Pico
 
 We are excited to announce support for the Raspberry Pi Pico series in Zenoh-Pico! This addition makes it possible to leverage Zenoh-Pico’s lightweight and efficient communication capabilities on `RP2040/RP2350`-based devices.
 To get started, check out the new Raspberry Pi Pico section in the [README](https://github.com/eclipse-zenoh/zenoh-pico?tab=readme-ov-file#226-raspberry-pi-pico). This includes detailed instructions for building and running Zenoh-Pico on Pico devices, enabling seamless integration into your IoT projects.

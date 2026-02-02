@@ -255,5 +255,5 @@ You can also test this with the "teleop" demos provided [here](https://github.co
 [**--JE**](https://github.com/JEnoch)
 
 [^1]: **Why 1 domain per robot ?**  
-In most of the cases, you don't need the robots to communicate with each other. But if you let them use the same `ROS_DOMAIN_ID`, their DDS entities in the robots will anyway exchange discovery information with each other leading to a lot of unecessary traffic that could be problematic over wireless communications (as seen in our previous blog). The simplest way to avoid such traffic is to use distinct domains. Other solutions could be specific network configuration, or specific DDS configuration.
+In most of the cases, you don't need the robots to communicate with each other. But if you let them use the same `ROS_DOMAIN_ID`, their DDS entities in the robots will anyway exchange discovery information with each other leading to a lot of unnecessary traffic that could be problematic over wireless communications (as seen in our previous blog). The simplest way to avoid such traffic is to use distinct domains. Other solutions could be specific network configuration, or specific DDS configuration.
 
