@@ -132,3 +132,6 @@ You can also have a look at the examples provided with each client API:
  - **Rust**: https://github.com/eclipse-zenoh/zenoh/tree/main/examples
  - **Python**: https://github.com/eclipse-zenoh/zenoh-python/tree/main/examples
  - **C**: https://github.com/eclipse-zenoh/zenoh-c/tree/main/examples
+ - **C++**: https://github.com/eclipse-zenoh/zenoh-cpp/tree/main/examples
+ - **Java**: https://github.com/eclipse-zenoh/zenoh-java/tree/main/examples
+ - **Kotlin**: https://github.com/eclipse-zenoh/zenoh-kotlin/tree/main/examples

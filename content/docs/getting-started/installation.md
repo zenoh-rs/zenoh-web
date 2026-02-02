@@ -15,6 +15,9 @@ Depending on your programming language, pick one of the following API and refer 
 - [Rust API](https://crates.io/crates/zenoh)
 - [Python API](https://github.com/eclipse-zenoh/zenoh-python)
 - [C API](https://github.com/eclipse-zenoh/zenoh-c)
+- [C++ API](https://github.com/eclipse-zenoh/zenoh-cpp)
+- [Java API](https://github.com/eclipse-zenoh/zenoh-java)
+- [Kotlin API](https://github.com/eclipse-zenoh/zenoh-kotlin)
 - [Pico API](https://github.com/eclipse-zenoh/zenoh-pico): A port of Zenoh in C, targeted at low-power devices.
 
 Note that if you wish to always have access to all of Zenoh's latest features, Rust is Zenoh's original language, and will therefore always be the most feature-complete version.
