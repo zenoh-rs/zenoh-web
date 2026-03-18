@@ -22,6 +22,9 @@ Depending on your programming language, pick one of the following API and refer 
 &lt;li>&lt;a href="https://crates.io/crates/zenoh">Rust API&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-python">Python API&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-c">C API&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-cpp">C++ API&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-java">Java API&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-kotlin">Kotlin API&lt;/a>&lt;/li>
 &lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-pico">Pico API&lt;/a>: A port of Zenoh in C, targeted at low-power devices.&lt;/li>
 &lt;/ul>
 &lt;p>Note that if you wish to always have access to all of Zenoh&amp;rsquo;s latest features, Rust is Zenoh&amp;rsquo;s original language, and will therefore always be the most feature-complete version.&lt;/p></description></item><item><title>Deployment</title><link>/docs/getting-started/deployment/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/deployment/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
@@ -124,7 +127,7 @@ please refer to the &lt;a href="https://github.com/eclipse-zenoh/roadmap/blob/ca
 &lt;p>&lt;em>Access control&lt;/em> enables Zenoh instances to filter (allow or deny) messages,
 depending on certain characteristics of individual messages and their respective source or destination.
 &lt;em>Authentication&lt;/em> on the other hand allows Zenoh instances to identify certain characteristics in other instances they connect to,
-which are used to match the remote instances with configured subjects in the ACL policies and apply the rules accordingly on the exhanged messages.&lt;/p></description></item><item><title>Rust API</title><link>/docs/apis/rust/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/rust/</guid><description>The Rust API documentation is available on 
+which are used to match the remote instances with configured subjects in the ACL policies and apply the rules accordingly on the exchanged messages.&lt;/p></description></item><item><title>Rust API</title><link>/docs/apis/rust/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/rust/</guid><description>The Rust API documentation is available on 
 &lt;a href="https://docs.rs/zenoh/latest/zenoh/" target="_blank">docs.rs&lt;/a>.</description></item><item><title>C API</title><link>/docs/apis/c/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/c/</guid><description>The C API documentation is available on 
 &lt;a href="https://zenoh-c.readthedocs.io/" target="_blank">Read the Docs&lt;/a>.</description></item><item><title>Pico API</title><link>/docs/apis/pico/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/pico/</guid><description>The Pico API documentation is available on 
 &lt;a href="https://zenoh-pico.readthedocs.io/" target="_blank">Read the Docs&lt;/a>.</description></item><item><title>C++ API</title><link>/docs/apis/cpp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/cpp/</guid><description>The C++ API documentation is available on 
