@@ -33,23 +33,29 @@ Depending on your programming language, pick one of the following API and refer 
 &lt;p>By default Zenoh applications are configured to communicate peer to peer (&lt;code>peer&lt;/code> mode). All applications in the local network directly communicate with each other.&lt;/p>
 &lt;p>&lt;img src="../img/peer_to_peer.png" alt="peer to peer" title="peer to peer">&lt;/p>
 &lt;p>&lt;strong>Configuration&lt;/strong>&lt;/p>
-&lt;pre tabindex="0">&lt;code>{
- mode: &amp;#34;peer&amp;#34;,
-}
-&lt;/code>&lt;/pre>&lt;h3 id="scouting">Scouting&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">{
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mode: &amp;#34;peer&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="scouting">Scouting&lt;/h3>
 &lt;p>Zenoh applications in &lt;code>peer&lt;/code> mode run both &lt;code>multicast&lt;/code> and &lt;code>gossip&lt;/code> scouting to discover other applications or Zenoh routers and connect them.&lt;/p>
 &lt;p>&lt;strong>Multicast scouting&lt;/strong>&lt;/p>
 &lt;p>Zenoh applications in &lt;code>peer&lt;/code> mode join multicast group &lt;code>224.0.0.224&lt;/code> on UDP port &lt;code>7446&lt;/code> and send scout messages on this address to discover local applications and routers. They automatically connect to all accessible &lt;code>peer&lt;/code> mode applications and routers they discover. The scouting address and behavior can be configured.&lt;/p></description></item><item><title>For a quick test using Docker</title><link>/docs/getting-started/quick-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/quick-test/</guid><description>&lt;p>This page describe how to perform a quick test of Zenoh, using a Docker image.&lt;/p>
 &lt;h2 id="run-zenoh-router-in-a-docker-container">Run Zenoh router in a Docker container&lt;/h2>
 &lt;p>The Zenoh router is also available in a Docker image. You can deploy a single instance on your local host just running:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>docker run --init -p 7447:7447/tcp -p 8000:8000/tcp eclipse/zenoh
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker run --init -p 7447:7447/tcp -p 8000:8000/tcp eclipse/zenoh
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The ports used by Zenoh are the following:&lt;/p>
 &lt;ul>
 &lt;li>&lt;strong>7447/tcp&lt;/strong> : the Zenoh protocol via TCP&lt;/li>
 &lt;li>&lt;strong>8000/tcp&lt;/strong> : the Zenoh REST API&lt;/li>
 &lt;/ul>
-&lt;p>&lt;strong>⚠️ WARNING ⚠️&lt;/strong>: &lt;em>Docker doesn&amp;rsquo;t support UDP multicast between a container and its host (see cases &lt;a href="https://github.com/moby/moby/issues/23659">moby/moby#23659&lt;/a>, &lt;a href="https://github.com/moby/libnetwork/issues/2397">moby/libnetwork#2397&lt;/a> or &lt;a href="https://github.com/moby/libnetwork/issues/552">moby/libnetwork#552&lt;/a>). The only case where it works is on Linux using the &lt;code>--net=host&lt;/code> option to make the container to share the host&amp;rsquo;s networking space (i.e. run: &lt;code>docker run --init --net=host eclipse/zenoh&lt;/code>).&lt;/em>&lt;br>
-&lt;em>The implication of not having UDP multicast working for the Zenoh router is that you need to configure your Zenoh applications (peer or client) with the router&amp;rsquo;s locator as &lt;code>peer&lt;/code>:&lt;/em>&lt;/p></description></item><item><title>Troubleshooting</title><link>/docs/getting-started/troubleshooting/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/troubleshooting/</guid><description>&lt;h2 id="activate-logging">Activate logging&lt;/h2>
+&lt;div class="not-prose my-6 flex gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 dark:border-amber-700/60 dark:bg-amber-950/40">
+ &lt;div class="flex-shrink-0 pt-0.5">
+ &lt;svg class="h-5 w-5 text-amber-500 dark:text-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+ &lt;path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003ZM12 8.25a.75.75 0 0 1 .75.75v3.75a.75.75 0 0 1-1.5 0V9a.75.75 0 0 1 .75-.75Zm0 8.25a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd"/>
+ &lt;/svg>
+ &lt;/div>
+ &lt;div class="min-w-0">
+ &lt;p class="mb-1 text-sm font-semibold text-amber-800 dark:text-amber-300">Warning&lt;/p></description></item><item><title>Troubleshooting</title><link>/docs/getting-started/troubleshooting/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/getting-started/troubleshooting/</guid><description>&lt;h2 id="activate-logging">Activate logging&lt;/h2>
 &lt;p>Activating the Zenoh logging can provide useful information for any troubleshooting. The Zenoh router (&lt;code>zenohd&lt;/code>) and all the Zenoh APIs (except zenoh-pico) are developed with a Rust code base. Logging is controlled via the &lt;code>RUST_LOG&lt;/code> environment variable that can typically be defined with the desired logging level amongst:&lt;/p>
 &lt;ul>
 &lt;li>&lt;code>error&lt;/code> - this is the default level if &lt;code>RUST_LOG&lt;/code> is not defined&lt;/li>
@@ -108,21 +114,21 @@ The configuration of credentials is done via a &lt;a href="../configuration">con
 &lt;hr>
 &lt;h2 id="client-configuration">Client configuration&lt;/h2>
 &lt;p>The required configuration fields for a &lt;em>client&lt;/em> would hence be:&lt;/p>
-&lt;pre tabindex="0">&lt;code>{
- /// The node&amp;#39;s mode (router, peer or client)
- mode: &amp;#34;client&amp;#34;,
- transport: {
- auth: {
- /// The configuration of authentication.
- /// A password implies a username is required.
- usrpwd: {
- user: &amp;#34;clientusername&amp;#34;,
- password: &amp;#34;clientpassword&amp;#34;,
- },
- },
- },
-}
-&lt;/code>&lt;/pre>&lt;p>When using such configuration, the client will use the provided &lt;strong>user&lt;/strong> and &lt;strong>password&lt;/strong> to authenticate against any peer or router.&lt;/p></description></item><item><title>Access Control</title><link>/docs/manual/access-control/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/access-control/</guid><description>&lt;p>&lt;em>NOTE: This documentation covers the Zenoh 1.0 ACL config. For Zenoh 0.11 ACL config,
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">{
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> /// The node&amp;#39;s mode (router, peer or client)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mode: &amp;#34;client&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> transport: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> auth: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> /// The configuration of authentication.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> /// A password implies a username is required.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> usrpwd: {
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> user: &amp;#34;clientusername&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> password: &amp;#34;clientpassword&amp;#34;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> },
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> },
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> },
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>When using such configuration, the client will use the provided &lt;strong>user&lt;/strong> and &lt;strong>password&lt;/strong> to authenticate against any peer or router.&lt;/p></description></item><item><title>Access Control</title><link>/docs/manual/access-control/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/manual/access-control/</guid><description>&lt;p>&lt;em>NOTE: This documentation covers the Zenoh 1.0 ACL config. For Zenoh 0.11 ACL config,
 please refer to the &lt;a href="https://github.com/eclipse-zenoh/roadmap/blob/ca841fe219890bf73289089b520271d70ded89b6/rfcs/ALL/Access%20Control%20Rules.md">Zenoh 0.11 Access Control Rules RFC&lt;/a>&lt;/em>&lt;/p>
 &lt;p>&lt;em>Access control&lt;/em> enables Zenoh instances to filter (allow or deny) messages,
 depending on certain characteristics of individual messages and their respective source or destination.
@@ -143,57 +149,7 @@ The full Zenoh key/value space is accessible via this REST API, including the Ad
 &lt;li>&lt;strong>headers&lt;/strong>: none&lt;/li>
 &lt;/ul>
 &lt;p>The results are returned as a JSON array of objects containing &lt;code>&amp;quot;key&amp;quot;&lt;/code>, &lt;code>&amp;quot;value&amp;quot;&lt;/code>and &lt;code>&amp;quot;time&amp;quot;&lt;/code>.&lt;/p></description></item><item><title>Kotlin API</title><link>/docs/apis/kotlin/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/apis/kotlin/</guid><description>The Kotlin API documentation is available on
-&lt;a href="https://eclipse-zenoh.github.io/zenoh-kotlin" target="_blank">https://eclipse-zenoh.github.io/zenoh-kotlin&lt;/a>.</description></item><item><title>Migrating from Zenoh v0.5.x to Zenoh v0.6.x</title><link>/docs/migration_0.5_to_0.6/migrationguide-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-v0.5.x-v0.6.x/</guid><description>&lt;h2 id="key-expressions">Key expressions&lt;/h2>
-&lt;p>Some key expressions are now considered invalid:&lt;/p>
-&lt;ul>
-&lt;li>Heading slashes are forbidden. Example: &lt;code>&amp;quot;/key/expression&amp;quot;&lt;/code>.&lt;/li>
-&lt;li>Trailing slashes are forbidden. Example: &lt;code>&amp;quot;key/expression/&amp;quot;&lt;/code>.&lt;/li>
-&lt;li>Empty chunks are forbidden. Example: &lt;code>&amp;quot;key//expression&amp;quot;&lt;/code>.&lt;/li>
-&lt;/ul>
-&lt;p>An error will be returned when trying to use such invalid key expressions.&lt;/p>
-&lt;h2 id="apis">APIs&lt;/h2>
-&lt;p>In zenoh version 0.6.0, zenoh and zenoh-net APIs have been merged into a single API.&lt;/p>
-&lt;h2 id="configuration">Configuration&lt;/h2>
-&lt;p>In v0.5.x the Zenoh configuration was a list of key/value pairs.
-In v0.6.x the has a structured format which can be expressed in JSON, JSON5 or YAML.&lt;/p></description></item><item><title>Migrating from Zenoh v0.5.x Rust API to Zenoh v0.6.x Rust API</title><link>/docs/migration_0.5_to_0.6/migrationguide-rust-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-rust-v0.5.x-v0.6.x/</guid><description>&lt;p>In zenoh version 0.6.0, zenoh and zenoh-net APIs have been merged into a single API.&lt;/p>
-&lt;h2 id="general-considerations-about-the-new-rust-v06x-zenoh-api">General considerations about the new Rust v0.6.x zenoh API&lt;/h2>
-&lt;h3 id="resolvables">Resolvables&lt;/h3>
-&lt;p>Most of the operations of the new API return builder structs that implement the &lt;code>Resolvable&lt;/code>, &lt;code>SyncResolve&lt;/code> and &lt;code>AsyncResolve&lt;/code> traits. A &lt;code>res&lt;/code> function needs to be called on those builders to obtain the final result of the operation. When using Rust sync, the &lt;code>SyncResolve&lt;/code> trait needs to be used and the &lt;code>res&lt;/code> function directly returns the final result. When using Rust async/await, &lt;code>AsyncResolve&lt;/code> trait needs to be used and the &lt;code>res&lt;/code> function returns a &lt;code>Future&lt;/code>.&lt;/p></description></item><item><title>Migrating from Zenoh-C v0.5.x zenoh-net API to Zenoh-C v0.6.x zenoh API</title><link>/docs/migration_0.5_to_0.6/migrationguide-c-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-c-v0.5.x-v0.6.x/</guid><description>&lt;h3 id="opening-a-session">Opening a session&lt;/h3>
-&lt;p>All types and operations from the &lt;code>zn_*&lt;/code> primitives have been updated and migrated to the &lt;code>z_*&lt;/code> primitives.&lt;/p>
-&lt;p>&lt;em>zenoh v0.5.x&lt;/em>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-C" data-lang="C">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#078;font-weight:bold">zn_properties_t&lt;/span> &lt;span style="color:#555">*&lt;/span>config &lt;span style="color:#555">=&lt;/span> &lt;span style="color:#c0f">zn_config_default&lt;/span>();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#078;font-weight:bold">zn_session_t&lt;/span> &lt;span style="color:#555">*&lt;/span>s &lt;span style="color:#555">=&lt;/span> &lt;span style="color:#c0f">zn_open&lt;/span>(config);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#069;font-weight:bold">if&lt;/span> (s &lt;span style="color:#555">==&lt;/span> &lt;span style="color:#366">NULL&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c0f">printf&lt;/span>(&lt;span style="color:#c30">&amp;#34;Unable to open session!&lt;/span>&lt;span style="color:#c30;font-weight:bold">\n&lt;/span>&lt;span style="color:#c30">&amp;#34;&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c0f">exit&lt;/span>(&lt;span style="color:#555">-&lt;/span>&lt;span style="color:#f60">1&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;em>zenoh v0.6.x&lt;/em>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-C" data-lang="C">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#078;font-weight:bold">z_owned_config_t&lt;/span> config &lt;span style="color:#555">=&lt;/span> &lt;span style="color:#c0f">z_config_default&lt;/span>();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#078;font-weight:bold">z_owned_session_t&lt;/span> s &lt;span style="color:#555">=&lt;/span> &lt;span style="color:#c0f">z_open&lt;/span>(&lt;span style="color:#c0f">z_move&lt;/span>(config));
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#069;font-weight:bold">if&lt;/span> (&lt;span style="color:#555">!&lt;/span>&lt;span style="color:#c0f">z_check&lt;/span>(s)) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c0f">printf&lt;/span>(&lt;span style="color:#c30">&amp;#34;Unable to open session!&lt;/span>&lt;span style="color:#c30;font-weight:bold">\n&lt;/span>&lt;span style="color:#c30">&amp;#34;&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#c0f">exit&lt;/span>(&lt;span style="color:#555">-&lt;/span>&lt;span style="color:#f60">1&lt;/span>);
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="subscribing">Subscribing&lt;/h3>
-&lt;p>For this release, Zenoh-C only supports subscribers with callbacks. It is possible to access samples through a callback by calling the &lt;code>callback&lt;/code> function passed as argument on &lt;code>declare_subscriber&lt;/code> function.&lt;/p></description></item><item><title>Migrating from Zenoh v0.5.x Python API to Zenoh v0.6.x Python API</title><link>/docs/migration_0.5_to_0.6/migrationguide-python-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-python-v0.5.x-v0.6.x/</guid><description>&lt;h2 id="explorability">Explorability&lt;/h2>
-&lt;p>In previous releases, the Python bindings were entirely defined in Rust, making it very hard for Pythoners to explore it.&lt;/p>
-&lt;p>With 0.6, the bindings have evolved: a &amp;ldquo;private&amp;rdquo; layer is exposed by Rust, and wrapped in Python, with 2 main advantages:&lt;/p>
-&lt;ul>
-&lt;li>IDEs can now find available symbols, signatures and documentation more easily.&lt;/li>
-&lt;li>Any dynamic type handling is done in Python, letting you investigate what happens depending on the types of values you pass more easily.&lt;/li>
-&lt;/ul>
-&lt;h2 id="handling-raii">Handling RAII&lt;/h2>
-&lt;p>The bindings are generated through &lt;code>pyo3&lt;/code>, which among other things ensures that the destructors of the wrapped Rust types get called when a value becomes inaccessible.&lt;/p></description></item><item><title>Migrating from Zenoh-Pico v0.5.x to Zenoh-Pico v0.6.x</title><link>/docs/migration_0.5_to_0.6/migrationguide-pico-v0.5.x-v0.6.x/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-pico-v0.5.x-v0.6.x/</guid><description>&lt;h2 id="general-considerations-about-the-new-zenoh-pico-v06x-api">General considerations about the new Zenoh-Pico v0.6.x API&lt;/h2>
-&lt;h3 id="ownership-model">Ownership model&lt;/h3>
-&lt;p>The new Zenoh-Pico API, similarly to the Zenoh-C API, introduced a more explicit ownership model to the user. Such model targets a better memory management where e.g. memory leaks can be easily identified and double free can be avoided. The user will have a clear understanding on what is owned by his side of the code, and what has been loaned or moved to the API.&lt;/p></description></item><item><title>Migrating from Zenoh-C to Zenoh-Pico (and vice-versa)</title><link>/docs/migration_0.5_to_0.6/migrationguide-zenohc-zenohpico/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_0.5_to_0.6/migrationguide-zenohc-zenohpico/</guid><description>&lt;p>Both Zenoh-C and Zenoh-Pico APIs offer a C client API for the zenoh protocol, thus this release took an extra step to make Zenoh-C code to be compatible with Zenoh-Pico code (and vice-versa). Such approach aids users to easily migrate its Zenoh-based code to microcontrollers and embedded systems.&lt;/p>
-&lt;p>Nevertheless, in order to keep your code optimal some minor changes might be required while moving from Zenoh-C to Zenoh-Pico:&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>zc_*&lt;/strong> refers to Zenoh-C API only, while &lt;strong>zp_*&lt;/strong> refers to Zenoh-Pico API only.&lt;/li>
-&lt;li>Zenoh &lt;strong>configurations&lt;/strong> are handled in a different way.&lt;/li>
-&lt;li>&lt;strong>Read&lt;/strong> and &lt;strong>Lease&lt;/strong> tasks must be spawn and destroyed explicitly by the user.&lt;/li>
-&lt;li>Keyexpr to_string vs resolve&lt;/li>
-&lt;/ul>
-&lt;p>Everything else should be copy-paste friendly. Note that, although the API between Zenoh-C and Zenoh-Pico are the same, their ABI is different w.r.t. how parameters are passed to functions. Still, &lt;strong>z_loan&lt;/strong> and &lt;strong>z_move&lt;/strong> hide those differences from the user.&lt;/p></description></item><item><title>Concepts</title><link>/docs/migration_1.0/concepts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/concepts/</guid><description>&lt;p>The Zenoh team have been hard at work preparing an official version 1.0.0 of Zenoh!&lt;br>
+&lt;a href="https://eclipse-zenoh.github.io/zenoh-kotlin" target="_blank">https://eclipse-zenoh.github.io/zenoh-kotlin&lt;/a>.</description></item><item><title>Concepts</title><link>/docs/migration_1.0/concepts/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/concepts/</guid><description>&lt;p>The Zenoh team have been hard at work preparing an official version 1.0.0 of Zenoh!&lt;br>
 This major release comes with several API changes, quality of life improvements and developer conveniences.&lt;/p>
 &lt;p>We now have a more stable API and intend to keep backward compatibility in future Zenoh revisions.&lt;br>
 This guide is here to ease the transition to Zenoh 1.0.0 for our users!&lt;/p>
@@ -203,36 +159,36 @@ This guide is here to ease the transition to Zenoh 1.0.0 for our users!&lt;/p>
 We have added a number of conversion implementations for language primitives as well as methods to seamlessly allow user defined structs to be serialized into &lt;code>ZBytes&lt;/code>.&lt;br>
 &lt;code>Sample&lt;/code>&amp;rsquo;s payloads are now &lt;code>ZBytes&lt;/code>. &lt;code>Publisher&lt;/code>, &lt;code>Queryable&lt;/code> and &lt;code>Subscriber&lt;/code> now expect &lt;code>ZBytes&lt;/code> for all their interfaces. The &lt;a href="#attachment">Attachment&lt;/a> API also now accepts &lt;code>ZBytes&lt;/code>.&lt;/p></description></item><item><title>Rust</title><link>/docs/migration_1.0/rust/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/rust/</guid><description>&lt;h2 id="module-reorganization">Module reorganization&lt;/h2>
 &lt;p>We reorganized the module tree, so import paths are not the same as before. The main difference is that everything should be imported via the root path &lt;code>zenoh::&lt;/code>. Here are some examples, but you can look into &lt;code>zenoh/src/lib.rs&lt;/code> for the complete list of changes.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-rust" data-lang="rust">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">// common use
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::config::&lt;span style="color:#555">*&lt;/span>;&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::{Config,&lt;span style="color:#bbb"> &lt;/span>Error,&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#366">Result&lt;/span>};&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// key_expr &amp;amp; selector
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::key_expr::{&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>format::{kedefine,&lt;span style="color:#bbb"> &lt;/span>keformat},&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>keyexpr,&lt;span style="color:#bbb"> &lt;/span>KeyExpr,&lt;span style="color:#bbb"> &lt;/span>OwnedKeyExpr,&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>};&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// session
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::session::{init,&lt;span style="color:#bbb"> &lt;/span>open,&lt;span style="color:#bbb"> &lt;/span>EntityId,&lt;span style="color:#bbb"> &lt;/span>Session,&lt;span style="color:#bbb"> &lt;/span>SessionInfo};&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// publisher &amp;amp; subscriber
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::pubsub::{Publisher,&lt;span style="color:#bbb"> &lt;/span>Reliability,&lt;span style="color:#bbb"> &lt;/span>Subscriber};&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// query &amp;amp; queryable &amp;amp; selectors
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::query::{&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>ConsolidationMode,&lt;span style="color:#bbb"> &lt;/span>Parameters,&lt;span style="color:#bbb"> &lt;/span>Query,&lt;span style="color:#bbb"> &lt;/span>QueryConsolidation,&lt;span style="color:#bbb"> &lt;/span>QueryTarget,&lt;span style="color:#bbb"> &lt;/span>Queryable,&lt;span style="color:#bbb"> &lt;/span>Reply,&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>Selector,&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>};&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// ZBytes &amp;amp; encoding
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::bytes::{ZBytes,&lt;span style="color:#bbb"> &lt;/span>Encoding};&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// sample
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::sample::{Locality,&lt;span style="color:#bbb"> &lt;/span>Sample};&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#09f;font-style:italic">// quality of service
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#09f;font-style:italic">&lt;/span>&lt;span style="color:#069;font-weight:bold">use&lt;/span>&lt;span style="color:#bbb"> &lt;/span>zenoh::qos::{CongestionControl,&lt;span style="color:#bbb"> &lt;/span>Priority,&lt;span style="color:#bbb"> &lt;/span>QoSBuilderTrait};&lt;span style="color:#bbb">
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-rust" data-lang="rust">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// common use
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">use&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">zenoh&lt;/span>::&lt;span class="n">config&lt;/span>::&lt;span class="o">*&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="k">use&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">zenoh&lt;/span>::&lt;span class="p">{&lt;/span>&lt;span class="n">Config&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Error&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nb">Result&lt;/span>&lt;span class="p">};&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// key_expr &amp;amp; selector
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">use&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">zenoh&lt;/span>::&lt;span class="n">key_expr&lt;/span>::&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">format&lt;/span>::&lt;span class="p">{&lt;/span>&lt;span class="n">kedefine&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">keformat&lt;/span>&lt;span class="p">},&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">keyexpr&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">KeyExpr&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">OwnedKeyExpr&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">};&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// session
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">use&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">zenoh&lt;/span>::&lt;span class="n">session&lt;/span>::&lt;span class="p">{&lt;/span>&lt;span class="n">init&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">open&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">EntityId&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Session&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">SessionInfo&lt;/span>&lt;span class="p">};&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// publisher &amp;amp; subscriber
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">use&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">zenoh&lt;/span>::&lt;span class="n">pubsub&lt;/span>::&lt;span class="p">{&lt;/span>&lt;span class="n">Publisher&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Reliability&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Subscriber&lt;/span>&lt;span class="p">};&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// query &amp;amp; queryable &amp;amp; selectors
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">use&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">zenoh&lt;/span>::&lt;span class="n">query&lt;/span>::&lt;span class="p">{&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">ConsolidationMode&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Parameters&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Query&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">QueryConsolidation&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">QueryTarget&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Queryable&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Reply&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="n">Selector&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="p">};&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// ZBytes &amp;amp; encoding
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">use&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">zenoh&lt;/span>::&lt;span class="n">bytes&lt;/span>::&lt;span class="p">{&lt;/span>&lt;span class="n">ZBytes&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Encoding&lt;/span>&lt;span class="p">};&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// sample
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">use&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">zenoh&lt;/span>::&lt;span class="n">sample&lt;/span>::&lt;span class="p">{&lt;/span>&lt;span class="n">Locality&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Sample&lt;/span>&lt;span class="p">};&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="c1">// quality of service
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="k">use&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">zenoh&lt;/span>::&lt;span class="n">qos&lt;/span>::&lt;span class="p">{&lt;/span>&lt;span class="n">CongestionControl&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">Priority&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">QoSBuilderTrait&lt;/span>&lt;span class="p">};&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="removal-of-the-sync-and-async-preludes">Removal of the sync and async preludes&lt;/h2>
 &lt;p>Zenoh preludes has been deprecated and are no more used in the API. The API has also been made asynchronous first: all operations like put/get/etc. can be awaited directly.
 Making synchronous calls now requires to import &lt;code>zenoh::Wait&lt;/code>, and use &lt;code>wait()&lt;/code> method, replacing the old &lt;code>res()&lt;/code> method.
@@ -255,9 +211,9 @@ To make the migration easier, there is a deprecation prompt if you use the old A
 &lt;p>The API has also been reworked to feel more pythonic, using notably context managers.&lt;/p>
 &lt;h2 id="context-managers-and-background-callbacks">Context managers and background callbacks&lt;/h2>
 &lt;p>You &lt;em>should&lt;/em> close the zenoh session after use and the recommended way is through context manager:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#069;font-weight:bold">import&lt;/span> &lt;span style="color:#0cf;font-weight:bold">zenoh&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#069;font-weight:bold">with&lt;/span> zenoh&lt;span style="color:#555">.&lt;/span>open(zenoh&lt;span style="color:#555">.&lt;/span>Config()) &lt;span style="color:#069;font-weight:bold">as&lt;/span> session:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#09f;font-style:italic"># `session.close()` will be called at the end of the block&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">zenoh&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">with&lt;/span> &lt;span class="n">zenoh&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">open&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">zenoh&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Config&lt;/span>&lt;span class="p">())&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="n">session&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># `session.close()` will be called at the end of the block&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Session-managed objects like subscribers or queryables can also be managed using context managers:&lt;/p></description></item><item><title>Java</title><link>/docs/migration_1.0/java/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/migration_1.0/java/</guid><description>&lt;h1 id="java-api-migration-guide-for-100">Java API migration guide for 1.0.0&lt;/h1>
 &lt;p>The API has been extensively modified with the following goals in mind:&lt;/p>
 &lt;ul>
@@ -267,10 +223,10 @@ To make the migration easier, there is a deprecation prompt if you use the old A
 &lt;/ul>
 &lt;h2 id="remotion-of-the-builder-patterns-and-options-parameters">Remotion of the builder patterns and options parameters&lt;/h2>
 &lt;p>Throughout the 0.11.0 API, we were exposing builders, for instance:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>session.&lt;span style="color:#309">put&lt;/span>(keyExpr,&lt;span style="color:#bbb"> &lt;/span>value)&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>.&lt;span style="color:#309">congestionControl&lt;/span>(CongestionControl.&lt;span style="color:#309">BLOCK&lt;/span>)&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>.&lt;span style="color:#309">priority&lt;/span>(Priority.&lt;span style="color:#309">REALTIME&lt;/span>)&lt;span style="color:#bbb">
-&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>.&lt;span style="color:#309">res&lt;/span>()&lt;span style="color:#bbb">
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="n">session&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">put&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">keyExpr&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">value&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">congestionControl&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">CongestionControl&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">BLOCK&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">priority&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Priority&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">REALTIME&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="na">res&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This seemed odd, because &amp;ldquo;put&amp;rdquo; is an imperative statement. This could lead to confusions
 since it&amp;rsquo;s not evident that instead of performing the put operation, that function returns
 a builder that must be built with a &amp;lsquo;res()&amp;rsquo; (from resolve) function.
