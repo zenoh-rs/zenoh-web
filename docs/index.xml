@@ -122,8 +122,10 @@ TLS can be configured in two ways:&lt;/p>
 &lt;p>The configuration of TLS certificates is done via a &lt;a href="../configuration">configuration file&lt;/a>.&lt;/p></description></item><item><title>QUIC transport</title><link>https://zenoh.io/docs/manual/quic/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/manual/quic/</guid><description>&lt;p>Zenoh supports QUIC as a transport protocol.&lt;/p>
 &lt;p>As you may already know, QUIC is a UDP-based, stream-multiplexing, encrypted transport protocol.
 It natively embeds TLS for encryption, authentication and confidentiality.&lt;/p>
-&lt;p>As of today, the only supported TLS authentication mode in Zenoh is server-authentication &lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>: clients validate the server TLS certificate but not the other way around.
-That is, the same way of operating on the web where the web browsers validate the identity of the server via means of the TLS certificate.&lt;/p></description></item><item><title>User-Password authentication</title><link>https://zenoh.io/docs/manual/user-password/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/manual/user-password/</guid><description>&lt;p>Zenoh supports basic &lt;em>user-password authentication&lt;/em>.
+&lt;p>Zenoh supports both TLS and mTLS over QUIC, and leverages advanced QUIC features such as &lt;strong>stream multiplexing&lt;/strong>, &lt;strong>unreliable datagrams&lt;/strong>, and &lt;strong>mixed reliability&lt;/strong>.&lt;/p>
+&lt;hr>
+&lt;h2 id="tls-configuration">TLS configuration&lt;/h2>
+&lt;p>In order to use QUIC as a transport protocol, we need first to create the TLS certificates.&lt;/p></description></item><item><title>User-Password authentication</title><link>https://zenoh.io/docs/manual/user-password/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/manual/user-password/</guid><description>&lt;p>Zenoh supports basic &lt;em>user-password authentication&lt;/em>.
 Clients and peers can use &lt;em>user&lt;/em> and &lt;em>password&lt;/em> for authentication against a router or a peer.
 Similarly, peers and routers can use &lt;em>user&lt;/em> and &lt;em>password&lt;/em> for authentication among themselves.
 The configuration of credentials is done via a &lt;a href="../configuration">configuration file&lt;/a>.&lt;/p>
