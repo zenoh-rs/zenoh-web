@@ -3,22 +3,22 @@ title: "Using ReductStore as a Zenoh storage backend"
 date: 2026-04-23
 menu: "blog"
 weight: 20260423
-description: "23 April 2026 -- Hamburg."
+description: "23 April 2026 -- HH."
 draft: false
 ---
 
 [ReductStore](https://www.reduct.store) is an open source time series
 object store. It can persist time series data of any size and type:
 small JSON telemetry, camera frames, LiDAR point clouds, audio
-chunks, or anything else you can encode as bytes. Starting with version 1.19, it
-ships a native Zenoh plugin: a ReductStore instance can join a Zenoh
+chunks, or anything else you can encode as bytes. Starting with version 1.19,
+it ships a native Zenoh plugin: an instance can join a Zenoh
 network as a regular peer, subscribe to key expressions, persist
 every sample it receives, and answer `get()` queries on the same key
 space. No bridge process, no extra protocol.
 
 The data models line up well. A Zenoh sample is published on a key
 (e.g. `robot/arm/joint1`) and carries a timestamp, a payload, and an
-optional attachment. A ReductStore record is stored under an entry
+optional attachment. On the storage side, a record is stored under an entry
 name and carries a timestamp, an arbitrary size payload, and a set of
 labels. Same structure, different taxonomy. The mapping between the
 two is almost one to one:
@@ -43,22 +43,7 @@ Everything is in
 
 ## The setup
 
-```
-┌──────────────┐
-│ robot alpha  │  robot/alpha/*
-│              ├──┐
-└──────────────┘  │        ┌───────────────┐     ┌──────────────┐
-                  ├───────▶│  zenoh router ├────▶│  ReductStore │
-┌──────────────┐  │        └───────┬───────┘ sub │  bucket:     │
-│ robot beta   │──┘                │         qry │    fleet     │
-│              │  robot/beta/*     │             └──────┬───────┘
-└──────────────┘                   ▼                    │
-                            ┌────────────┐          HTTP 8383
-                            │ remote app │              │
-                            │  get(...)  │              ▼
-                            └────────────┘       Web console +
-                                                  HTTP clients
-```
+![Setup](../../img/2026-04-23-reductstore/setup.png)
 
 Each robot publishes to `robot/<id>/camera` (JPEGs at 2 Hz) and
 `robot/<id>/telemetry` (JSON at 10 Hz). ReductStore connects to the
@@ -150,19 +135,9 @@ carries live data also carries history. `RS_ZENOH_QUERY_LOCALITY`
 lets you restrict whether the storage answers local queries, remote
 queries, or both.
 
-```
-   site A gateway       site B gateway         cloud site
- ┌───────────────┐    ┌───────────────┐    ┌───────────────┐
- │ zenoh router  │◀──▶│ zenoh router  │◀──▶│ zenoh router  │
- │ ReductStore A │    │ ReductStore B │    │ ReductStore   │
- │  robot/A/**   │    │  robot/B/**   │    │   robot/**    │
- └───────▲───────┘    └───────▲───────┘    └───────▲───────┘
-         │ robots A           │ robots B           │
-                                              operator laptop
-                                        get("robot/**?start=…")
-```
+![Multi-site topology](../../img/2026-04-23-reductstore/multi-site.png)
 
-### 3. FIFO quota
+### 3. FIFO quota policy based on storage volume
 
 ReductStore buckets support a FIFO quota: set a size, and the oldest
 blocks are dropped to make room for new ones.
@@ -200,38 +175,49 @@ The filter language is the same `when` from point 1. You label a
 record once, at ingest, and the same label drives the read query,
 the retention policy, and the replication rule.
 
-```
- ROBOT             EDGE GATEWAY                   CLOUD
- ─────             ──────────────────             ───────────────
-                  ┌───────────────────┐          ┌───────────────┐
-  pub ──zenoh──▶  │ ReductStore       │ replicate│ ReductStore   │
-                  │ bucket: fleet     │─ filter ▶│ bucket: fleet │
-                  │ FIFO quota 50 GB  │  when=   │ (warn subset) │
-                  └───────────────────┘   warn   └───────────────┘
-```
+![Replication](../../img/2026-04-23-reductstore/replication.png)
 
-## Try it
+## Run the example yourself
+
+The full example is on GitHub. Clone, start the stack, and you have
+two simulated robots publishing telemetry and camera frames through a
+Zenoh router into ReductStore — all in a few seconds:
 
 ```bash
 git clone https://github.com/reductstore/zenoh-example
 cd zenoh-example
 docker compose up --build
-open http://localhost:8383    # web console, token: reductstore
 ```
 
-Then:
+Once everything is up, open the ReductStore web console at
+<http://localhost:8383> (API token: `reductstore`). You will see a
+`fleet` bucket with entries for each robot's camera and telemetry
+streams. You can browse records by time range, inspect labels, and
+preview JPEG frames directly in the browser.
+
+![ReductStore web console](../../img/2026-04-23-reductstore/web-console.png)
+
+Now query the data over Zenoh from a separate terminal:
 
 ```bash
 cd query && pip install -r requirements.txt
+
+# latest 60 seconds of telemetry for robot alpha
 python query_zenoh.py --robot alpha --last 60
+
+# last 10 minutes, only records where status was "warn"
 python query_zenoh.py --robot alpha --last 600 --only-warn
 ```
 
-## References
+The query script connects to the Zenoh router, sends a `get()` with a
+time range selector, and receives the matching records straight from
+ReductStore. No HTTP client, no separate API — the same Zenoh session
+that carries live data also serves history.
 
-- Zenoh: <https://zenoh.io>
-- Zenoh first app: <https://zenoh.io/docs/getting-started/first-app/>
-- ReductStore: <https://www.reduct.store>
-- ReductStore + Zenoh: <https://www.reduct.store/docs/integrations/zenoh>
-- Replication tasks: <https://www.reduct.store/docs/guides/data-replication>
-- Example on GitHub: <https://github.com/reductstore/zenoh-example>
+If you want to dig deeper, the [ReductStore + Zenoh integration
+docs](https://www.reduct.store/docs/integrations/zenoh) cover every
+configuration option, and the [replication
+guide](https://www.reduct.store/docs/guides/data-replication) explains
+label-based filtering in detail.
+
+**-- The ReductStore Team**
