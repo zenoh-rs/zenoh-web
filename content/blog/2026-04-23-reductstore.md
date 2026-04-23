@@ -9,7 +9,7 @@ draft: false
 
 [ReductStore](https://www.reduct.store) is an open source time series
 object store. It can persist time series data of any size and type:
-small JSON telemetry, camera frames, LiDAR point clouds, audio
+small JSON telemetry, camera frames, LiDAR point clouds, vibration
 chunks, or anything else you can encode as bytes. Starting with version 1.19,
 it ships a native Zenoh plugin: an instance can join a Zenoh
 network as a regular peer, subscribe to key expressions, persist
@@ -81,7 +81,7 @@ pub.put(
 
 ReductStore hooks into Zenoh's `get()`. The selector carries a time
 window, and a JSON attachment carries a condition on labels. Both are
-evaluated on the storage side before bytes cross the network.
+evaluated on the storage side before any data is sent back to the client.
 
 Time range:
 
@@ -93,9 +93,10 @@ replies = session.get(
 )
 ```
 
-`ConsolidationMode.NONE` is the important bit. Zenoh's default
-consolidates replies to one per key. For a time series you want
-every record, so consolidation has to be off.
+Note the `ConsolidationMode.NONE`. Without it, Zenoh may
+consolidate replies and return only one sample per key. For a time
+series query you want every record in the range, so consolidation
+must be disabled.
 
 Conditional filter on labels:
 
@@ -109,7 +110,10 @@ replies = session.get(
 ```
 
 "Every camera frame from the last ten minutes where status was warn"
-is one `get()`. No client side filtering.
+is one `get()`. No client side filtering. The `when` syntax supports
+comparison, logical, arithmetic, and aggregation operators. See the
+[Conditional Query Reference](https://www.reduct.store/docs/conditional-query)
+for the full list.
 
 ### 2. Queries work over the network
 
@@ -130,8 +134,9 @@ python query_zenoh.py --robot alpha --last 60 \
 ```
 
 Storage can sit on the robot, on the gateway, or in the cloud. The
-caller's code is the same in all three cases. The port that already
-carries live data also carries history. `RS_ZENOH_QUERY_LOCALITY`
+caller's code is the same in all three cases. Live data and
+historical queries flow through the same Zenoh session.
+`RS_ZENOH_QUERY_LOCALITY`
 lets you restrict whether the storage answers local queries, remote
 queries, or both.
 
@@ -139,8 +144,13 @@ queries, or both.
 
 ### 3. FIFO quota policy based on storage volume
 
-ReductStore buckets support a FIFO quota: set a size, and the oldest
-blocks are dropped to make room for new ones.
+ReductStore buckets support a FIFO quota based on storage size: set a
+limit, and the oldest blocks are dropped to make room for new ones.
+This is more robust than a time-based retention policy for
+edge devices. If a robot goes offline for days, a "keep the last 24
+hours" rule would silently discard everything when the robot comes
+back online. With a size-based policy, the bucket just fills up and keeps
+the most recent 50 GB, regardless of how long that takes.
 
 ```yaml
 # on the edge instance
@@ -155,9 +165,13 @@ dropping old ones, if that is what you need.
 
 ### 4. Label based replication to the cloud
 
-A replication task is a background worker on the source instance. It
-watches new writes, filters by entry name and by label, and forwards
-matches to a destination ReductStore.
+When ReductStore subscribes to data from a Zenoh router on the edge,
+you may want to keep a long-term subset of that data in the cloud.
+ReductStore can replicate records from one instance to another,
+filtering by entry name and by label condition. The filter uses the
+same Conditional Query syntax as `get()`, so you can match on labels 
+but also on context (e.g. keep the last 10 seconds of data before and 
+after a "warn" event).
 
 ```yaml
 # on the edge instance: forward only warn events and their frames
@@ -171,17 +185,16 @@ environment:
   RS_REPLICATION_1_WHEN: '{"&status": {"$eq": "warn"}}'
 ```
 
-The filter language is the same `when` from point 1. You label a
-record once, at ingest, and the same label drives the read query,
-the retention policy, and the replication rule.
+You label a record once, at ingest, and the same label drives the
+read query, the retention policy, and the replication rule.
 
 ![Replication](../../img/2026-04-23-reductstore/replication.png)
 
-## Run the example yourself
+## Try it out
 
-The full example is on GitHub. Clone, start the stack, and you have
-two simulated robots publishing telemetry and camera frames through a
-Zenoh router into ReductStore — all in a few seconds:
+The full example is on GitHub. Clone, start the stack, and in a few
+seconds you have two simulated robots publishing telemetry and camera
+frames through a Zenoh router into ReductStore:
 
 ```bash
 git clone https://github.com/reductstore/zenoh-example
@@ -190,7 +203,7 @@ docker compose up --build
 ```
 
 Once everything is up, open the ReductStore web console at
-<http://localhost:8383> (API token: `reductstore`). You will see a
+`http://localhost:8383` (API token: `reductstore`). You will see a
 `fleet` bucket with entries for each robot's camera and telemetry
 streams. You can browse records by time range, inspect labels, and
 preview JPEG frames directly in the browser.
@@ -210,9 +223,7 @@ python query_zenoh.py --robot alpha --last 600 --only-warn
 ```
 
 The query script connects to the Zenoh router, sends a `get()` with a
-time range selector, and receives the matching records straight from
-ReductStore. No HTTP client, no separate API — the same Zenoh session
-that carries live data also serves history.
+time range selector, and receives the matching records.
 
 If you want to dig deeper, the [ReductStore + Zenoh integration
 docs](https://www.reduct.store/docs/integrations/zenoh) cover every
