@@ -1,11 +1,19 @@
 ---
 title: "Using ReductStore as a Zenoh storage backend"
-date: 2026-04-23
+date: 2026-05-13
 menu: "blog"
-weight: 20260423
-description: "23 April 2026 -- HH."
+weight: 20260513
+description: "13 May 2026 -- Hamburg"
 draft: false
 ---
+
+{{< callout icon ="🐉" >}}
+This blog post was contributed by the ReductStore team. ReductStore is an open source, high-performance time-series store that is now available as a Zenoh storage backend thanks to their work.<br>
+<br>
+-- kydos
+{{< /callout >}}
+
+
 
 [ReductStore](https://www.reduct.store) is an open source time series
 object store. It can persist time series data of any size and type:
