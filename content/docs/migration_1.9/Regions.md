@@ -118,7 +118,7 @@ Example:
 }
 ```
 
-Nodes can be filtered on their region name in the `gateway` configuration.
+Nodes can be filtered by their region name in the `gateway` configuration.
 
 Examples:
 ```
