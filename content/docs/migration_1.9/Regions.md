@@ -31,7 +31,7 @@ In peer to peer regions, Zenoh nodes must be deployed with `peer` mode and must 
 ![peer2peer](/img/migration_1.9/peer2peer.png "peer2peer")
 
 **Brokered:**
-In brokered regions, Zenoh nodes must be deployed with `client` mode and must be connected to a "broker" node. The broker node is typically a gateway to a north region or the super node of the system. The mode of the broker node is irrelevant for the brokered region and only affects the north region.
+In brokered regions, Zenoh nodes must be deployed with `client` mode and must also be connected to a "broker" node. The broker node is typically a gateway to a north region or the super node of the system. The mode of the broker node is irrelevant for the brokered region and only affects the north region.
 
 ![brokered](/img/migration_1.9/brokered.png "brokered")
 
