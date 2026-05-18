@@ -26,7 +26,7 @@ In routed regions, Zenoh nodes must be deployed with `router` mode and can be de
 ![routed](/img/migration_1.9/routed.png "routed")
 
 **Peer to Peer:**
-In peer to peer regions, Zenoh nodes must be deployed with `peer` mode and must be deployed in a clique topology where every node is connected to all other nodes of the region.
+In peer to peer regions, Zenoh nodes must be deployed with `peer` mode and must also be deployed in a clique topology where every node is connected to all other nodes of the region.
 
 ![peer2peer](/img/migration_1.9/peer2peer.png "peer2peer")
 
