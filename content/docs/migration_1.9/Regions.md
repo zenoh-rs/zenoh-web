@@ -44,7 +44,7 @@ The gateway will hide non needed details of the sub region(s) to the upper regio
 #### Regions hierarchy
 
 While different topologies and communication models are possible inside each Zenoh region, the Zenoh regions **must** be deployed in a **hierarchical** manner. A Zenoh region can have at most one north region. 
-Note: for load balancing and fault tolerance purposes, multiple gateways may be deployed to serve a same south region in a north region, but those multiple gateways **must** be deployed in the same north reion.
+Note: for load balancing and fault tolerance purposes, multiple gateways may be deployed to serve a same south region in a north region, but those multiple gateways **must** be deployed in the same north region.
 
 ![hierarchy](/img/migration_1.9/hierarchy.png "hierarchy")
 
