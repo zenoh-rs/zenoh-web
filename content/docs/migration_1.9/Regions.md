@@ -8,7 +8,7 @@ menu:
 
 ## Zenoh regions
 
-Zenoh version 1.9.0 introduces a new feature that allows to subdivise a system in regions in a more flexible manner than before. This provides more scalability and allows deployments and topologies that were not possible before.
+Zenoh version 1.9.0 introduces a new feature that allows subdividing a system into _regions_ in a more flexible manner than before. This provides more scalability and allows deployments and topologies that were not possible before.
 
 ### The Zenoh Gateway
 
