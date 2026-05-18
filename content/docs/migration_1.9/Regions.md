@@ -268,7 +268,7 @@ This kind of deployment will not work any more out of the box.
 
 Here are 2 ways to workaround this change:
 
-**Deploy one gateway per sub region**
+**Deploy one gateway per subregion**
 
 Examples:
 
