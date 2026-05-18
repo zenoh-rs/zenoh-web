@@ -260,7 +260,7 @@ Here is a list of configuration options that have been removed in Zenoh v1.9.0 a
 
 #### `peers_failover_brokering` option
 
-The `routing/router/peers_failover_brokering` feature has been removed and the related option is no longer available in the configuration. This feature allowed the following kind of topology:
+The peer failover brokering feature in routers has been removed and the corresponding option `routing/router/peers_failover_brokering` is no longer available in the configuration. This feature allowed the following kind of topology:
 
 ![topology1](/img/migration_1.9/migration_topo1.png "topology1")
 
