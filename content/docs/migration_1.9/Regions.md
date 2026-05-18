@@ -12,7 +12,7 @@ Zenoh version 1.9.0 introduces a new feature that allows subdividing a system in
 
 ### The Zenoh Gateway
 
-Version 1.9.0 introduces the Zenoh *Gateway*. A Zenoh gateway is a Zenoh node that can serve one or several sub regions called *south* regions. It will act as a representant of the south region(s) in the main region called the *north* region.
+Version 1.9.0 introduces the Zenoh *Gateway*. A Zenoh gateway is a Zenoh node that can serve one or several subregions called *south* regions. It will act as a representative of the south region(s) in the main region called the *north* region.
 
 The `mode` of the Zenoh gateway node defines what communication model is used in the north region and thus how the node should act in the north region. A Zenoh gateway can accept any communication models in it's south regions and so do not need any configuration of south regions modes.
 
