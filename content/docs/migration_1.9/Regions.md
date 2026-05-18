@@ -105,7 +105,7 @@ Example of configuration with two south regions:
 
 Nodes that do not match any south region and has the correct mode for the north region will be affected to the north region.
 
-Nodes that do not match any south region and don't have the correct mode for the north region will be affected to the *unbound* region. The  *unbound* region behaves like a south region.
+Nodes that do not match any south region and don't have the correct mode for the north region will be rejected and will fail to connect.
 
 #### Region names
 
