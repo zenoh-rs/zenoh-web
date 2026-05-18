@@ -23,6 +23,12 @@ enableEmoji: true
 singleViewStyle: "caspertwo"
 ignoreLogs: ['warning-goldmark-raw-html']
 
+security:
+  node:
+    permissions:
+      allowRead:
+        - '/'
+
 params:
   description: "Eclipse Zenoh unifies pub/sub, query, storage, and computation across cloud, edge, robotics, IoT, and constrained devices."
   images:

@@ -235,24 +235,14 @@ Most scenarios and topologies will continue working without any change when migr
 
 ### Changed defaults
 
-- `connect.timeout_ms` default value changed 
-  - from `{ router: -1, peer: -1, client: 0 }` 
-  - to `-1`
-- `connect.exit_on_failure` default value changed 
-  - from `{ router: false, peer: false, client: true }` 
-  - to `false`
-- `scouting.timeout` default value changed 
-  - from `3000` 
-  - to `-1`
-- `scouting.multicast.listen` default value changed
-  - from `{ router: true, peer: true, client: false }` 
-  - to `true`
-- `scouting.multicast.autoconnect` default value changed
-  - from `{ router: [], peer: ["router", "peer"], client: ["router"] }`
-  - to `{ router: [], peer: ["router", "peer", "client"], client: ["router", "peer", "client"] }`
-- `scouting.gossip.autoconnect` default value changed
-  - from `{ router: [], peer: ["router", "peer"], client: ["router"] }`
-  - to `{ router: [], peer: ["router", "peer", "client"], client: ["router", "peer", "client"] }`
+| Option | Previous default | New default |
+|--------|------------------|-------------|
+| `connect.timeout_ms` | `{ router: -1, peer: -1, client: 0 }` | `-1` |
+| `connect.exit_on_failure` | `{ router: false, peer: false, client: true }` | `false` |
+| `scouting.timeout` | `3000` | `-1` |
+| `scouting.multicast.listen` | `{ router: true, peer: true, client: false }` | `true` |
+| `scouting.multicast.autoconnect` | `{ router: [], peer: ["router", "peer"], client: ["router"] }` | `{ router: [], peer: ["router", "peer", "client"], client: ["router", "peer", "client"] }` |
+| `scouting.gossip.autoconnect` | `{ router: [], peer: ["router", "peer"], client: ["router"] }` | `{ router: [], peer: ["router", "peer", "client"], client: ["router", "peer", "client"] }` |
 
 ### Removed options
 
