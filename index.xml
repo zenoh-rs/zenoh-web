@@ -34,7 +34,8 @@ Depending on your programming language, pick one of the following API and refer 
 &lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-pico">Pico API&lt;/a>: A port of Zenoh in C, targeted at low-power devices.&lt;/li>
 &lt;/ul>
 &lt;p>Note that if you wish to always have access to all of Zenoh&amp;rsquo;s latest features, Rust is Zenoh&amp;rsquo;s original language, and will therefore always be the most feature-complete version.&lt;/p></description></item><item><title>Deployment</title><link>https://zenoh.io/docs/getting-started/deployment/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/getting-started/deployment/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>&lt;img src="https://zenoh.io/img/topology_anim.gif"
+&lt;p>Zenoh supports multiple communication models.&lt;/p>
+&lt;p>&lt;img src="https://zenoh.io/img/deployment/topology_anim.gif"
  alt="topology animation"
  title="topology animation"
  loading="lazy"
@@ -42,7 +43,7 @@ Depending on your programming language, pick one of the following API and refer 
 &lt;/p>
 &lt;h2 id="peer-to-peer">Peer to peer&lt;/h2>
 &lt;p>By default Zenoh applications are configured to communicate peer to peer (&lt;code>peer&lt;/code> mode). All applications in the local network directly communicate with each other.&lt;/p>
-&lt;p>&lt;img src="https://zenoh.io/img/peer_to_peer.png"
+&lt;p>&lt;img src="https://zenoh.io/img/deployment/peer_to_peer.png"
  alt="peer to peer"
  title="peer to peer"
  loading="lazy"
@@ -54,8 +55,7 @@ Depending on your programming language, pick one of the following API and refer 
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="scouting">Scouting&lt;/h3>
 &lt;p>Zenoh applications in &lt;code>peer&lt;/code> mode run both &lt;code>multicast&lt;/code> and &lt;code>gossip&lt;/code> scouting to discover other applications or Zenoh routers and connect them.&lt;/p>
-&lt;p>&lt;strong>Multicast scouting&lt;/strong>&lt;/p>
-&lt;p>Zenoh applications in &lt;code>peer&lt;/code> mode join multicast group &lt;code>224.0.0.224&lt;/code> on UDP port &lt;code>7446&lt;/code> and send scout messages on this address to discover local applications and routers. They automatically connect to all accessible &lt;code>peer&lt;/code> mode applications and routers they discover. The scouting address and behavior can be configured.&lt;/p></description></item><item><title>For a quick test using Docker</title><link>https://zenoh.io/docs/getting-started/quick-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/getting-started/quick-test/</guid><description>&lt;p>This page describe how to perform a quick test of Zenoh, using a Docker image.&lt;/p>
+&lt;p>&lt;strong>Multicast scouting&lt;/strong>&lt;/p></description></item><item><title>For a quick test using Docker</title><link>https://zenoh.io/docs/getting-started/quick-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/getting-started/quick-test/</guid><description>&lt;p>This page describe how to perform a quick test of Zenoh, using a Docker image.&lt;/p>
 &lt;h2 id="run-zenoh-router-in-a-docker-container">Run Zenoh router in a Docker container&lt;/h2>
 &lt;p>The Zenoh router is also available in a Docker image. You can deploy a single instance on your local host just running:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker run --init -p 7447:7447/tcp -p 8000:8000/tcp eclipse/zenoh
@@ -256,7 +256,18 @@ After some deliberation, we opted for the following approach:&lt;/p></descriptio
 &lt;li>Abstracting users from the underlying native mechanisms&lt;/li>
 &lt;/ul>
 &lt;h2 id="default-arguments">Default arguments&lt;/h2>
-&lt;p>Throughout the 0.11.0 API we were exposing builders, however we decided to replace all of them with the more Kotlin-idiomatic way of the default arguments.&lt;/p></description></item><item><title>A Year Full of Zenoh</title><link>https://zenoh.io/blog/2020-01-01-zenohtude/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://zenoh.io/blog/2020-01-01-zenohtude/</guid><description>&lt;p>First of all we would like to take a moment to wish all of you a 2020 filled with joy, health, peace and success.&lt;/p>
+&lt;p>Throughout the 0.11.0 API we were exposing builders, however we decided to replace all of them with the more Kotlin-idiomatic way of the default arguments.&lt;/p></description></item><item><title>Regions</title><link>https://zenoh.io/docs/migration_1.9/regions/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/migration_1.9/regions/</guid><description>&lt;h2 id="zenoh-regions">Zenoh regions&lt;/h2>
+&lt;p>Zenoh version &lt;a href="https://zenoh.io/blog/2026-04-16-zenoh-longwang/">1.9.0&lt;/a> introduces a new feature that allows subdividing a system into &lt;em>regions&lt;/em> in a more flexible manner than before. This provides more scalability and allows deployments and topologies that were not possible before.&lt;/p>
+&lt;p>Please refer to deployment documentation &lt;a href="https://zenoh.io/docs/getting-started/deployment/#zenoh-regions">regions section&lt;/a> on how to deploy and configure Zenoh regions.&lt;/p>
+&lt;h3 id="new-possible-topologies">New possible topologies&lt;/h3>
+&lt;p>Here are examples of topologies that were not possible to deploy before and are now available.&lt;/p>
+&lt;h4 id="south-regions-interconnected-as-clients">South regions interconnected as clients&lt;/h4>
+&lt;p>&lt;img src="https://zenoh.io/img/migration_1.9/new_topo1.png"
+ alt="topology1"
+ title="topology1"
+ loading="lazy"
+ decoding="async">
+&lt;/p></description></item><item><title>A Year Full of Zenoh</title><link>https://zenoh.io/blog/2020-01-01-zenohtude/</link><pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate><guid>https://zenoh.io/blog/2020-01-01-zenohtude/</guid><description>&lt;p>First of all we would like to take a moment to wish all of you a 2020 filled with joy, health, peace and success.&lt;/p>
 &lt;p>This year marks a very important landmark for us. After having kicked-off the &lt;a href="http://edgenative.eclipse.org">Eclipse Edge Native&lt;/a> working group, last December, we are bringing &lt;a href="https://projects.eclipse.org/proposals/eclipse-zenoh">zenoh&lt;/a> to Eclipse and are starting to work a &lt;a href="https://www.rust-lang.org">Rust&lt;/a> rewrite of the &lt;strong>zenoh&lt;/strong> router.
 As part for the rewrite we have just about to complete a review of the &lt;strong>zenoh&lt;/strong> protocol and will be updating the specification accordingly in the weeks to come.&lt;/p></description></item><item><title>Zenoh Tidings</title><link>https://zenoh.io/blog/2020-06-29-zenoh-tidings/</link><pubDate>Tue, 30 Jun 2020 00:00:00 +0000</pubDate><guid>https://zenoh.io/blog/2020-06-29-zenoh-tidings/</guid><description>&lt;p>In our last blog we had announced a rewrite of &lt;a href="http://zenoh.io">&lt;strong>zenoh&lt;/strong>&lt;/a> in &lt;a href="http://rust-lang.org">Rust&lt;/a>. The wrote the first version of zenoh in &lt;a href="http://ocaml.org">OCaml&lt;/a>, a super-neat ML-derived functional programming language. &lt;a href="http://ocaml.org">OCaml&lt;/a> allowed us to experiment very quickly and have good performances. Yet, one of the major feedback we were receiving from the community was that few people knew this programming language and this was limiting contributions. Beside, we had the desire to make zenoh even faster and smaller. One obvious choice would have been to write the new version in C/C++, yet something we did not want to loose were the safety properties we enjoyed with &lt;a href="http://ocaml.org">OCaml&lt;/a>. Additionally, if we had to leave our beloved &lt;a href="http://ocaml.org">OCaml&lt;/a>, we did not want to completely give away high level abstractions. We also wanted to avoid languages that had a heavy runtime and a garbage collector. We had already looked at &lt;a href="http://rust-lang.org">Rust&lt;/a> back in 2015, but at the point we did not feel it was the right choice for us. The improvements introduced in the programming language with the 2018 edition along with the introduction at a language level &lt;strong>async&lt;/strong> make &lt;a href="http://rust-lang.org">Rust&lt;/a> a perfect choice for zenoh.&lt;/p></description></item><item><title>Zenoh Aithusa Hatched Out!</title><link>https://zenoh.io/blog/2020-10-08-aithusa/</link><pubDate>Thu, 08 Oct 2020 00:00:00 +0000</pubDate><guid>https://zenoh.io/blog/2020-10-08-aithusa/</guid><description>&lt;p>We have been waiting this very moment for several months. Months of patient
 dedication, months of hard and creative work. Months in which each and every

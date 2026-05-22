@@ -34,7 +34,8 @@ Depending on your programming language, pick one of the following API and refer 
 &lt;li>&lt;a href="https://github.com/eclipse-zenoh/zenoh-pico">Pico API&lt;/a>: A port of Zenoh in C, targeted at low-power devices.&lt;/li>
 &lt;/ul>
 &lt;p>Note that if you wish to always have access to all of Zenoh&amp;rsquo;s latest features, Rust is Zenoh&amp;rsquo;s original language, and will therefore always be the most feature-complete version.&lt;/p></description></item><item><title>Deployment</title><link>https://zenoh.io/docs/getting-started/deployment/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/getting-started/deployment/</guid><description>&lt;h2 id="overview">Overview&lt;/h2>
-&lt;p>&lt;img src="https://zenoh.io/img/topology_anim.gif"
+&lt;p>Zenoh supports multiple communication models.&lt;/p>
+&lt;p>&lt;img src="https://zenoh.io/img/deployment/topology_anim.gif"
  alt="topology animation"
  title="topology animation"
  loading="lazy"
@@ -42,7 +43,7 @@ Depending on your programming language, pick one of the following API and refer 
 &lt;/p>
 &lt;h2 id="peer-to-peer">Peer to peer&lt;/h2>
 &lt;p>By default Zenoh applications are configured to communicate peer to peer (&lt;code>peer&lt;/code> mode). All applications in the local network directly communicate with each other.&lt;/p>
-&lt;p>&lt;img src="https://zenoh.io/img/peer_to_peer.png"
+&lt;p>&lt;img src="https://zenoh.io/img/deployment/peer_to_peer.png"
  alt="peer to peer"
  title="peer to peer"
  loading="lazy"
@@ -54,8 +55,7 @@ Depending on your programming language, pick one of the following API and refer 
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="scouting">Scouting&lt;/h3>
 &lt;p>Zenoh applications in &lt;code>peer&lt;/code> mode run both &lt;code>multicast&lt;/code> and &lt;code>gossip&lt;/code> scouting to discover other applications or Zenoh routers and connect them.&lt;/p>
-&lt;p>&lt;strong>Multicast scouting&lt;/strong>&lt;/p>
-&lt;p>Zenoh applications in &lt;code>peer&lt;/code> mode join multicast group &lt;code>224.0.0.224&lt;/code> on UDP port &lt;code>7446&lt;/code> and send scout messages on this address to discover local applications and routers. They automatically connect to all accessible &lt;code>peer&lt;/code> mode applications and routers they discover. The scouting address and behavior can be configured.&lt;/p></description></item><item><title>For a quick test using Docker</title><link>https://zenoh.io/docs/getting-started/quick-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/getting-started/quick-test/</guid><description>&lt;p>This page describe how to perform a quick test of Zenoh, using a Docker image.&lt;/p>
+&lt;p>&lt;strong>Multicast scouting&lt;/strong>&lt;/p></description></item><item><title>For a quick test using Docker</title><link>https://zenoh.io/docs/getting-started/quick-test/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/getting-started/quick-test/</guid><description>&lt;p>This page describe how to perform a quick test of Zenoh, using a Docker image.&lt;/p>
 &lt;h2 id="run-zenoh-router-in-a-docker-container">Run Zenoh router in a Docker container&lt;/h2>
 &lt;p>The Zenoh router is also available in a Docker image. You can deploy a single instance on your local host just running:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker run --init -p 7447:7447/tcp -p 8000:8000/tcp eclipse/zenoh
@@ -256,4 +256,15 @@ After some deliberation, we opted for the following approach:&lt;/p></descriptio
 &lt;li>Abstracting users from the underlying native mechanisms&lt;/li>
 &lt;/ul>
 &lt;h2 id="default-arguments">Default arguments&lt;/h2>
-&lt;p>Throughout the 0.11.0 API we were exposing builders, however we decided to replace all of them with the more Kotlin-idiomatic way of the default arguments.&lt;/p></description></item></channel></rss>
+&lt;p>Throughout the 0.11.0 API we were exposing builders, however we decided to replace all of them with the more Kotlin-idiomatic way of the default arguments.&lt;/p></description></item><item><title>Regions</title><link>https://zenoh.io/docs/migration_1.9/regions/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://zenoh.io/docs/migration_1.9/regions/</guid><description>&lt;h2 id="zenoh-regions">Zenoh regions&lt;/h2>
+&lt;p>Zenoh version &lt;a href="https://zenoh.io/blog/2026-04-16-zenoh-longwang/">1.9.0&lt;/a> introduces a new feature that allows subdividing a system into &lt;em>regions&lt;/em> in a more flexible manner than before. This provides more scalability and allows deployments and topologies that were not possible before.&lt;/p>
+&lt;p>Please refer to deployment documentation &lt;a href="https://zenoh.io/docs/getting-started/deployment/#zenoh-regions">regions section&lt;/a> on how to deploy and configure Zenoh regions.&lt;/p>
+&lt;h3 id="new-possible-topologies">New possible topologies&lt;/h3>
+&lt;p>Here are examples of topologies that were not possible to deploy before and are now available.&lt;/p>
+&lt;h4 id="south-regions-interconnected-as-clients">South regions interconnected as clients&lt;/h4>
+&lt;p>&lt;img src="https://zenoh.io/img/migration_1.9/new_topo1.png"
+ alt="topology1"
+ title="topology1"
+ loading="lazy"
+ decoding="async">
+&lt;/p></description></item></channel></rss>
