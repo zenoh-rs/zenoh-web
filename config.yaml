@@ -23,6 +23,12 @@ enableEmoji: true
 singleViewStyle: "caspertwo"
 ignoreLogs: ['warning-goldmark-raw-html']
 
+security:
+  node:
+    permissions:
+      allowRead:
+        - '/'
+
 params:
   description: "Eclipse Zenoh unifies pub/sub, query, storage, and computation across cloud, edge, robotics, IoT, and constrained devices."
   images:
@@ -47,5 +53,8 @@ menu:
       name: "API"
       weight: 4000
     - identifier: "migration_1.0"
-      name: "Migration guides v0.11 → v1.0 "
+      name: "Migration guides v0.11 → v1.0"
       weight: 6000
+    - identifier: "migration_1.9"
+      name: "Migration guides v1.8 → v1.9"
+      weight: 7000
