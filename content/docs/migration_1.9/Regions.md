@@ -8,7 +8,7 @@ menu:
 
 ## Zenoh regions
 
-Zenoh version 1.9.0 introduces a new feature that allows subdividing a system into _regions_ in a more flexible manner than before. This provides more scalability and allows deployments and topologies that were not possible before.
+Zenoh version [1.9.0](/blog/2026-04-16-zenoh-longwang/) introduces a new feature that allows subdividing a system into _regions_ in a more flexible manner than before. This provides more scalability and allows deployments and topologies that were not possible before.
 
 Please refer to deployment documentation [regions section](/docs/getting-started/deployment/#zenoh-regions) on how to deploy and configure Zenoh regions. 
 
