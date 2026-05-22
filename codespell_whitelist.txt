@@ -1,5 +1,4 @@
 crate
-reduct
 CAs
 decypher
 deque
