@@ -6,6 +6,7 @@ dequeue
 lets
 medias
 mut
+reduct
 stdio
 UInt
 unsecure

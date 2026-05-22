@@ -31,6 +31,6 @@
 			}
 		}
 	},
-	"postCreateCommand": "hugo version",
+	"postCreateCommand": "npm install && hugo version",
 	"remoteUser": "vscode"
 }
