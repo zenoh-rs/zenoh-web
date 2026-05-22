@@ -100,7 +100,7 @@ Zenoh applications in `client` mode run `multicast` scouting to discover Zenoh n
 ## Routed 
 
 Zenoh applications deployed in router mode can route data on behalf of other applications of the subsystem. This allows to deploy applications in a mesh topology.
-By default, router nodes never try to interconnect themself automatically and must be configured with the endpoints of the other router nodes they are supposed to connect to. 
+By default, router nodes never try to connect to each other automatically and must be configured with the endpoints of the other router nodes they are supposed to connect to. 
 
 ![routed](/img/deployment/routed.png "routed" )
 
