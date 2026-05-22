@@ -82,7 +82,7 @@
 <!-- Pagefind JS (search) -->
 <script src="/pagefind/pagefind-ui.js" defer></script>
 <script>
-  window.addEventListener('load', function() {
+  window.addEventListener('DOMContentLoaded', function() {
     if (typeof PagefindUI === 'undefined') return;
     if (document.getElementById('global-search')) {
       new PagefindUI({ element: '#global-search', showSubResults: true });
