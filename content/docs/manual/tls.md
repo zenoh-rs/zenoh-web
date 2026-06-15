@@ -339,7 +339,7 @@ Once the above certificates have been correctly generated, we can proceed to con
 
 For mutual TLS (mTLS), both the server and the client must present certificates to each other. The server certificate must be trusted by the client, and the client certificate must be trusted by the server. Both certificates must be signed by a trusted Certificate Authority (CA).
 
-> **Note:** The `minica` tool only generates certificates with **TLS Web Server Authentication** EKU. To use mTLS, you must manually generate a client certificate with **TLS Web Client Authentication** EKU using OpenSSL, signed by your existing CA (`minica.pem` and `minica-key.pem`).
+> **Note:** The *minica* tool only generates certificates with **TLS Web Server Authentication** EKU. To use mTLS, you must manually generate a client certificate with **TLS Web Client Authentication** EKU using OpenSSL, signed by your existing CA (*minica.pem* and *minica-key.pem*).
 
 ---
 
@@ -366,7 +366,7 @@ user
 
 #### Step 2: Generate a Client Certificate with OpenSSL
 
-Since `minica` does not support generating client certificates, use OpenSSL to create one signed by your existing CA.
+Since *minica* does not support generating client certificates, use OpenSSL to create one signed by your existing CA.
 
 ##### 1. Generate a Private Key for the Client
 
@@ -383,7 +383,7 @@ openssl req -new -key /home/user/client/localhost/key.pem -out /home/user/client
 
 ##### 3. Create a Configuration File for the Client Certificate
 
-Create a file named `client_ext.cnf` with the following content:
+Create a file named *client_ext.cnf* with the following content:
 
 ```ini
 [req]
@@ -426,14 +426,12 @@ openssl x509 -in /home/user/server/localhost/cert.pem -text -noout | grep -A 1 "
 openssl x509 -in /home/user/client/localhost/cert.pem -text -noout | grep -A 1 "Extended Key Usage"
 ```
 
-- The **server certificate** should include `TLS Web Server Authentication`.
-- The **client certificate** should include `TLS Web Client Authentication`.
+- The **server certificate** should include *TLS Web Server Authentication*.
+- The **client certificate** should include *TLS Web Client Authentication*.
 
 ---
 
 #### Step 4: Use the Certificates in Zenoh
-
-##### For the Router (Server)
 
 In your router configuration, specify the CA certificate to validate the client, and provide the router's own certificate and private key:
 
@@ -455,8 +453,6 @@ In your router configuration, specify the CA certificate to validate the client,
   }
 }
 ```
-
-##### For the Client
 
 In your client configuration, specify the CA certificate to validate the server, and provide the client's own certificate and private key:
 
