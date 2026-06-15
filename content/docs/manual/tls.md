@@ -133,18 +133,17 @@ Let's suppose we are storing them under `$home/user/` with the following files a
 
 ```bash
 user
-├── client
-│   ├── localhost
-│   │   ├── cert.pem
-│   │   └── key.pem
-│   ├── minica-key.pem
-│   └── minica.pem
-└── server
-    ├── localhost
-    │   ├── cert.pem
-    │   └── key.pem
-    ├── minica-key.pem
-    └── minica.pem
+├── ca
+│   ├── minica.pem
+│   └── minica-key.pem
+├── server
+│   └── localhost
+│       ├── cert.pem
+│       └── key.pem
+└── client
+    └── localhost
+        ├── cert.pem
+        └── key.pem
 ```
 
 ### Router configuration
@@ -160,7 +159,7 @@ The filed `enable_mtls` needs to be set to `true` and we must provide the router
   "transport": {
     "link": {
       "tls": {
-        "root_ca_certificate": "/home/user/client/minica.pem",
+        "root_ca_certificate": "/home/user/ca/minica.pem",
         "enable_mtls": true,
         "listen_private_key": "/home/user/server/localhost/key.pem",
         "listen_certificate": "/home/user/server/localhost/cert.pem"
@@ -183,7 +182,7 @@ Again, the field `enable_mtls` needs to be set to `true` and we must provide the
   "transport": {
     "link": {
       "tls": {
-        "root_ca_certificate": "/home/user/server/minica.pem",
+        "root_ca_certificate": "/home/user/ca/minica.pem",
         "enable_mtls": true,
         "connect_private_key": "/home/user/client/localhost/key.pem",
         "connect_certificate": "/home/user/client/localhost/cert.pem"
@@ -294,12 +293,12 @@ As it can be noticed, the same _peer.json5_ is used for _z_sub_ and _z_pub_.
 
 ## Appendix: TLS certificates creation
 
-In order to use TLS as a transport protocol, we need first to create the TLS certificates.  
+In order to use TLS as a transport protocol, we need first to create the TLS certificates.
 While multiple ways of creating TLS certificates exist, in this guide we are going to use [minica](https://github.com/jsha/minica) for simplicity:
 
 > _Minica is a simple CA intended for use in situations where the CA operator also operates each host where a certificate will be used. It automatically generates both a key and a certificate when asked to produce a certificate. It does not offer OCSP or CRL services. Minica is appropriate, for instance, for generating certificates for RPC systems or microservices._
 
-First, you need to install minica by following these [instructions](https://github.com/jsha/minica#installation).  
+First, you need to install minica by following these [instructions](https://github.com/jsha/minica#installation).
 Once you have successfully installed on your machine, let's create the certificates as follows assuming that we will test Zenoh over TLS on _localhost_.  
 First let's create a folder to store our certificates:
 
@@ -323,8 +322,8 @@ $/home/user/tls: ls
 localhost   minica-key.pem  minica.pem
 ```
 
-_minica.pem_ is the root CA certificate that will be used by the client to validate the server certificate.  
-The server certificate *cert.pem* and private key _key.pem_ can be found inside the _localhost_ folder.
+_minica.pem_ is the root CA certificate that will be used by the client to validate the server certificate.
+The server certificate _cert.pem_ and private key _key.pem_ can be found inside the _localhost_ folder.
 
 ```bash
 $/home/user/tls: ls localhost
@@ -333,19 +332,13 @@ cert.pem    key.pem
 
 Once the above certificates have been correctly generated, we can proceed to configure Zenoh to use TLS as explained.
 
----
-
 ### Generating Client Certificates for Mutual TLS (mTLS)
 
 For mutual TLS (mTLS), both the server and the client must present certificates to each other. The server certificate must be trusted by the client, and the client certificate must be trusted by the server. Both certificates must be signed by a trusted Certificate Authority (CA).
 
 > **Note:** The _minica_ tool only generates certificates with **TLS Web Server Authentication** EKU. To use mTLS, you must manually generate a client certificate with **TLS Web Client Authentication** EKU using OpenSSL, signed by your existing CA (_minica.pem_ and _minica-key.pem_).
 
----
-
-#### Step 1: Organize Your Certificates
-
-For clarity, it is recommended to organize your certificates in a structured directory. For example:
+For clarity, you can organize your certificates in a structured directory. For example:
 
 ```bash
 user
@@ -361,10 +354,6 @@ user
         ├── cert.pem        # Client certificate (to be generated)
         └── key.pem         # Client private key (to be generated)
 ```
-
----
-
-#### Step 2: Generate a Client Certificate with OpenSSL
 
 Since _minica_ does not support generating client certificates, use OpenSSL to create one signed by your existing CA.
 
@@ -411,10 +400,6 @@ Remove the CSR file if you no longer need it:
 rm /home/user/client/localhost/client.csr
 ```
 
----
-
-#### Step 3: Verify Your Certificates
-
 You can verify the Extended Key Usage (EKU) of your certificates using OpenSSL:
 
 ```bash
@@ -427,50 +412,48 @@ openssl x509 -in /home/user/client/localhost/cert.pem -text -noout | grep -A 1 "
 
 ---
 
-#### Step 4: Use the Certificates in Zenoh
+Since version 0.7.1-rc from Zenoh, we can generate certificates associated not only to dns domains but also to ip addresses as well. For instance, we can generate them as follows with minica:
 
-In your router configuration, specify the CA certificate to validate the client, and provide the router's own certificate and private key:
+```bash
+$/home/user/server/tls: minica --ip-addresses 127.0.0.1
+```
+
+```bash
+$/home/user/server/tls: ls
+127.0.0.1   minica-key.pem  minica.pem
+```
+
+Then on the Zenoh configuration file we'll be able to set up the TLS configuration specifying the ip address, for instance for a server and a client with tls:
 
 ```json
 {
   "mode": "router",
   "listen": {
-    "endpoints": ["tls/localhost:7447"]
+    "endpoints": ["tls/127.0.0.1:7447"]
   },
   "transport": {
     "link": {
       "tls": {
-        "root_ca_certificate": "/home/user/ca/minica.pem",
-        "enable_mtls": true,
-        "listen_private_key": "/home/user/server/localhost/key.pem",
-        "listen_certificate": "/home/user/server/localhost/cert.pem"
+        "listen_private_key": "/home/user/server/127.0.0.1/key.pem",
+        "listen_certificate": "/home/user/server/127.0.0.1/cert.pem"
       }
     }
   }
 }
 ```
-
-In your client configuration, specify the CA certificate to validate the server, and provide the client's own certificate and private key:
 
 ```json
 {
   "mode": "client",
   "connect": {
-    "endpoints": ["tls/localhost:7447"]
+    "endpoints": ["tls/127.0.0.1:7447"]
   },
   "transport": {
     "link": {
       "tls": {
-        "root_ca_certificate": "/home/user/ca/minica.pem",
-        "enable_mtls": true,
-        "connect_private_key": "/home/user/client/localhost/key.pem",
-        "connect_certificate": "/home/user/client/localhost/cert.pem"
+        "root_ca_certificate": "/home/user/server/minica.pem"
       }
     }
   }
 }
 ```
-
----
-
-Once the above certificates have been correctly generated, you can proceed to configure Zenoh to use TLS as explained in the main documentation.
