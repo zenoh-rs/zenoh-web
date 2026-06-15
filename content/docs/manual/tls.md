@@ -297,10 +297,10 @@ As it can be noticed, the same _peer.json5_ is used for _z_sub_ and _z_pub_.
 In order to use TLS as a transport protocol, we need first to create the TLS certificates.  
 While multiple ways of creating TLS certificates exist, in this guide we are going to use [minica](https://github.com/jsha/minica) for simplicity:
 
-> *Minica is a simple CA intended for use in situations where the CA operator also operates each host where a certificate will be used. It automatically generates both a key and a certificate when asked to produce a certificate. It does not offer OCSP or CRL services. Minica is appropriate, for instance, for generating certificates for RPC systems or microservices.*
+> _Minica is a simple CA intended for use in situations where the CA operator also operates each host where a certificate will be used. It automatically generates both a key and a certificate when asked to produce a certificate. It does not offer OCSP or CRL services. Minica is appropriate, for instance, for generating certificates for RPC systems or microservices._
 
 First, you need to install minica by following these [instructions](https://github.com/jsha/minica#installation).  
-Once you have successfully installed on your machine, let's create the certificates as follows assuming that we will test Zenoh over TLS on *localhost*.  
+Once you have successfully installed on your machine, let's create the certificates as follows assuming that we will test Zenoh over TLS on _localhost_.  
 First let's create a folder to store our certificates:
 
 ```bash
@@ -310,7 +310,7 @@ $/home/user/tls: pwd
 /home/user/tls
 ```
 
-Then, let's generate the TLS certificate for the *localhost* domain:
+Then, let's generate the TLS certificate for the _localhost_ domain:
 
 ```bash
 $/home/user/tls: minica --domains localhost
@@ -323,8 +323,8 @@ $/home/user/tls: ls
 localhost   minica-key.pem  minica.pem
 ```
 
-*minica.pem* is the root CA certificate that will be used by the client to validate the server certificate.  
-The server certificate *cert.pem* and private key *key.pem* can be found inside the *localhost* folder.
+_minica.pem_ is the root CA certificate that will be used by the client to validate the server certificate.  
+The server certificate *cert.pem* and private key _key.pem_ can be found inside the _localhost_ folder.
 
 ```bash
 $/home/user/tls: ls localhost
@@ -339,7 +339,7 @@ Once the above certificates have been correctly generated, we can proceed to con
 
 For mutual TLS (mTLS), both the server and the client must present certificates to each other. The server certificate must be trusted by the client, and the client certificate must be trusted by the server. Both certificates must be signed by a trusted Certificate Authority (CA).
 
-> **Note:** The *minica* tool only generates certificates with **TLS Web Server Authentication** EKU. To use mTLS, you must manually generate a client certificate with **TLS Web Client Authentication** EKU using OpenSSL, signed by your existing CA (*minica.pem* and *minica-key.pem*).
+> **Note:** The _minica_ tool only generates certificates with **TLS Web Server Authentication** EKU. To use mTLS, you must manually generate a client certificate with **TLS Web Client Authentication** EKU using OpenSSL, signed by your existing CA (_minica.pem_ and _minica-key.pem_).
 
 ---
 
@@ -366,24 +366,22 @@ user
 
 #### Step 2: Generate a Client Certificate with OpenSSL
 
-Since *minica* does not support generating client certificates, use OpenSSL to create one signed by your existing CA.
+Since _minica_ does not support generating client certificates, use OpenSSL to create one signed by your existing CA.
 
-##### 1. Generate a Private Key for the Client
+Generate a Private Key for the Client:
 
 ```bash
 mkdir -p /home/user/client/localhost
 openssl genpkey -algorithm RSA -out /home/user/client/localhost/key.pem -pkeyopt rsa_keygen_bits:2048
 ```
 
-##### 2. Create a Certificate Signing Request (CSR) for the Client
+Create a Certificate Signing Request (CSR) for the Client:
 
 ```bash
 openssl req -new -key /home/user/client/localhost/key.pem -out /home/user/client/localhost/client.csr -subj "/CN=zenoh-client"
 ```
 
-##### 3. Create a Configuration File for the Client Certificate
-
-Create a file named *client_ext.cnf* with the following content:
+Create a file named _client_ext.cnf_ with the following content:
 
 ```ini
 [req]
@@ -393,7 +391,7 @@ req_extensions = v3_req
 extendedKeyUsage = clientAuth
 ```
 
-##### 4. Sign the CSR with Your CA, Adding the `clientAuth` EKU
+Sign the CSR with Your CA, Adding the `clientAuth` EKU:
 
 ```bash
 openssl x509 -req -in /home/user/client/localhost/client.csr \
@@ -406,8 +404,6 @@ openssl x509 -req -in /home/user/client/localhost/client.csr \
   -extfile client_ext.cnf \
   -extensions v3_req
 ```
-
-##### 5. Clean Up (Optional)
 
 Remove the CSR file if you no longer need it:
 
@@ -426,8 +422,8 @@ openssl x509 -in /home/user/server/localhost/cert.pem -text -noout | grep -A 1 "
 openssl x509 -in /home/user/client/localhost/cert.pem -text -noout | grep -A 1 "Extended Key Usage"
 ```
 
-- The **server certificate** should include *TLS Web Server Authentication*.
-- The **client certificate** should include *TLS Web Client Authentication*.
+- The **server certificate** should include _TLS Web Server Authentication_.
+- The **client certificate** should include _TLS Web Client Authentication_.
 
 ---
 
