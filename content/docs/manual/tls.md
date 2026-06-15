@@ -369,17 +369,6 @@ Create a Certificate Signing Request (CSR) for the Client:
 ```bash
 openssl req -new -key /home/user/client/localhost/key.pem -out /home/user/client/localhost/client.csr -subj "/CN=zenoh-client"
 ```
-
-Create a file named _client_ext.cnf_ with the following content:
-
-```ini
-[req]
-req_extensions = v3_req
-
-[v3_req]
-extendedKeyUsage = clientAuth
-```
-
 Sign the CSR with Your CA, Adding the `clientAuth` EKU:
 
 ```bash
@@ -390,8 +379,7 @@ openssl x509 -req -in /home/user/client/localhost/client.csr \
   -out /home/user/client/localhost/cert.pem \
   -days 365 \
   -sha256 \
-  -extfile client_ext.cnf \
-  -extensions v3_req
+  -extfile <(echo -e "extendedKeyUsage = clientAuth")
 ```
 
 Remove the CSR file if you no longer need it:
