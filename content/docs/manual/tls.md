@@ -299,7 +299,7 @@ While multiple ways of creating TLS certificates exist, in this guide we are goi
 > _Minica is a simple CA intended for use in situations where the CA operator also operates each host where a certificate will be used. It automatically generates both a key and a certificate when asked to produce a certificate. It does not offer OCSP or CRL services. Minica is appropriate, for instance, for generating certificates for RPC systems or microservices._
 
 First, you need to install minica by following these [instructions](https://github.com/jsha/minica#installation).
-Once you have successfully installed on your machine, let's create the certificates as follows assuming that we will test Zenoh over TLS on _localhost_.  
+Once you have successfully installed on your machine, let's create the certificates as follows assuming that we will test Zenoh over TLS on _localhost_.
 First let's create a folder to store our certificates:
 
 ```bash
