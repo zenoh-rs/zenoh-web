@@ -2,7 +2,7 @@
 baseURL: "https://zenoh.io/"
 relativeURLs: false
 title: "Zenoh - The Zero Overhead, Pub/Sub, Store, Query, and Compute Protocol."
-languageCode: "en-us"
+locale: "en-us"
 canonifyURLs: false
 markup:
   highlight:
@@ -24,6 +24,15 @@ singleViewStyle: "caspertwo"
 ignoreLogs: ['warning-goldmark-raw-html']
 
 security:
+  exec:
+    allow:
+      - '^(dart-)?sass$'
+      - '^go$'
+      - '^git$'
+      - '^node$'
+      - '^npx$'
+      - '^postcss$'
+      - '^tailwindcss$'
   node:
     permissions:
       allowRead:
