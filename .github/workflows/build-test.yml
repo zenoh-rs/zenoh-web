@@ -21,7 +21,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          # Hugo's css.TailwindCSS runs node under the permission model
+          # (--permission + module.registerHooks), which needs Node >= 22.15.
+          node-version: '24'
           cache: 'npm'
 
       - name: Install npm dependencies
