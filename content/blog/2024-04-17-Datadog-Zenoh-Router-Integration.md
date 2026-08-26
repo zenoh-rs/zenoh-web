@@ -3,7 +3,7 @@ title: "Streamlining Zenoh router Monitoring with Datadog Integration"
 date: 2024-04-17
 menu: "blog"
 weight: 20240417
-description: "April 17th, 2024 -- Paris."
+description: "Paris — 17 April 2024"
 draft: false
 ---
 

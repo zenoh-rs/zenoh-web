@@ -3,7 +3,7 @@ title: "Data Flow programming with Zenoh-Flow"
 date: 2023-02-10
 menu: "blog"
 weight: 20230210
-description: "10 February 2023 -- Paris."
+description: "Paris — 10 February 2023"
 draft: false
 ---
 

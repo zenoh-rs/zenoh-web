@@ -3,7 +3,7 @@ title: "There is Land Besides IP: How to Cross It with Zenoh"
 date: 2022-08-12
 menu: "blog"
 weight: 20220812
-description: "12 August 2022 -- Paris."
+description: "Paris — 12 August 2022"
 draft: false
 ---
 Since the early 2000s the transition towards All-IP networks had been pushed as a natural evolutionary path. Today, IP is the dominant stack for packet-based integrated networks deployed worldwide. However, there is land beyond the ocean…in other words, **there is an entire and growing non-IP universe that cannot be ignored**. This universe expands at the outskirts of ordinary IP networks, where other protocols shine brighter because of more stringent requirements on **overhead, energy-efficienciency, latency / real-time, and cost**.

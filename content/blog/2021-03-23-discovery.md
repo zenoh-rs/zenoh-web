@@ -3,7 +3,7 @@ title: "Minimizing Discovery Overhead in ROS2"
 date: 2021-03-23
 menu: "blog"
 weight: 20210323
-description: "23 March 2021 -- Paris."
+description: "Paris — 23 March 2021"
 draft: false
 ---
 

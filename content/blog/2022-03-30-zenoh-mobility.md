@@ -3,7 +3,7 @@ title: "Mobility, Latency and Energy saving"
 date: 2022-03-30
 menu: "blog"
 weight: 20220330
-description: "30 March 2022 -- Paris."
+description: "Paris — 30 March 2022"
 draft: false
 ---
  

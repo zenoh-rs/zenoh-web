@@ -3,7 +3,7 @@ title: "The Blue Dragon meets the Wire’s Shark"
 date: 2023-01-18
 menu: "blog"
 weight: 20230118
-description: "19 January 2023 -- Paris."
+description: "Paris — 19 January 2023"
 draft: false
 ---
 

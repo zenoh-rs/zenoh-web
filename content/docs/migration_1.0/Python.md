@@ -44,7 +44,7 @@ with zenoh.open(zenoh.Config()) as session:
 ## Drop-callback has to be wrapped in `handlers.Callback`
 
 In the previous 0.11.0 version, it was possible to pass a drop-callback with the main callback in a tuple for operations like `Session.declare_subscriber`. However, it was also possible to pass a tuple with a "receiver" (renamed "handler" in 1.0.0) as second member, and that could confuse users.
-<br>
+
 The API has been changed and now requires the drop-callback to be wrapped in `handlers.Callback`. 
 
 - Zenoh 0.11.x

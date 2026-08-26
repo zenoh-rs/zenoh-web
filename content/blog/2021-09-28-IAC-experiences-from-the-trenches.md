@@ -3,7 +3,7 @@ title: "Indy Autonomous Challenge (IAC): Experiences from the Trenches"
 date: 2021-09-28
 menu: "blog"
 weight: 20210928
-description: "28 September 2021 -- Paris."
+description: "Paris — 28 September 2021"
 draft: false
 ---
 

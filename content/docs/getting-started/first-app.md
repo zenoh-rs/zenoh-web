@@ -12,7 +12,7 @@ Then we see how we can route this data to store and perform some analytics.
 
 Before cranking some code, let's define some terminology.
 
-<b>Zenoh</b> deals with <i>keys/values</i> where each key is a <i>path</i> and is associated to a <i>value</i>. A key looks like just a Unix file system path, such as ```myhome/kitchen/temp```. The value can be defined with different
+**Zenoh** deals with *keys/values* where each key is a *path* and is associated to a *value*. A key looks like just a Unix file system path, such as ```myhome/kitchen/temp```. The value can be defined with different
 encodings (string, JSON, raw bytes buffer...).
 <!-- To query the values stored by Zenoh, we use <i>selectors</i>. As the name suggest, a <i>selector</i> can use wildcards, such as <b>*</b> and <b>**</b> to represent a set of paths, such as, ```myhome/*/temp```. -->
 

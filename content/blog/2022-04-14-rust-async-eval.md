@@ -3,7 +3,7 @@ title: "A Performance Evaluation on Rust Asynchronous Frameworks"
 date: 2022-04-14
 menu: "blog"
 weight: 20220414
-description: "14 April 2022 -- Paris."
+description: "Paris — 14 April 2022"
 draft: false
 ---
 

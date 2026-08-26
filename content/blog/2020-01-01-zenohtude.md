@@ -1,7 +1,7 @@
 ---
 date: "2020-01-01"
 title: "A Year Full of Zenoh"
-description: "1 January 2020"
+description: "Paris — 1 January 2020"
 menu: "blog"
 weight: 20200101
 ---

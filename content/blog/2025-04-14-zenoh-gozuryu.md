@@ -3,7 +3,7 @@ title: "Zenoh Gozuryū is Here!"
 date: 2025-04-14
 menu: "blog"
 weight: 20250414
-description: "14th April, 2025 -- Paris."
+description: "Paris — 14 April 2025"
 draft: false
 ---
 

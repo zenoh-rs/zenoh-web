@@ -7,7 +7,7 @@ menu:
 ---
 
 <!-- To get up and running with <b>Zenoh</b> you will have to install the router or the client (possibly both).  -->
-To start playing with <b>Zenoh</b> we need the Zenoh router and/or the Zenoh client library. 
+To start playing with **Zenoh** we need the Zenoh router and/or the Zenoh client library. 
 ## Installing client library
 To develop your application Zenoh, you need to install a Zenoh client library.
 Depending on your programming language, pick one of the following API and refer to the installation and usage instructions in here:

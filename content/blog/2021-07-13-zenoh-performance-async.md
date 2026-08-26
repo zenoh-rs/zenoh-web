@@ -3,7 +3,7 @@ title: "Zenoh performance: a stroll in Rust async wonderland"
 date: 2021-07-13
 menu: "blog"
 weight: 20210713
-description: "13 July 2021 -- Paris."
+description: "Paris — 13 July 2021"
 draft: false
 ---
 

@@ -3,7 +3,7 @@ title: "Zenoh-Pico: Above and Beyond"
 date: 2022-06-09
 menu: "blog"
 weight: 20220609
-description: "09 June 2022 -- Paris."
+description: "Paris — 9 June 2022"
 draft: false
 ---
 In a [previous blog post](https://zenoh.io/blog/2021-10-04-zenoh-pico-guide/), we introduced Zenoh-Pico, an implementation of Zenoh for microcontrollers and embedded devices, along with a preliminary performance results and its integration on off-the-shelf robots (by bridging both legacy ROS2+DDS and Zenoh systems or by making it a full-fledged Zenoh system).

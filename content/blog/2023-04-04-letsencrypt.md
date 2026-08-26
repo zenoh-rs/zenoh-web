@@ -3,7 +3,7 @@ title: "Securing Zenoh with LetsEncrypt: A Comprehensive Guide"
 date: 2023-04-04
 menu: "blog"
 weight: 20230404
-description: "April 4th, 2023 -- Paris"
+description: "Paris — 4 April 2023"
 draft: false
 ---
 

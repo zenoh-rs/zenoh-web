@@ -1,7 +1,7 @@
 ---
 date: "2024-12-12"
 title: 'Zenoh 1.1.0: Firesong Keeps Rocking 🎸'
-description: "12th December 2024"
+description: "Paris — 12 December 2024"
 menu: "blog"
 weight: 20241212
 ---

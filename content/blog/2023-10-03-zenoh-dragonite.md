@@ -3,7 +3,7 @@ title: "Zenoh Dragonite Took Off!"
 date: 2023-10-03
 menu: "blog"
 weight: 20231003
-description: "October 3rd, 2023 -- Paris"
+description: "Paris — 3 October 2023"
 draft: false
 ---
 

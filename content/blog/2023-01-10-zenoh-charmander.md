@@ -3,7 +3,7 @@ title: "Zenoh Charmander is coming to town"
 date: 2023-01-10
 menu: "blog"
 weight: 20230110
-description: "10 January 2023 -- Paris."
+description: "Paris — 10 January 2023"
 draft: false
 ---
 

@@ -3,7 +3,7 @@ title: "Zenoh-Flow 0.6.0-rc: Getting Started"
 date: 2024-01-31
 menu: "blog"
 weight: 20240131
-description: "31 January 2024 -- Paris."
+description: "Paris — 31 January 2024"
 draft: false
 ---
 
@@ -348,9 +348,9 @@ We then need to start the standalone daemon:
 
 You should see something along the lines of:
 
-<samp>
+```
 2024-01-25T09:27:48.736415Z  INFO zenoh_flow_daemon: Zenoh-Flow daemon < my-first-daemon > has id: 92af6ef5bdab227a95993f3f73cb9f6e
-</samp>
+```
 
 The id is the unique identifier of the Zenoh-Flow runtime contained within your daemon called “my-first-daemon”. This id is important if you want to control where the different nodes composing your data flow will run. As we mentioned earlier when we described the different sections of a data flow descriptor, there is an optional section `mapping`.
 

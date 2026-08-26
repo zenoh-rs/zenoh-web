@@ -1,7 +1,7 @@
 ---
 date: "2024-05-13"
 title: 'Zenoh 0.11.0 "Electrode" release is out!'
-description: "13th May 2024"
+description: "Paris — 13 May 2024"
 menu: "blog"
 weight: 20240512
 ---

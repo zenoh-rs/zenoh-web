@@ -3,7 +3,7 @@ title: "Integrating ROS2 with Eclipse zenoh"
 date: 2021-04-28
 menu: "blog"
 weight: 20210428
-description: "28 April 2021 -- Paris."
+description: "Paris — 28 April 2021"
 draft: false
 ---
 

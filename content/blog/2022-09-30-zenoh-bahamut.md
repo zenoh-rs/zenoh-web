@@ -3,7 +3,7 @@ title: "Zenoh Bahamut takes flight!"
 date: 2022-09-30
 menu: "blog"
 weight: 20220930
-description: "30 September 2022 -- Paris."
+description: "Paris — 30 September 2022"
 draft: false
 ---
 

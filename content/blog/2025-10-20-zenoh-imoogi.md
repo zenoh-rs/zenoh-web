@@ -3,7 +3,7 @@ title: "Zenoh 1.6.x: Imoogi"
 date: 2025-10-20
 menu: "blog"
 weight: 20251020
-description: "20th October, 2025 -- Paris."
+description: "Paris — 20 October 2025"
 draft: false
 ---
 

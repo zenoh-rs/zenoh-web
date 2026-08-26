@@ -3,7 +3,7 @@ title: "ROS 2 and microcontrollers integration via Zenoh-pico"
 date: 2021-11-09
 menu: "blog"
 weight: 20211109
-description: "09 November 2021 -- Paris."
+description: "Paris — 9 November 2021"
 draft: false
 ---
 In a [previous blog](https://zenoh.io/blog/2021-04-28-ros2-integration/), we showed how you can easily write native Zenoh applications and seamlessly interact with ROS 2 applications. This was exemplified by developing a native Zenoh teleoperation application to control a ROS 2 powered robot, namely a [turtlebot](https://www.robot-advance.com/EN/actualite-turtlebot3-burger-by-robotis-149.htm) or its simulation counterpart [turtlesim](http://wiki.ros.org/turtlesim), from anywhere in the world. In this blog, we will go one step further by trying to make it cool and fun -- together with a bit of nostalgia.

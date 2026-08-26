@@ -3,7 +3,7 @@ title: "Comparing the Performance of Zenoh, MQTT, Kafka, and DDS"
 date: 2023-03-21
 menu: "blog"
 weight: 20230321
-description: "21 March 2023 -- Taipei."
+description: "Taipei — 21 March 2023"
 draft: false
 ---
 ### Prologue

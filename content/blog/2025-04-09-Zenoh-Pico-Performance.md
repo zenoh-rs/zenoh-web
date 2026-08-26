@@ -3,7 +3,7 @@ title: "Zenoh-Pico performance improvements"
 date: 2025-04-30
 menu: "blog"
 weight: 20250430
-description: "April 30th, 2025 -- Paris."
+description: "Paris — 30 April 2025"
 draft: false
 ---
 

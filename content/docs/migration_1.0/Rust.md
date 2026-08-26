@@ -82,11 +82,11 @@ publisher.put(buf).wait().unwrap();
 ## `Session` is now clonable and can be closed easily
 
 `Session` implements `Clone` now, so there is no more need to wrap it into an `Arc<Session>`, and `Session::into_arc` has been deprecated. All the session methods, except `Session::close`, works like before, so only the session type need to be changed.
-<br>
+
 As a side effect, `Subscriber` and `Queryable` no longer have a generic lifetime parameter. `Publisher` also looses one of its lifetime parameters, to keep only the one of its key expression.
 
 The session is now closed automatically when the last `Session` instance is dropped, **even if publishers/subscribers/etc. are still alive**. Session can also be manually closed using `Session::close`, which now takes an immutable reference, so it can be called anytime, even if publishers/subscribers/etc. are still alive.
-<br>
+
 Subscriber and queryable of a closed session will no longer receive data; trying to call `Session::get`, `Session::put` or `Publisher::put` will result in an error. Closing session on the fly may save bandwidth on the wire, as it avoids propagating the undeclaration of remaining entities like subscribers/queryables/etc.  
 
 ```rust

@@ -3,7 +3,7 @@ title: "Zenoh-Pico Peer to Peer Improvements"
 date: 2025-07-09
 menu: "blog"
 weight: 20250709
-description: "July 9th, 2025 -- Paris."
+description: "Paris — 9 July 2025"
 draft: false
 ---
 

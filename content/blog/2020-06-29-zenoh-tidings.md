@@ -3,7 +3,7 @@ title: "Zenoh Tidings"
 date: 2020-06-30
 menu: "blog"
 weight: 20200630
-description: "30 June 2020 -- Paris."
+description: "Paris — 30 June 2020"
 draft: false
 ---
 In our last blog we had announced a rewrite of [**zenoh**](http://zenoh.io) in [Rust](http://rust-lang.org). The wrote the first version of zenoh in [OCaml](http://ocaml.org), a super-neat ML-derived functional programming language. [OCaml](http://ocaml.org) allowed us to experiment very quickly and have good performances. Yet, one of the major feedback we were receiving from the community was that few people knew this programming language and this was limiting contributions. Beside, we had the desire to make zenoh even faster and smaller. One obvious choice would have been to write the new version in C/C++, yet something we did not want to loose were the safety properties we enjoyed with [OCaml](http://ocaml.org). Additionally, if we had to leave our beloved [OCaml](http://ocaml.org), we did not want to completely give away high level abstractions. We also wanted to avoid languages that had a heavy runtime and a garbage collector. We had already looked at [Rust](http://rust-lang.org) back in 2015, but at the point we did not feel it was the right choice for us. The improvements introduced in the programming language with the 2018 edition along with the introduction at a language level **async** make [Rust](http://rust-lang.org) a perfect choice for zenoh. 

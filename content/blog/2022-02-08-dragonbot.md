@@ -3,7 +3,7 @@ title: "DragonBotOne Egg Hatching with Zenoh and Zenoh-Pico"
 date: 2022-02-08
 menu: "blog"
 weight: 20220208
-description: "08 February 2022 -- Paris."
+description: "Paris — 8 February 2022"
 draft: false
 ---
 In previous blogs [(1)](https://zenoh.io/blog/2021-04-28-ros2-integration/)[(2)](https://zenoh.io/blog/2021-11-09-ros2-zenoh-pico/), we showed how you can easily develop native Zenoh applications and seamlessly integrate them with ROS2 applications by using Zenoh bridge for DDS. In particular, this was successfully exemplified by using a TurtleBot, a well-known, low-cost, personal robot kit with open-source software and hardware.

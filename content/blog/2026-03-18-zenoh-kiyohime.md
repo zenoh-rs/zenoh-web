@@ -3,7 +3,7 @@ title: "Zenoh 1.8.x: Kiyohime"
 date: 2026-03-18
 menu: "blog"
 weight: 20260317
-description: "18th March, 2026 -- Paris."
+description: "Paris — 18 March 2026"
 draft: false
 ---
 

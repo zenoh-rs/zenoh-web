@@ -3,7 +3,7 @@ title: "Zenoh overhead: a story from our community"
 date: 2021-07-05
 menu: "blog"
 weight: 20210705
-description: "05 July 2021 -- Paris."
+description: "Paris — 5 July 2021"
 draft: false
 ---
 

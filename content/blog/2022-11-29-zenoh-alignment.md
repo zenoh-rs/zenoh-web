@@ -3,7 +3,7 @@ title: "Keeping storages aligned in Zenoh"
 date: 2022-11-29
 menu: "blog"
 weight: 20221129
-description: "29 November 2022 -- Paris."
+description: "Paris — 29 November 2022"
 draft: false
 ---
 

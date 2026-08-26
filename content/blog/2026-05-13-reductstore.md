@@ -3,7 +3,7 @@ title: "Using ReductStore as a Zenoh storage backend"
 date: 2026-05-13
 menu: "blog"
 weight: 20260513
-description: "13 May 2026 -- Hamburg"
+description: "Hamburg — 13 May 2026"
 draft: false
 ---
 

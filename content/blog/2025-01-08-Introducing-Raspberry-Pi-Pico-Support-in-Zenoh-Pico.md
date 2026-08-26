@@ -3,7 +3,7 @@ title: "Introducing Raspberry Pi Pico Support in Zenoh-Pico"
 date: 2025-01-08
 menu: "blog"
 weight: 20250108
-description: "January 8th, 2025 -- Paris."
+description: "Paris — 8 January 2025"
 draft: false
 ---
 
@@ -117,44 +117,13 @@ e.g.
 
 Valid PIN combinations and associated device names for Raspberry Pi Pico:
 
-<table>
-  <tr>
-   <td><strong><code>PINS</code></strong>
-   </td>
-   <td><strong><code>Device name</code></strong>
-   </td>
-  </tr>
-  <tr>
-   <td><code>0.1</code>
-   </td>
-   <td><code>uart0_0</code>
-   </td>
-  </tr>
-  <tr>
-   <td><code>4.5</code>
-   </td>
-   <td><code>uart1_0</code>
-   </td>
-  </tr>
-  <tr>
-   <td><code>8.9</code>
-   </td>
-   <td><code>uart1_1</code>
-   </td>
-  </tr>
-  <tr>
-   <td><code>12.13</code>
-   </td>
-   <td><code>uart0_1</code>
-   </td>
-  </tr>
-  <tr>
-   <td><code>16.17</code>
-   </td>
-   <td><code>uart0_2</code>
-   </td>
-  </tr>
-</table>
+| `PINS` | `Device name` |
+| --- | --- |
+| `0.1` | `uart0_0` |
+| `4.5` | `uart1_0` |
+| `8.9` | `uart1_1` |
+| `12.13` | `uart0_1` |
+| `16.17` | `uart0_2` |
 
 
 ### USB Serial Connection (Experimental)

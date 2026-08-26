@@ -3,7 +3,7 @@ title: "Zenoh Charmander Grows Stronger"
 date: 2023-06-07
 menu: "blog"
 weight: 20230607
-description: "June 7th, 2023 -- Paris"
+description: "Paris — 7 June 2023"
 draft: false
 ---
 

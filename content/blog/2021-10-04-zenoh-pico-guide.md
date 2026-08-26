@@ -3,7 +3,7 @@ title: "Zenoh goes embedded with zenoh-pico"
 date: 2021-10-04
 menu: "blog"
 weight: 20211004
-description: "04 October 2021 -- Paris."
+description: "Paris — 4 October 2021"
 draft: false
 ---
 In this post, we will introduce [zenoh-pico](https://github.com/eclipse-zenoh/zenoh-pico), **a lightweight implementation of Zenoh APIs in C, fully compatible with its Rust counterpart**. 
@@ -231,7 +231,7 @@ In terms of application-level throughput (i.e., goodput), ESP32 board was able t
 
 ![msg-sec](../../img/blog-zenoh-pico-guide/preliminary-benchmark.png)
 
-<sub><sup>*Note: reel_board and nucleo-f767zi are using Ethernet while ESP32 WiFi.</sub></sup> 
+*Note: reel_board and nucleo-f767zi are using Ethernet while ESP32 WiFi.* 
 
 ----
 # Conclusion
