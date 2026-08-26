@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repo Is
 
-Official website for the [Eclipse Zenoh](https://github.com/eclipse-zenoh) protocol, published at [zenoh.io](https://zenoh.io). Targets developers who use Zenoh — contains technical documentation and blog posts. Built with [Hugo](https://gohugo.io) (last tested: v0.145.0) and [Tailwind CSS v3](https://tailwindcss.com). Content is Markdown; templates are Hugo HTML.
+Official website for the [Eclipse Zenoh](https://github.com/eclipse-zenoh) protocol, published at [zenoh.io](https://zenoh.io). Targets developers who use Zenoh — contains technical documentation and blog posts. Built with [Hugo](https://gohugo.io) (last tested: v0.165.0) and [Tailwind CSS v3](https://tailwindcss.com). Content is Markdown; templates are Hugo HTML.
 
 ## Commands
 
@@ -23,7 +23,7 @@ hugo server
 **Production build with search index:**
 ```sh
 npm run build
-# Equivalent to: hugo && npx pagefind --site public
+# Equivalent to: hugo --cleanDestinationDir && npx pagefind --site public
 # Generates public/pagefind/ for full-text search
 ```
 
@@ -76,6 +76,13 @@ public/           # Generated output — do not edit
 
 **Custom shortcodes** in `layouts/shortcodes/` can be used in Markdown as `{{< callout >}}`, `{{< rawhtml >}}`, etc.
 
+**Tailwind exec permission:** `layouts/partials/header.html` pipes CSS through `css.TailwindCSS`,
+which shells out to `node_modules/.bin/tailwindcss`. Hugo dropped `tailwindcss` from the default
+`security.exec.allow` list in v0.158.0+, so `config.yaml` sets an explicit allowlist. Specifying
+`security.exec.allow` **replaces** Hugo's defaults rather than appending, so that list must also
+re-state `sass`/`go`/`git`/`node`/`postcss`. Without it every build fails with
+`access denied: "tailwindcss" is not whitelisted in policy "security.exec.allow"`.
+
 **Tailwind brand colors** (defined in `tailwind.config.js`):
 - `zenoh-navy` = `#0A143C` (navbar, dark backgrounds)
 - `zenoh-blue` = `#1450ff` (primary accent, links)
@@ -100,12 +107,15 @@ WidgetBot provides an embedded Discord chat widget.
 **Setup required (Discord server admin action):**
 1. Add WidgetBot to the server at https://widgetbot.io
 2. Enable a channel for embedding (e.g. `#general` or `#help`)
-3. Replace `SERVER_ID` and `CHANNEL_ID` in `layouts/partials/discord-widget.html` with real values
+3. Set `params.widgetbot.server` and `params.widgetbot.channel` in `config.yaml`
 
-**Current state:** Placeholder IDs — widget will not load until replaced.
+**Current state:** Those params are unset, so `layouts/partials/discord-widget.html` renders nothing. The partial is guarded on both params being present — no placeholder IDs reach the output.
 
 - **Floating crate** (all pages): included in `layouts/partials/footer.html`
-- **Full embed** (community page only): enabled by `discord_embed: true` in `content/community.md`
+- **Full embed**: gated on `discord_embed: true` in front matter, but the block lives in
+  `layouts/_default/single.html`. `content/community.md` sets `layout: "community"`, so it renders
+  `layouts/_default/community.html` and never reaches that block — the full embed is currently
+  unreachable from any page.
 - **Canonical Discord invite:** `https://discord.gg/2GJ958VuHs`
 
 ## Spell Check

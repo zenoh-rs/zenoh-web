@@ -38,11 +38,12 @@ for await (const file of walk(root)) {
     if (html.includes(token)) failures.push(`${file}: contains ${token}`);
   }
 
-  if (!html.includes('rel="canonical"')) {
+  // Hugo's --minify strips attribute quotes, so match quoted and unquoted forms.
+  if (!/rel=(?:"canonical"|'canonical'|canonical(?=[\s/>]))/.test(html)) {
     failures.push(`${file}: missing canonical link`);
   }
 
-  if (/target="_blank"(?![^>]*rel=)/s.test(html)) {
+  if (/target=(?:"_blank"|'_blank'|_blank(?=[\s/>]))(?![^>]*rel=)/s.test(html)) {
     failures.push(`${file}: target=_blank without rel`);
   }
 
