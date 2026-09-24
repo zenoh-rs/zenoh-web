@@ -19,11 +19,21 @@ The configuration of TLS certificates is done via a [configuration file](../conf
 
 ## Client configuration
 
-The field **root_ca_certificate** is used to specify the path to the certificate used to authenticate the _TLS server_.
+Zenoh provides configuration options to control which certificate authorities are trusted when authenticating a TLS server or peer:
 
-It's important to note that if the field is not specified then the default behaviour is to load the root certificates provided by [Mozilla's CA for use with webpki](https://docs.rs/crate/webpki-roots/latest/source/src/lib.rs).
+The default behaviour is to load the root certificates provided by [Mozilla's CA for use with webpki](https://docs.rs/crate/webpki-roots/latest/source/src/lib.rs).
+This means that a (for example) Zenoh router on the public internet with a certificate issued by Let's Encrypt will be trusted by default.
 
-However, if we manage our own certificates, we need to specify the root certificate.
+Alternatively, we can manage our own certificates by specifying the path to the certificate for the CA that authenticates the server using the parameter
+**root_ca_certificate**.
+This allows us to generate our own certificates using something like [MiniCA as explained below](#appendix-tls-certificates-creation).
+
+Setting the parameter **use_public_pki** to false disables trusting the default root certificates.
+When it is set to true (as it is by default) and the parameter **root_ca_certificate** is set, then both the default root certificates and the one loaded
+by the user will be trusted.
+This is useful, for example, when a Zenoh peer can connect to a network of peers which have certificates signed by a mix of private and public
+certificate authorities.
+
 Suppose we generated the certificate using [MiniCA as explained below](#appendix-tls-certificates-creation), then the configuration file for a _client_ would be:
 
 ```json
@@ -36,7 +46,8 @@ Suppose we generated the certificate using [MiniCA as explained below](#appendix
   "transport": {
     "link": {
       "tls": {
-        "root_ca_certificate": "/home/user/tls/minica.pem"
+        "root_ca_certificate": "/home/user/tls/minica.pem",
+        "use_public_pki": false
       }
     }
   }
@@ -90,7 +101,8 @@ A configuration file for a _peer_ would be:
       "tls": {
         "root_ca_certificate": "/home/user/tls/minica.pem",
         "listen_private_key": "/home/user/tls/localhost/key.pem",
-        "listen_certificate": "/home/user/tls/localhost/cert.pem"
+        "listen_certificate": "/home/user/tls/localhost/cert.pem",
+        "use_public_pki": false
       }
     }
   }
@@ -149,7 +161,7 @@ user
 
 ### Router configuration
 
-The filed `enable_mtls` needs to be set to `true` and we must provide the router (acting as server) the certificate authority to validate the client's keys and certificates under the field `root_ca_certificate`. The `listen_private_key` and `listen_certificate` fields are also required in order to authenticate the router in front of the client.
+The field `enable_mtls` needs to be set to `true` and we must provide the router (acting as server) the certificate authority to validate the client's keys and certificates under the field `root_ca_certificate`. The `listen_private_key` and `listen_certificate` fields are also required in order to authenticate the router in front of the client.
 
 ```json
 {
@@ -163,7 +175,8 @@ The filed `enable_mtls` needs to be set to `true` and we must provide the router
         "root_ca_certificate": "/home/user/client/minica.pem",
         "enable_mtls": true,
         "listen_private_key": "/home/user/server/localhost/key.pem",
-        "listen_certificate": "/home/user/server/localhost/cert.pem"
+        "listen_certificate": "/home/user/server/localhost/cert.pem",
+        "use_public_pki": false
       }
     }
   }
@@ -186,7 +199,8 @@ Again, the field `enable_mtls` needs to be set to `true` and we must provide the
         "root_ca_certificate": "/home/user/server/minica.pem",
         "enable_mtls": true,
         "connect_private_key": "/home/user/client/localhost/key.pem",
-        "connect_certificate": "/home/user/client/localhost/cert.pem"
+        "connect_certificate": "/home/user/client/localhost/cert.pem",
+        "use_public_pki": false
       }
     }
   }
