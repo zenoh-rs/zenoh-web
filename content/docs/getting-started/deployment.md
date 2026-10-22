@@ -177,11 +177,11 @@ Example:
 
 For more advanced gateways configurations, the `gateway/south` section should contain a list of south regions. Each region should containing a list of filters. All nodes matching one of the filters will be affected to the corresponding south region.
 
-Each filter can contain a list of conditions: `modes`, `zids`, `interfaces` and/or `region_names`. Each condition is a list of possible values. A filter can also have an optional `negate` boolean. 
+Each filter can contain a list of conditions: `modes`, `zids`, `interfaces` and/or `region_names`. Each condition is a list of possible values. A filter can also have an optional `negated` boolean. 
 - A node matches a condition, if it matches one of the possible values. 
 - A node matches a filter if 
     - it matches all the conditions of the filter. 
-    - or if `negate` is `true` and the node deos not match one of the conditions of the filter.
+    - or if `negated` is `true` and the node deos not match one of the conditions of the filter.
 - A node matches a south region if it matches one of the filters of the region. 
 
 Example of configuration with two south regions:
@@ -201,7 +201,7 @@ Example of configuration with two south regions:
         filters: [
           {
             interfaces: ["wlan0"],
-            negate: true
+            negated: true
           }
         ]
       }
@@ -251,7 +251,7 @@ Examples:
       {
         filters: [
           {
-            negate: true,
+            negated: true,
             region_names: ["main"],
           }
         ]
